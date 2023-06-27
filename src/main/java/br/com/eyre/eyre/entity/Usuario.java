@@ -35,16 +35,19 @@ public class Usuario implements UserDetails {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-
+	
+	@Column(name = "cpf_cnpj")
+	private String cpfCnpj;
+	
 	@Column(name = "nome")
 	private String nome;
 
+	@Column(name = "senha")
+	private String senha;
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "role_id")
 	private Role role;
-
-	@Column(name = "senha")
-	private String senha;
 
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "endereco")
@@ -77,7 +80,7 @@ public class Usuario implements UserDetails {
 
 	@Override
 	public String getUsername() {
-		return getNome();
+		return getCpfCnpj();
 	}
 
 	@Override
