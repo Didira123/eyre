@@ -50,7 +50,7 @@ public class Usuario implements UserDetails {
 	private Role role;
 
 	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "endereco")
+	@JoinColumn(name = "endereco_id")
 	private Endereco endereco;
 
 	@Column(name = "ativo")

@@ -3,9 +3,8 @@ package br.com.eyre.eyre.config.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.Ordered;
-import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -22,7 +21,10 @@ public class SecurityConfiguration {
 
 	@Autowired
 	private UsuarioService usuarioService;
-
+	
+	@Autowired
+	private AuthenticationProvider authenticationProvider;
+	
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return PasswordEncoderFactories.createDelegatingPasswordEncoder();
@@ -32,13 +34,13 @@ public class SecurityConfiguration {
 	protected AuthenticationManager authentication(AuthenticationManagerBuilder auth) throws Exception {
 		return auth.userDetailsService(usuarioService).passwordEncoder(passwordEncoder()).and().build();
 	}
-
+	
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http.authorizeHttpRequests((authz) -> authz
 //            		.requestMatchers(HttpMethod.GET, "/hospedagem/**").authenticated()
-				.anyRequest().permitAll())
-				.sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.ALWAYS));
+				.anyRequest().authenticated())
+				.sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.ALWAYS)).formLogin().permitAll();
 //            .httpBasic(withDefaults());
 		return http.build();
 	}

@@ -20,9 +20,12 @@ public class UsuarioServiceImpl implements UsuarioService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		List<Usuario> users = usuarioRepository.findByCpfCnpj(username);
-		if (users.size() > 1) {
-			throw new RuntimeException("Múltiplos Usuários para o cpf_cnpj \"" + username + "\"");
+		if(users.isEmpty()) {
+			throw new UsernameNotFoundException("Dados inválidos!");
 		}
+//		if (users.size() > 1) {
+//			throw new RuntimeException("Múltiplos Usuários para o cpf_cnpj \"" + username + "\"");
+//		}
 
 		return users.get(0);
 	}
