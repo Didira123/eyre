@@ -1,57 +1,55 @@
 package br.com.eyre.eyre.config.security;
 
-import javax.sql.DataSource;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
-import org.springframework.security.provisioning.JdbcUserDetailsManager;
-import org.springframework.security.provisioning.UserDetailsManager;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 import br.com.eyre.eyre.service.UsuarioService;
 
-//@EnableWebSecurity
+@EnableWebSecurity
 @Configuration
 public class SecurityConfiguration {
-	
+
 	@Autowired
 	private UsuarioService usuarioService;
-	
+
 	@Bean
-	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.userDetailsService(usuarioService).passwordEncoder(new BCryptPasswordEncoder());
+	public PasswordEncoder passwordEncoder() {
+		return PasswordEncoderFactories.createDelegatingPasswordEncoder();
 	}
-	
-//    @Bean
-//    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-//        http
-//            .authorizeHttpRequests((authz) -> authz
-////            		.requestMatchers(HttpMethod.GET, "/hospedagem/**").authenticated()
-//                .anyRequest().permitAll()
-//            )
+
+	@Bean
+	protected AuthenticationManager authentication(AuthenticationManagerBuilder auth) throws Exception {
+		return auth.userDetailsService(usuarioService).passwordEncoder(passwordEncoder()).and().build();
+	}
+
+	@Bean
+	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+		http.authorizeHttpRequests((authz) -> authz
+//            		.requestMatchers(HttpMethod.GET, "/hospedagem/**").authenticated()
+				.anyRequest().permitAll())
+				.sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.ALWAYS));
 //            .httpBasic(withDefaults());
-//        return http.build();
-//    }
-    
-    //Terá aparentemente o mesmo efeito de fazer "requestMatchers(...).permitAll()"
+		return http.build();
+	}
+
+	// Terá aparentemente o mesmo efeito de fazer "requestMatchers(...).permitAll()"
 //    @Bean
 //    public WebSecurityCustomizer webSecurityCustomizer() {
 //        return (web) -> web.ignoring().requestMatchers("/ignore1", "/ignore2");
 //    }
-    
-    //LDAP AUTHENTICATION
+
+	// LDAP AUTHENTICATION
 //    @Bean
 //    public EmbeddedLdapServerContextSourceFactoryBean contextSourceFactoryBean() {
 //        EmbeddedLdapServerContextSourceFactoryBean contextSourceFactoryBean =
@@ -69,8 +67,8 @@ public class SecurityConfiguration {
 //        factory.setUserDetailsContextMapper(new PersonContextMapper());
 //        return factory.createAuthenticationManager();
 //    }
-    
-    //JDBC Authentication com SINGLE USER
+
+	// JDBC Authentication com SINGLE USER
 //    @Bean
 //    public DataSource dataSource() {
 //        return new EmbeddedDatabaseBuilder()
@@ -91,8 +89,8 @@ public class SecurityConfiguration {
 //        users.createUser(user);
 //        return users;
 //    }
-    
-    //In-Memory Authentication
+
+	// In-Memory Authentication
 //    @Bean
 //    public InMemoryUserDetailsManager userDetailsService() {
 //    	BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(16);
@@ -103,5 +101,5 @@ public class SecurityConfiguration {
 //            .build();
 //        return new InMemoryUserDetailsManager(user);
 //    }
-    
+
 }
