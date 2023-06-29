@@ -9,6 +9,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Component;
 
+//CLASSE ALTERNATIVA A CLASSE "AUTENTICACAO". ESTA AQUI MOSTRA PARTE DE COMO ERA NO TRAMPO
+
 @Component
 public class AuthenticationProviderImpl implements AuthenticationProvider {
 

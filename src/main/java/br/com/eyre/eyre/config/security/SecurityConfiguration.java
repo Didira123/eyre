@@ -3,7 +3,9 @@ package br.com.eyre.eyre.config.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -32,8 +34,10 @@ public class SecurityConfiguration {
 //	protected AuthenticationManager authentication(AuthenticationManagerBuilder auth) throws Exception {
 //		return auth.userDetailsService(usuarioService).passwordEncoder(passwordEncoder()).and().build();
 //	}
-	
-	//Sobreescrita do DaoAuthenticationProvider Padrão do Spring (o código comentado acima fazia a alteração do existente, o que causava o erro de "OBJECT ALREADY BUILT")
+
+	// Sobreescrita do DaoAuthenticationProvider Padrão do Spring (o código
+	// comentado acima fazia a alteração do existente, o que causava o erro de
+	// "OBJECT ALREADY BUILT")
 	@Bean
 	public DaoAuthenticationProvider authenticationProvider() {
 		DaoAuthenticationProvider dap = new DaoAuthenticationProvider();
@@ -41,20 +45,20 @@ public class SecurityConfiguration {
 		dap.setPasswordEncoder(passwordEncoder());
 		return dap;
 	}
-
-//	@Bean
-//	public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration)
-//			throws Exception {
-//		return authenticationConfiguration.getAuthenticationManager();
-//	}
+	
+	//A Aplicação não faz a injeção desta dependência de forma automática, sendo necessário adquirí-la assim
+	@Bean
+	public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration)
+			throws Exception {
+		return authenticationConfiguration.getAuthenticationManager();
+	}
 
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-		http
-			.authorizeHttpRequests((authz) -> authz
-//            		.requestMatchers(HttpMethod.GET, "/hospedagem/**").authenticated()
-				.anyRequest().authenticated())
-				.sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.ALWAYS)).formLogin().permitAll();
+		http.authorizeHttpRequests(
+				(authz) -> authz.requestMatchers("/auth/**").permitAll().anyRequest().authenticated())
+				.csrf(csrf -> csrf.disable())
+				.sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 //            .httpBasic(withDefaults());
 		return http.build();
 	}

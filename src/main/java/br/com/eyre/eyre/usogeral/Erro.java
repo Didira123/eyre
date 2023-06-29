@@ -5,8 +5,8 @@ import lombok.Data;
 @Data
 public class Erro {
 
-	public String field;
-	public String error;
+	private String field;
+	private String error;
 
 	public Erro(String field, String error) {
 		this.field = field;
