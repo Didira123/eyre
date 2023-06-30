@@ -34,9 +34,9 @@ public class Autenticacao {
 	@PostMapping(name = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> login(@RequestBody @Valid UsuarioLoginVO login) {
 		
-		UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(login.getNome(), login.getSenha());
+		UsernamePasswordAuthenticationToken dadosLogin = new UsernamePasswordAuthenticationToken(login.getNome(), login.getSenha());
 		try {
-			Authentication authentication = authenticationManager.authenticate(token);
+			Authentication authentication = authenticationManager.authenticate(dadosLogin);
 			String token = tokenService.generateToken(authentication);
 			return ResponseEntity.ok().build();			
 		} catch(AuthenticationException e) {
