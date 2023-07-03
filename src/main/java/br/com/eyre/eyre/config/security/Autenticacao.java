@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.eyre.eyre.usogeral.Erro;
 import br.com.eyre.eyre.vo.UsuarioLoginVO;
 import jakarta.validation.Valid;
 
@@ -22,7 +21,7 @@ public class Autenticacao {
 
 	@Autowired
 	private AuthenticationManager authenticationManager;
-	
+
 	@Autowired
 	private TokenService tokenService;
 
@@ -33,13 +32,14 @@ public class Autenticacao {
 
 	@PostMapping(name = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> login(@RequestBody @Valid UsuarioLoginVO login) {
-		
-		UsernamePasswordAuthenticationToken dadosLogin = new UsernamePasswordAuthenticationToken(login.getNome(), login.getSenha());
+
+		UsernamePasswordAuthenticationToken dadosLogin = new UsernamePasswordAuthenticationToken(login.getNome(),
+				login.getSenha());
 		try {
 			Authentication authentication = authenticationManager.authenticate(dadosLogin);
 			String token = tokenService.generateToken(authentication);
-			return ResponseEntity.ok().build();			
-		} catch(AuthenticationException e) {
+			return ResponseEntity.ok(new TokenVO(token, "Bearer"));
+		} catch (AuthenticationException e) {
 			return ResponseEntity.badRequest().build();
 //					.body(new Erro("N/A", "Dados Inválidos"));
 		}

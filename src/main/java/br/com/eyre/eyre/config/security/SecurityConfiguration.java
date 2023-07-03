@@ -12,7 +12,9 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import br.com.eyre.eyre.repository.UsuarioRepository;
 import br.com.eyre.eyre.service.UsuarioService;
 
 @EnableWebSecurity
@@ -21,7 +23,12 @@ public class SecurityConfiguration {
 
 	@Autowired
 	private UsuarioService usuarioService;
-//	
+
+	@Autowired
+	private UsuarioRepository usuarioRepository;
+
+	@Autowired
+	private TokenService tokenService;
 //	@Autowired
 //	private AuthenticationProvider authenticationProvider;
 
@@ -45,8 +52,9 @@ public class SecurityConfiguration {
 		dap.setPasswordEncoder(passwordEncoder());
 		return dap;
 	}
-	
-	//A Aplicação não faz a injeção desta dependência de forma automática, sendo necessário adquirí-la assim
+
+	// A Aplicação não faz a injeção desta dependência de forma automática, sendo
+	// necessário adquirí-la assim
 	@Bean
 	public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration)
 			throws Exception {
@@ -56,9 +64,11 @@ public class SecurityConfiguration {
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http.authorizeHttpRequests(
-				(authz) -> authz.requestMatchers("/auth/**").permitAll().anyRequest().authenticated())
+				(authz) -> authz.requestMatchers("/auth/", "/actuator/**").permitAll().anyRequest().authenticated())
 				.csrf(csrf -> csrf.disable())
-				.sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+				.sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+				.addFilterBefore(new AutenticacaoViaTokenFilter(tokenService, usuarioRepository),
+						UsernamePasswordAuthenticationFilter.class);
 //            .httpBasic(withDefaults());
 		return http.build();
 	}
