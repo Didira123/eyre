@@ -13,20 +13,12 @@ public class PacoteViagemVO {
 
 	private Long id;
 
-	private String titulo;
-
-	private LocalDateTime dataIda;
-
-	private LocalDateTime dataVolta;
-
-	private BigDecimal preco;
-
-	private TuristaVO turista;
-
+	private UsuarioVO usuario;
+	
 	private HospedagemVO hospedagem;
 
+	private TransporteVO transporte;
+	
 	private PagamentoVO pagamento;
-
-	private List<PacoteViagemTuristaVO> listPacoteViagemTuristas;
-
+	
 }

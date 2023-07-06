@@ -1,62 +1,45 @@
 package br.com.eyre.eyre.entity;
 
-import br.com.eyre.eyre.enums.PagamentoEnum;
-import br.com.eyre.eyre.vo.PacoteViagemVO;
+import java.math.BigDecimal;
+
+import br.com.eyre.eyre.enums.CompanhiaAereaEnum;
+import br.com.eyre.eyre.vo.CompanhiaAereaVO;
+import jakarta.persistence.Column;
+import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "pacote_viagem")
+@Table(name = "companhia_aerea")
 //@EqualsAndHashCode(callSuper = true)
 //@ToString(callSuper = true)
-public class PacoteViagem {
+@DiscriminatorValue(value = Transporte.ONIBUS)
+public class Onibus extends Transporte {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "usuario_id")
-	private Usuario usuario;
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "hospedagem_id")
-	private Hospedagem hospedagem;
-
-	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "transporte_id")
-	private Transporte transporte;
 	
-	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "pagamento_id")
-	public Pagamento pagamento;
+	@Column(name = "tipo_assento")
+	private String tipoAssento;
 	
-	public PacoteViagem() {	
+	public Onibus() {	
 	}
 	
-	public PacoteViagem(Long id) {	
+	public Onibus(Long id) {	
 		setId(id);
 	}
 	
-	public PacoteViagemVO toVO() {
-		PacoteViagemVO vo = new PacoteViagemVO();
+	public CompanhiaAereaVO toVO() {
+		CompanhiaAereaVO vo = new CompanhiaAereaVO();
 		vo.setId(getId());
 		vo.set();
-		vo.set();
-		vo.set();
-		vo.set();
-		
+
 		return vo;
 	}
 
@@ -68,7 +51,7 @@ public class PacoteViagem {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		PacoteViagem other = (PacoteViagem) obj;
+		Onibus other = (Onibus) obj;
 		if (getId() == null) {
 			if (other.getId() != null)
 				return false;

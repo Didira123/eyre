@@ -1,26 +1,22 @@
 package br.com.eyre.eyre.entity;
 
-import br.com.eyre.eyre.enums.PagamentoEnum;
-import br.com.eyre.eyre.vo.PacoteViagemVO;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "pacote_viagem")
+@Table(name = "avaliacao")
 //@EqualsAndHashCode(callSuper = true)
 //@ToString(callSuper = true)
-public class PacoteViagem {
+public class Avaliacao {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,29 +30,23 @@ public class PacoteViagem {
 	@JoinColumn(name = "hospedagem_id")
 	private Hospedagem hospedagem;
 
-	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "transporte_id")
-	private Transporte transporte;
+	@Column(name = "texto")
+	private String texto;
 	
-	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "pagamento_id")
-	public Pagamento pagamento;
-	
-	public PacoteViagem() {	
+	public Avaliacao() {	
 	}
 	
-	public PacoteViagem(Long id) {	
+	public Avaliacao(Long id) {	
 		setId(id);
 	}
 	
-	public PacoteViagemVO toVO() {
-		PacoteViagemVO vo = new PacoteViagemVO();
+	public AvaliacaoVO toVO() {
+		AvaliacaoVO vo = new AvaliacaoVO();
 		vo.setId(getId());
 		vo.set();
 		vo.set();
 		vo.set();
-		vo.set();
-		
+
 		return vo;
 	}
 
@@ -68,7 +58,7 @@ public class PacoteViagem {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		PacoteViagem other = (PacoteViagem) obj;
+		Avaliacao other = (Avaliacao) obj;
 		if (getId() == null) {
 			if (other.getId() != null)
 				return false;

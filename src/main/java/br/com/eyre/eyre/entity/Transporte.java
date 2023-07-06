@@ -1,14 +1,17 @@
 package br.com.eyre.eyre.entity;
 
-import java.math.BigDecimal;
+import java.time.LocalTime;
 
-import br.com.eyre.eyre.enums.TransporteEnum;
 import br.com.eyre.eyre.vo.TransporteVO;
 import jakarta.persistence.Column;
+import jakarta.persistence.DiscriminatorColumn;
+import jakarta.persistence.DiscriminatorType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
 import jakarta.persistence.Table;
 import lombok.Data;
 
@@ -17,33 +20,43 @@ import lombok.Data;
 @Table(name = "transporte")
 //@EqualsAndHashCode(callSuper = true)
 //@ToString(callSuper = true)
-public class Transporte {
-
+@Inheritance(strategy = InheritanceType.JOINED)
+@DiscriminatorColumn(columnDefinition = "dtype", discriminatorType = DiscriminatorType.INTEGER)
+public abstract class Transporte {
+	
+	public static final String COMPANHIA_AEREA = "0";
+	public static final String ONIBUS = "1";
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
+	@Column(name = "nome")
+	private String nome;
+	
+	@Column(name = "horario_partida")
+	private LocalTime horarioPartida;
+	
+	@Column(name = "horario_retorno")
+	private LocalTime horarioRetorno;
+	
+	@Column(name = "local_saida")
+	private Endereco localSaida;
+	
+	@Column(name = "local_chegada")
+	private Endereco localChegada;
 
-	@Column(name = "limite_passageiros")
-	private Integer limitePassageiros;
-
-	@Column(name = "empresa")
-	private String empresa;
-
-	@Column(name = "tipo_transporte")
-	private TransporteEnum tipoTransporte;
-
-	@Column(name = "preco")
-	private BigDecimal preco;
-
+//	TODO Não informado o campo de preço do transporte!!!!!!
+//	@Column(name = "preco")
+//	private BigDecimal preco;
+	
 	public TransporteVO toVO() {
-		TransporteVO vo = new TransporteVO();
-		vo.setId(getId());
-		vo.setTipoTransporte(getTipoTransporte());
-		vo.setEmpresa(getEmpresa());
-		vo.setLimitePassageiros(getLimitePassageiros());
-		vo.setPreco(getPreco());
-
-		return vo;
+		if (this instanceof CompanhiaAerea) {
+			return ((CompanhiaAerea) this).toVO();
+		} else if (this instanceof Onibus) {
+			return ((Onibus) this).toVO();
+		}
+		return null;
 	}
 
 	@Override

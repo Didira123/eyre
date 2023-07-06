@@ -1,40 +1,58 @@
 package br.com.eyre.eyre.entity;
 
-import br.com.eyre.eyre.vo.PacoteViagemTuristaVO;
+import java.time.LocalTime;
+
+import br.com.eyre.eyre.vo.CompanhiaAereaVO;
+import jakarta.persistence.Column;
+import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "pacote_viagem_turista")
+@Table(name = "companhia_aerea")
 //@EqualsAndHashCode(callSuper = true)
 //@ToString(callSuper = true)
-public class PacoteViagemTurista {
+@DiscriminatorValue(value = Transporte.COMPANHIA_AEREA)
+public class CompanhiaAerea extends Transporte {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "pacote_viagem_id")
-	private PacoteViagem pacoteViagem;
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "turista_id")
-	private Turista turista;
-
-	public PacoteViagemTuristaVO toVO() {
-		PacoteViagemTuristaVO vo = new PacoteViagemTuristaVO();
+	
+	@Column(name = "nome")
+	private String nome;
+	
+	@Column(name = "horario_partida")
+	private LocalTime horarioPartida;
+	
+	@Column(name = "horario_retorno")
+	private LocalTime horarioRetorno;
+	
+	@Column(name = "local_saida")
+	private Endereco localSaida;
+	
+	@Column(name = "local_chegada")
+	private Endereco localChegada;
+	
+	public CompanhiaAerea() {	
+	}
+	
+	public CompanhiaAerea(Long id) {	
+		setId(id);
+	}
+	
+	public CompanhiaAereaVO toVO() {
+		CompanhiaAereaVO vo = new CompanhiaAereaVO();
 		vo.setId(getId());
-		vo.setPacoteViagem(getPacoteViagem().toVO());
-		vo.setTurista(getTurista().toVO());
+		vo.set();
+		vo.set();
+		vo.set();
+		vo.set();
 
 		return vo;
 	}
@@ -47,7 +65,7 @@ public class PacoteViagemTurista {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		PacoteViagemTurista other = (PacoteViagemTurista) obj;
+		CompanhiaAerea other = (CompanhiaAerea) obj;
 		if (getId() == null) {
 			if (other.getId() != null)
 				return false;

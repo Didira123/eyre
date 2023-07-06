@@ -1,23 +1,38 @@
 package br.com.eyre.eyre.vo;
 
-import java.math.BigDecimal;
+import java.time.LocalTime;
 
-import br.com.eyre.eyre.enums.TransporteEnum;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
+
 import lombok.Data;
 
 @Data
 //@EqualsAndHashCode(callSuper = true)
 //@ToString(callSuper = true)
+@JsonTypeInfo(use = Id.NAME, property = "type")
+@JsonSubTypes({ @Type(value = CompanhiaAereaVO.class, name = TransporteVO.COMPANHIA_AEREA),
+		@Type(value = OnibusVO.class, name = TransporteVO.ONIBUS) })
 public class TransporteVO {
+
+	public static final String COMPANHIA_AEREA = "0";
+	public static final String ONIBUS = "1";
 
 	private Long id;
 
-	private Integer limitePassageiros;
+	private String nome;
 
-	private String empresa;
+	private LocalTime horarioPartida;
 
-	private TransporteEnum tipoTransporte;
+	private LocalTime horarioRetorno;
 
-	private BigDecimal preco;
+	private EnderecoVO localSaida;
+
+	private EnderecoVO localChegada;
+
+//	TODO Não informado o campo de preço do transporte!!!!!!
+//	private BigDecimal preco;
 
 }

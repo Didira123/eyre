@@ -1,5 +1,6 @@
 package br.com.eyre.eyre.entity;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -8,6 +9,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import br.com.eyre.eyre.vo.UsuarioVO;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -35,16 +37,29 @@ public class Usuario implements UserDetails {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@Column(name = "cpf_cnpj")
 	private String cpfCnpj;
-	
+
 	@Column(name = "nome")
 	private String nome;
 
+	@Column(name = "email")
+	private String email;
+
 	@Column(name = "senha")
 	private String senha;
-	
+
+	@Column(name = "data_nascimento")
+	private LocalDate dataNascimento;
+
+	@Column(name = "telefone")
+	private Integer telefone;
+
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "imagem_id")
+	private Imagem foto;
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "role_id")
 	private Role role;
@@ -57,7 +72,6 @@ public class Usuario implements UserDetails {
 	private Boolean ativo;
 
 	public Usuario() {
-
 	}
 
 	public Usuario(Long id) {
@@ -101,6 +115,23 @@ public class Usuario implements UserDetails {
 	@Override
 	public boolean isEnabled() {
 		return getAtivo();
+	}
+
+	public UsuarioVO toVO() {
+		UsuarioVO vo = new UsuarioVO();
+		vo.setId(getId());
+		vo.setCpfCnpj(getCpfCnpj());
+		vo.setNome(getNome());
+		vo.setEmail(getEmail());
+//		vo.setSenha(getSenha());
+		vo.setDataNascimento(getDataNascimento());
+		vo.setTelefone(getTelefone());
+		vo.setFoto(getFoto().toVO());
+		vo.setRole(getRole());
+		vo.setEndereco(getEndereco());
+		vo.setAtivo(getAtivo());
+		
+		return vo;
 	}
 
 	@Override

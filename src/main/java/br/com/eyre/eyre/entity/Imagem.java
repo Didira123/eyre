@@ -1,6 +1,6 @@
 package br.com.eyre.eyre.entity;
 
-import br.com.eyre.eyre.vo.EnderecoVO;
+import br.com.eyre.eyre.vo.ImagemVO;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -11,49 +11,29 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "endereco")
+@Table(name = "imagem")
 //@EqualsAndHashCode(callSuper = true)
 //@ToString(callSuper = true)
-public class Endereco {
+public class Imagem {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(name = "cep")
-	private String cep;
+	@Column(name = "dados")
+	private String dados;
 
-	@Column(name = "pais")
-	private String pais;
-
-	@Column(name = "estado")
-	private String estado;
-
-	@Column(name = "cidade")
-	private String cidade;
-
-	@Column(name = "rua")
-	private String rua;
-
-	@Column(name = "numero")
-	private String numero;
-	
-	public Endereco() {	
+	public Imagem() {
 	}
-	
-	public Endereco(Long id) {	
+
+	public Imagem(Long id) {
 		setId(id);
 	}
-	
-	public EnderecoVO toVO() {
-		EnderecoVO vo = new EnderecoVO();
+
+	private ImagemVO toVO() {
+		ImagemVO vo = new ImagemVO();
 		vo.setId(getId());
-		vo.setCep(getCep());
-		vo.setPais(getPais());
-		vo.setCidade(getCidade());
-		vo.setEstado(getEstado());
-		vo.setRua(getRua());
-		vo.setNumero(getNumero());
+		vo.setDados(getDados());
 
 		return vo;
 	}
@@ -66,7 +46,7 @@ public class Endereco {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Endereco other = (Endereco) obj;
+		Imagem other = (Imagem) obj;
 		if (getId() == null) {
 			if (other.getId() != null)
 				return false;

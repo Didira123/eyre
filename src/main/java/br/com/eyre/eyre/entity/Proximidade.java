@@ -1,85 +1,45 @@
 package br.com.eyre.eyre.entity;
 
-import java.util.List;
-
-import br.com.eyre.eyre.vo.HospedagemVO;
+import br.com.eyre.eyre.vo.ImagemVO;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "hospedagem")
+@Table(name = "proximidade")
 //@EqualsAndHashCode(callSuper = true)
 //@ToString(callSuper = true)
-public class Hospedagem {
-
+public class Proximidade {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-
-	@Column(name = "titulo")
-	private String titulo;
-
+	
+	@Enumerated(EnumType.ORDINAL)
+	@Column(name = "estabelecimento")
+	private Estabelecimento estabelecimento;
+	
 	@Column(name = "descricao")
 	private String descricao;
-
-	@Column(name = "descricao_quarto")
-	private String descricaoQuarto;
-
-	@Column(name = "quant_reservas")
-	private Integer quantidadeReservas;
-
-	@OneToMany(mappedBy = "hospedagem")
-	private List<Transporte> listTransportes;
-
-	@OneToMany(mappedBy = "hospedagem")
-	private List<Extra> listExtras;
-
-	@OneToMany(mappedBy = "hospedagem")
-	private List<Imagem> listImagens;
-
-	@OneToMany(mappedBy = "hospedagem")
-	private List<Proximidade> listProximidades;
-
-	@Column(name = "email")
-	private String email;
-
-	@Column(name = "telefone")
-	private Integer telefone;
-
+	
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "endereco_id")
 	private Endereco endereco;
-
-	@OneToMany(mappedBy = "hospedagem")
-	private List<Avaliacao> listAvaliacoes;
-
-	public Hospedagem() {
-	}
-
-	public Hospedagem(Long id) {
-		setId(id);
-	}
-
-	public HospedagemVO toVO() {
-		HospedagemVO vo = new HospedagemVO();
+	
+	private ProximidadeVO toVO() {
+		ProximidadeVO vo = new ProximidadeVO();
 		vo.setId(getId());
-		vo.set();
-		vo.set();
-		vo.set();
-		vo.set();
-		vo.set();
-		vo.set();
-		vo.set();
+		vo.set
 
 		return vo;
 	}
@@ -92,7 +52,7 @@ public class Hospedagem {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Hospedagem other = (Hospedagem) obj;
+		Proximidade other = (Proximidade) obj;
 		if (getId() == null) {
 			if (other.getId() != null)
 				return false;
@@ -108,5 +68,5 @@ public class Hospedagem {
 		result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
 		return result;
 	}
-
+	
 }
