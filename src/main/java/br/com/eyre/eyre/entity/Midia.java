@@ -20,6 +20,9 @@ public class Midia {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	@Column(name = "nome")
+	private String nome;
+
 	@Column(name = "dados")
 	private byte[] dados;
 
@@ -33,6 +36,7 @@ public class Midia {
 	public MidiaVO toVO() {
 		MidiaVO vo = new MidiaVO();
 		vo.setId(getId());
+		vo.setNome(getNome());
 		vo.setDados(getDados());
 
 		return vo;
