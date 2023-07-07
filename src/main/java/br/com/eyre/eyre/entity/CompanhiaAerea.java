@@ -6,9 +6,9 @@ import br.com.eyre.eyre.vo.CompanhiaAereaVO;
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
 
@@ -20,39 +20,30 @@ import lombok.Data;
 @DiscriminatorValue(value = Transporte.COMPANHIA_AEREA)
 public class CompanhiaAerea extends Transporte {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	
-	@Column(name = "nome")
-	private String nome;
-	
-	@Column(name = "horario_partida")
-	private LocalTime horarioPartida;
-	
-	@Column(name = "horario_retorno")
-	private LocalTime horarioRetorno;
-	
-	@Column(name = "local_saida")
-	private Endereco localSaida;
-	
-	@Column(name = "local_chegada")
-	private Endereco localChegada;
-	
-	public CompanhiaAerea() {	
+	@Column(name = "escala")
+	private LocalTime escala;
+
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "midia_id")
+	private Midia midia;
+
+	public CompanhiaAerea() {
 	}
-	
-	public CompanhiaAerea(Long id) {	
+
+	public CompanhiaAerea(Long id) {
 		setId(id);
 	}
-	
+
 	public CompanhiaAereaVO toVO() {
 		CompanhiaAereaVO vo = new CompanhiaAereaVO();
 		vo.setId(getId());
-		vo.set();
-		vo.set();
-		vo.set();
-		vo.set();
+		vo.setNome(getNome());
+		vo.setHorarioPartida(getHorarioPartida());
+		vo.setHorarioChegada(getHorarioChegada());
+		vo.setLocalSaida(getLocalSaida().toVO());
+		vo.setLocalChegada(getLocalChegada().toVO());
+		vo.setEscala(getEscala());
+		vo.setMidia(getMidia().toVO());
 
 		return vo;
 	}

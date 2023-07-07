@@ -1,25 +1,119 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <databaseChangeLog
-    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
-    xmlns:pro="http://www.liquibase.org/xml/ns/pro"
-    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+	xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
         http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
         http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd">
-<!--
-	<changeSet id="create-pacote_viagem" author="diego.rafael">
-    	<createTable tableName="pacote_viagem">
-    		<column name="id" type="BIGINT" autoIncrement="true" >
-    			<constraints primaryKey="true"/>
-    		</column>
-    		<column name="data_ida" type="timestamp"/>
-    		<column name="data_volta" type="timestamp"/>
-    		<column name="pagamento_id" type="bigint"/>
-    	</createTable>
-    	<addForeignKeyConstraint constraintName="pacote_viagem_pagamento" baseTableName="pacote_viagem" 
-    	baseColumnNames="pagamento_id" referencedTableName="pagamento" referencedColumnNames="id"/>
-    </changeSet>
--->
+	<!--
+	<changeSet id="createTables-iniciais" author="diego.rafael">
+		<createTable tableName="hospedagem" schemaName="public">
+			<column autoIncrement="true" name="id" type="BIGSERIAL">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="titulo"
+				type="varchar(50 ?????????????????????????????????max exagero)">
+				<constraints unique="true" nullable="false" />
+			</column>
+			<column name="descricao" type="varchar(255)" />
+			<column name="descricao_quarto" type="varchar(255)" />
+			<column name="quantidade_reservas" type="smallint">
+				<constraints nullable="false" />
+			</column>
+			<column name="email" type="varchar(150)">
+				<constraints nullable="false" />
+			</column>
+			<column name="telefone" type="varchar(11)">
+				<constraints nullable="false" />
+			</column>
+			<column name="endereco_id" type="bigint">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+
+		<createTable tableName="usuario" schemaName="public">
+			<column autoIncrement="true" name="id" type="BIGSERIAL">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="cpf_cnpj" type="varchar(14)">
+				<constraints nullable="false" />
+			</column>
+			<column name="nome" type="varchar(150)">
+				<constraints nullable="false" />
+			</column>
+			<column name="email" type="varchar(150)">
+				<constraints nullable="false" />
+			</column>
+			<column name="senha" type="varchar(12)">
+				<constraints nullable="false" />
+			</column>
+			<column name="data_nascimento" type="date">
+				<constraints nullable="false" />
+			</column>
+			<column name="telefone" type="varchar(11)">
+				<constraints nullable="false" />
+			</column>
+			<column name="midia_id" type="bigint">
+				<constraints nullable="false" />
+			</column>
+			<column name="role_id" type="bigint">
+				<constraints nullable="false" />
+			</column>
+			<column name="endereco_id" type="bigint">
+				<constraints nullable="false" />
+			</column>
+			<column name="ativo" type="boolean">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+
+		<createTable tableName="role" schemaName="public">
+			<column autoIncrement="true" name="id" type="BIGSERIAL">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="nome" type="varchar(150)">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+
+		<createTable tableName="extra" schemaName="public">
+			<column autoIncrement="true" name="id" type="BIGSERIAL">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="nome" type="varchar(150)">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+
+		<createTable tableName="midia" schemaName="public">
+			<column autoIncrement="true" name="id" type="BIGSERIAL">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="dados" type="bytea">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+
+		<createTable tableName="avaliacao" schemaName="public">
+			<column autoIncrement="true" name="id" type="BIGSERIAL">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="usuario_id" type="bigint">
+				<constraints nullable="false" />
+			</column>
+			<column name="hospedagem_id" type="bigint">
+				<constraints nullable="false" />
+			</column>
+			<column name="texto" type="varchar(255)">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+		<addUniqueConstraint tableName="avaliacao"
+			columnNames="usuario_id,hospedagem_id"
+			constraintName="avaliacao>hospedagem_id-usuario_id" />
+	</changeSet>
+	-->
 </databaseChangeLog>

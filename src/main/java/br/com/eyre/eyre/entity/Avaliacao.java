@@ -1,5 +1,6 @@
 package br.com.eyre.eyre.entity;
 
+import br.com.eyre.eyre.vo.AvaliacaoVO;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -43,9 +44,9 @@ public class Avaliacao {
 	public AvaliacaoVO toVO() {
 		AvaliacaoVO vo = new AvaliacaoVO();
 		vo.setId(getId());
-		vo.set();
-		vo.set();
-		vo.set();
+		vo.setUsuario(getUsuario().toVO());
+		vo.setHospedagem(getHospedagem().toVO());
+		vo.setTexto(getTexto());
 
 		return vo;
 	}

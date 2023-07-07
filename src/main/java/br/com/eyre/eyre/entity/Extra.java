@@ -23,26 +23,18 @@ public class Extra {
 	@Column(name = "nome")
 	private String nome;
 
+	public Extra() {
+	}
+
+	public Extra(Long id) {
+		setId(id);
+	}
+
 	public ExtraVO toVO() {
 		ExtraVO vo = new ExtraVO();
 		vo.setId(getId());
 		vo.setNome(getNome());
 
-		return vo;
-	}
-	
-	public Extra() {	
-	}
-	
-	public Extra(Long id) {	
-		setId(id);
-	}
-	
-	public ExtraVO toVO() {
-		ExtraVO vo = new ExtraVO();
-		vo.set();
-		vo.set();
-		
 		return vo;
 	}
 

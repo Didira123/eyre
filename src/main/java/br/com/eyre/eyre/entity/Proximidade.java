@@ -1,6 +1,6 @@
 package br.com.eyre.eyre.entity;
 
-import br.com.eyre.eyre.vo.ImagemVO;
+import br.com.eyre.eyre.vo.ProximidadeVO;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -20,26 +20,28 @@ import lombok.Data;
 //@EqualsAndHashCode(callSuper = true)
 //@ToString(callSuper = true)
 public class Proximidade {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@Enumerated(EnumType.ORDINAL)
 	@Column(name = "estabelecimento")
 	private Estabelecimento estabelecimento;
-	
+
 	@Column(name = "descricao")
 	private String descricao;
-	
+
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "endereco_id")
 	private Endereco endereco;
-	
+
 	private ProximidadeVO toVO() {
 		ProximidadeVO vo = new ProximidadeVO();
 		vo.setId(getId());
-		vo.set
+		vo.setEstabelecimento(getEstabelecimento().toVO());
+		vo.setDescricao(getDescricao());
+		vo.setEndereco(getEndereco().toVO());
 
 		return vo;
 	}
@@ -68,5 +70,5 @@ public class Proximidade {
 		result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
 		return result;
 	}
-	
+
 }

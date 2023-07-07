@@ -23,33 +23,33 @@ import lombok.Data;
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(columnDefinition = "dtype", discriminatorType = DiscriminatorType.INTEGER)
 public abstract class Transporte {
-	
+
 	public static final String COMPANHIA_AEREA = "0";
 	public static final String ONIBUS = "1";
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@Column(name = "nome")
 	private String nome;
-	
+
 	@Column(name = "horario_partida")
 	private LocalTime horarioPartida;
-	
-	@Column(name = "horario_retorno")
-	private LocalTime horarioRetorno;
-	
+
+	@Column(name = "horario_chegada")
+	private LocalTime horarioChegada;
+
 	@Column(name = "local_saida")
 	private Endereco localSaida;
-	
+
 	@Column(name = "local_chegada")
 	private Endereco localChegada;
 
 //	TODO Não informado o campo de preço do transporte!!!!!!
 //	@Column(name = "preco")
 //	private BigDecimal preco;
-	
+
 	public TransporteVO toVO() {
 		if (this instanceof CompanhiaAerea) {
 			return ((CompanhiaAerea) this).toVO();

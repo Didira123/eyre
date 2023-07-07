@@ -1,5 +1,6 @@
 package br.com.eyre.eyre.entity;
 
+import br.com.eyre.eyre.vo.RoleVO;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -28,6 +29,14 @@ public class Role {
 
 	public Role(Long id) {
 		setId(id);
+	}
+
+	public RoleVO toVO() {
+		RoleVO vo = new RoleVO();
+		vo.setId(getId());
+		vo.setNome(getNome());
+
+		return vo;
 	}
 
 	@Override

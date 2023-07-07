@@ -26,7 +26,7 @@ public class TransporteVO {
 
 	private LocalTime horarioPartida;
 
-	private LocalTime horarioRetorno;
+	private LocalTime horarioChegada;
 
 	private EnderecoVO localSaida;
 

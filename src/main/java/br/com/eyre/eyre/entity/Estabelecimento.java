@@ -1,5 +1,6 @@
 package br.com.eyre.eyre.entity;
 
+import br.com.eyre.eyre.vo.EstabelecimentoVO;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -32,7 +33,7 @@ public class Estabelecimento {
 	public EstabelecimentoVO toVO() {
 		EstabelecimentoVO vo = new EstabelecimentoVO();
 		vo.setId(getId());
-		vo.set();
+		vo.setNome(getNome());
 
 		return vo;
 	}

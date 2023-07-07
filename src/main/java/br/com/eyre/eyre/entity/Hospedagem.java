@@ -35,7 +35,7 @@ public class Hospedagem {
 	@Column(name = "descricao_quarto")
 	private String descricaoQuarto;
 
-	@Column(name = "quant_reservas")
+	@Column(name = "quantidade_reservas")
 	private Integer quantidadeReservas;
 
 	@OneToMany(mappedBy = "hospedagem")
@@ -45,7 +45,7 @@ public class Hospedagem {
 	private List<Extra> listExtras;
 
 	@OneToMany(mappedBy = "hospedagem")
-	private List<Imagem> listImagens;
+	private List<Midia> listImagens;
 
 	@OneToMany(mappedBy = "hospedagem")
 	private List<Proximidade> listProximidades;
@@ -54,7 +54,7 @@ public class Hospedagem {
 	private String email;
 
 	@Column(name = "telefone")
-	private Integer telefone;
+	private String telefone;
 
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "endereco_id")
@@ -73,13 +73,13 @@ public class Hospedagem {
 	public HospedagemVO toVO() {
 		HospedagemVO vo = new HospedagemVO();
 		vo.setId(getId());
-		vo.set();
-		vo.set();
-		vo.set();
-		vo.set();
-		vo.set();
-		vo.set();
-		vo.set();
+		vo.setTitulo(getTitulo());
+		vo.setDescricao(getDescricao());
+		vo.setDescricaoQuarto(getDescricaoQuarto());
+		vo.setQuantidadeReservas(getQuantidadeReservas());
+		vo.setEmail(getEmail());
+		vo.setTelefone(getTelefone());
+		vo.setEndereco(getEndereco().toVO());
 
 		return vo;
 	}

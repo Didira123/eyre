@@ -54,11 +54,11 @@ public class Usuario implements UserDetails {
 	private LocalDate dataNascimento;
 
 	@Column(name = "telefone")
-	private Integer telefone;
+	private String telefone;
 
 	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "imagem_id")
-	private Imagem foto;
+	@JoinColumn(name = "midia_id")
+	private Midia foto;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "role_id")
@@ -127,10 +127,10 @@ public class Usuario implements UserDetails {
 		vo.setDataNascimento(getDataNascimento());
 		vo.setTelefone(getTelefone());
 		vo.setFoto(getFoto().toVO());
-		vo.setRole(getRole());
-		vo.setEndereco(getEndereco());
+		vo.setRole(getRole().toVO());
+		vo.setEndereco(getEndereco().toVO());
 		vo.setAtivo(getAtivo());
-		
+
 		return vo;
 	}
 

@@ -1,15 +1,9 @@
 package br.com.eyre.eyre.entity;
 
-import java.math.BigDecimal;
-
-import br.com.eyre.eyre.enums.CompanhiaAereaEnum;
-import br.com.eyre.eyre.vo.CompanhiaAereaVO;
+import br.com.eyre.eyre.vo.OnibusVO;
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Data;
 
@@ -21,24 +15,25 @@ import lombok.Data;
 @DiscriminatorValue(value = Transporte.ONIBUS)
 public class Onibus extends Transporte {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	
 	@Column(name = "tipo_assento")
 	private String tipoAssento;
-	
-	public Onibus() {	
+
+	public Onibus() {
 	}
-	
-	public Onibus(Long id) {	
+
+	public Onibus(Long id) {
 		setId(id);
 	}
-	
-	public CompanhiaAereaVO toVO() {
-		CompanhiaAereaVO vo = new CompanhiaAereaVO();
+
+	public OnibusVO toVO() {
+		OnibusVO vo = new OnibusVO();
 		vo.setId(getId());
-		vo.set();
+		vo.setNome(getNome());
+		vo.setHorarioPartida(getHorarioPartida());
+		vo.setHorarioChegada(getHorarioChegada());
+		vo.setLocalSaida(getLocalSaida().toVO());
+		vo.setLocalChegada(getLocalChegada().toVO());
+		vo.setTipoAssento(getTipoAssento());
 
 		return vo;
 	}
