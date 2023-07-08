@@ -1,6 +1,7 @@
 package br.com.eyre.eyre.entity;
 
 import java.time.LocalTime;
+import java.util.List;
 
 import br.com.eyre.eyre.vo.TransporteVO;
 import jakarta.persistence.Column;
@@ -12,6 +13,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Data;
 
@@ -40,15 +42,26 @@ public abstract class Transporte {
 	@Column(name = "horario_chegada")
 	private LocalTime horarioChegada;
 
-	@Column(name = "local_saida")
-	private Endereco localSaida;
+//	@OneToOne(fetch = FetchType.LAZY)
+//	@Column(name = "local_saida")
+//	private Endereco localSaida;
+//
+//	@OneToOne(fetch = FetchType.LAZY)
+//	@JoinColumn(name = "local_chegada")
+//	private Endereco localChegada;
 
-	@Column(name = "local_chegada")
-	private Endereco localChegada;
+	@OneToMany(mappedBy = "transporte")
+	private List<TransporteEndereco> listTransporteEnderecos;
 
 //	TODO Não informado o campo de preço do transporte!!!!!!
 //	@Column(name = "preco")
 //	private BigDecimal preco;
+
+	public List<TransporteEndereco> getListTransporteEndereco_Ordenado() {
+		List<TransporteEndereco> lista = getListTransporteEnderecos();
+		lista.sort((a, b) -> a.getTipoEndereco().getCode().compareTo(b.getTipoEndereco().getCode()));
+		return lista;
+	}
 
 	public TransporteVO toVO() {
 		if (this instanceof CompanhiaAerea) {

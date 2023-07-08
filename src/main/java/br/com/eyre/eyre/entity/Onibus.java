@@ -1,5 +1,7 @@
 package br.com.eyre.eyre.entity;
 
+import java.util.List;
+
 import br.com.eyre.eyre.vo.OnibusVO;
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
@@ -31,8 +33,9 @@ public class Onibus extends Transporte {
 		vo.setNome(getNome());
 		vo.setHorarioPartida(getHorarioPartida());
 		vo.setHorarioChegada(getHorarioChegada());
-		vo.setLocalSaida(getLocalSaida().toVO());
-		vo.setLocalChegada(getLocalChegada().toVO());
+		List<TransporteEndereco> saidaChegada = getListTransporteEndereco_Ordenado();
+		vo.setLocalSaida(saidaChegada.get(0).getEndereco().toVO());
+		vo.setLocalChegada(saidaChegada.get(1).getEndereco().toVO());
 		vo.setTipoAssento(getTipoAssento());
 
 		return vo;

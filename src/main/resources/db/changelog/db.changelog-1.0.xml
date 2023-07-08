@@ -4,11 +4,9 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
 	xmlns:pro="http://www.liquibase.org/xml/ns/pro"
-	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
-        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
-        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
-        http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd">
-	<!--
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+						http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+						http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd">
 	<changeSet id="createTables-iniciais" author="diego.rafael">
 		<createTable tableName="endereco" schemaName="public">
 			<column autoIncrement="true" name="id" type="BIGSERIAL">
@@ -33,7 +31,6 @@
 				<constraints nullable="false" />
 			</column>
 		</createTable>
-
 		<createTable tableName="hospedagem" schemaName="public">
 			<column autoIncrement="true" name="id" type="BIGSERIAL">
 				<constraints primaryKey="true" nullable="false" />
@@ -57,7 +54,6 @@
 				<constraints nullable="false" />
 			</column>
 		</createTable>
-
 		<createTable tableName="usuario" schemaName="public">
 			<column autoIncrement="true" name="id" type="BIGSERIAL">
 				<constraints primaryKey="true" nullable="false" />
@@ -93,7 +89,6 @@
 				<constraints nullable="false" />
 			</column>
 		</createTable>
-
 		<createTable tableName="role" schemaName="public">
 			<column autoIncrement="true" name="id" type="BIGSERIAL">
 				<constraints primaryKey="true" nullable="false" />
@@ -102,7 +97,6 @@
 				<constraints nullable="false" />
 			</column>
 		</createTable>
-
 		<createTable tableName="extra" schemaName="public">
 			<column autoIncrement="true" name="id" type="BIGSERIAL">
 				<constraints primaryKey="true" nullable="false" />
@@ -111,7 +105,6 @@
 				<constraints nullable="false" />
 			</column>
 		</createTable>
-
 		<createTable tableName="midia" schemaName="public">
 			<column autoIncrement="true" name="id" type="BIGSERIAL">
 				<constraints primaryKey="true" nullable="false" />
@@ -123,7 +116,6 @@
 				<constraints nullable="false" />
 			</column>
 		</createTable>
-
 		<createTable tableName="estabelecimento" schemaName="public">
 			<column autoIncrement="true" name="id" type="BIGSERIAL">
 				<constraints primaryKey="true" nullable="false" />
@@ -132,7 +124,6 @@
 				<constraints nullable="false" />
 			</column>
 		</createTable>
-		
 		<createTable tableName="hospedagem_extra" schemaName="public">
 			<column autoIncrement="true" name="id" type="BIGSERIAL">
 				<constraints primaryKey="true" nullable="false" />
@@ -147,7 +138,6 @@
 		<addUniqueConstraint tableName="hospedagem_extra"
 			columnNames="hospedagem_id,extra_id"
 			constraintName="hospedagem_extra>hospedagem_id-extra_id" />
-		
 		<createTable tableName="proximidade" schemaName="public">
 			<column autoIncrement="true" name="id" type="BIGSERIAL">
 				<constraints primaryKey="true" nullable="false" />
@@ -162,7 +152,6 @@
 				<constraints nullable="false" />
 			</column>
 		</createTable>
-		
 		<createTable tableName="avaliacao" schemaName="public">
 			<column autoIncrement="true" name="id" type="BIGSERIAL">
 				<constraints primaryKey="true" nullable="false" />
@@ -180,8 +169,6 @@
 		<addUniqueConstraint tableName="avaliacao"
 			columnNames="usuario_id,hospedagem_id"
 			constraintName="avaliacao>hospedagem_id-usuario_id" />
-			
-			
 		<createTable tableName="hospedagem_transporte" schemaName="public">
 			<column autoIncrement="true" name="id" type="BIGSERIAL">
 				<constraints primaryKey="true" nullable="false" />
@@ -196,6 +183,86 @@
 		<addUniqueConstraint tableName="hospedagem_transporte"
 			columnNames="hospedagem_id,transporte_id"
 			constraintName="hospedagem_transporte>hospedagem_id-transporte_id" />
+		<createTable tableName="transporte" schemaName="public">
+			<column autoIncrement="true" name="id" type="BIGSERIAL">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="nome" type="varchar(150)">
+				<constraints nullable="false" />
+			</column>
+			<column name="horario_partida" type="time">
+				<constraints nullable="false" />
+			</column>
+			<column name="horario_chegada" type="time">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+		<createTable tableName="transporte_endereco" schemaName="public">
+			<column autoIncrement="true" name="id" type="BIGSERIAL">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="transporte_id" type="bigint">
+				<constraints nullable="false" />
+			</column>
+			<column name="endereco_id" type="bigint">
+				<constraints nullable="false" />
+			</column>
+			<column name="tipo_endereco" type="tinyint">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+		<createTable tableName="onibus" schemaName="public">
+			<column autoIncrement="true" name="id" type="BIGSERIAL">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="tipo_assento" type="varchar(25)">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+		<createTable tableName="companhia_aerea" schemaName="public">
+			<column autoIncrement="true" name="id" type="BIGSERIAL">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="escala" type="time">
+				<constraints nullable="false" />
+			</column>
+			<column name="midia_id" type="bigint">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+		<createTable tableName="pacote_viagem" schemaName="public">
+			<column autoIncrement="true" name="id" type="BIGSERIAL">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="usuario_id" type="bigint">
+				<constraints nullable="false" />
+			</column>
+			<column name="hospedagem_id" type="bigint">
+				<constraints nullable="false" />
+			</column>
+			<column name="transporte_id" type="bigint">
+				<constraints nullable="false" />
+			</column>
+			<column name="pagamento_id" type="bigint">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+		<createTable tableName="pacote_viagem" schemaName="public">
+			<column autoIncrement="true" name="id" type="BIGSERIAL">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="usuario_id" type="bigint">
+				<constraints nullable="false" />
+			</column>
+			<column name="hospedagem_id" type="bigint">
+				<constraints nullable="false" />
+			</column>
+			<column name="transporte_id" type="bigint">
+				<constraints nullable="false" />
+			</column>
+			<column name="pagamento_id" type="bigint">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
 	</changeSet>
--->
 </databaseChangeLog>

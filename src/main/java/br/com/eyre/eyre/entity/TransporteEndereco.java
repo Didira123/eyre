@@ -1,58 +1,56 @@
 package br.com.eyre.eyre.entity;
 
-import br.com.eyre.eyre.vo.PacoteViagemVO;
+import br.com.eyre.eyre.enums.EnderecoEnum;
+import br.com.eyre.eyre.vo.TransporteEnderecoVO;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "pacote_viagem")
+@Table(name = "transporte_endereco")
 //@EqualsAndHashCode(callSuper = true)
 //@ToString(callSuper = true)
-public class PacoteViagem {
+public class TransporteEndereco {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "usuario_id")
-	private Usuario usuario;
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "hospedagem_id")
-	private Hospedagem hospedagem;
-
-	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "transporte_id")
 	private Transporte transporte;
 
-	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "pagamento_id")
-	public Pagamento pagamento;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "endereco_id")
+	private Endereco endereco;
 
-	public PacoteViagem() {
+	@Enumerated(EnumType.ORDINAL)
+	@Column(name = "tipo_endereco")
+	private EnderecoEnum tipoEndereco;
+
+	public TransporteEndereco() {
 	}
 
-	public PacoteViagem(Long id) {
+	public TransporteEndereco(Long id) {
 		setId(id);
 	}
 
-	public PacoteViagemVO toVO() {
-		PacoteViagemVO vo = new PacoteViagemVO();
+	public TransporteEnderecoVO toVO() {
+		TransporteEnderecoVO vo = new TransporteEnderecoVO();
 		vo.setId(getId());
-		vo.setUsuario(getUsuario().toVO());
-		vo.setHospedagem(getHospedagem().toVO());
 		vo.setTransporte(getTransporte().toVO());
-		vo.setPagamento(getPagamento().toVO());
+		vo.setEndereco(getEndereco().toVO());
+		vo.setTipoEndereco(getTipoEndereco());
 
 		return vo;
 	}
@@ -65,7 +63,7 @@ public class PacoteViagem {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		PacoteViagem other = (PacoteViagem) obj;
+		TransporteEndereco other = (TransporteEndereco) obj;
 		if (getId() == null) {
 			if (other.getId() != null)
 				return false;

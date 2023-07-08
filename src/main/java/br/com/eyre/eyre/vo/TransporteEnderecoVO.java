@@ -1,20 +1,19 @@
 package br.com.eyre.eyre.vo;
 
+import br.com.eyre.eyre.enums.EnderecoEnum;
 import lombok.Data;
 
 @Data
 //@EqualsAndHashCode(callSuper = true)
 //@ToString(callSuper = true)
-public class PacoteViagemVO {
+public class TransporteEnderecoVO {
 
 	private Long id;
 
-	private UsuarioVO usuario;
-
-	private HospedagemVO hospedagem;
-
 	private TransporteVO transporte;
 
-	private PagamentoVO pagamento;
+	private EnderecoVO endereco;
+
+	private EnderecoEnum tipoEndereco;
 
 }
