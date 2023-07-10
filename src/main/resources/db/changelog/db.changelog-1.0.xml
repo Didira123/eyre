@@ -36,8 +36,7 @@
 			<column autoIncrement="true" name="id" type="BIGSERIAL">
 				<constraints primaryKey="true" nullable="false" />
 			</column>
-			<column name="titulo"
-				type="varchar(50 ?????????????????????????????????max exagero)">
+			<column name="titulo" type="varchar(50)">
 				<constraints unique="true" nullable="false" />
 			</column>
 			<column name="descricao" type="varchar(255)" />
@@ -117,7 +116,8 @@
 				<constraints nullable="false" />
 			</column>
 		</createTable>
-		<createTable tableName="estabelecimento" schemaName="public">
+		<createTable tableName="estabelecimento"
+			schemaName="public">
 			<column autoIncrement="true" name="id" type="BIGSERIAL">
 				<constraints primaryKey="true" nullable="false" />
 			</column>
@@ -125,7 +125,8 @@
 				<constraints nullable="false" />
 			</column>
 		</createTable>
-		<createTable tableName="hospedagem_extra" schemaName="public">
+		<createTable tableName="hospedagem_extra"
+			schemaName="public">
 			<column autoIncrement="true" name="id" type="BIGSERIAL">
 				<constraints primaryKey="true" nullable="false" />
 			</column>
@@ -170,7 +171,8 @@
 		<addUniqueConstraint tableName="avaliacao"
 			columnNames="usuario_id,hospedagem_id"
 			constraintName="avaliacao>hospedagem_id-usuario_id" />
-		<createTable tableName="hospedagem_transporte" schemaName="public">
+		<createTable tableName="hospedagem_transporte"
+			schemaName="public">
 			<column autoIncrement="true" name="id" type="BIGSERIAL">
 				<constraints primaryKey="true" nullable="false" />
 			</column>
@@ -181,7 +183,8 @@
 				<constraints nullable="false" />
 			</column>
 		</createTable>
-		<addUniqueConstraint tableName="hospedagem_transporte"
+		<addUniqueConstraint
+			tableName="hospedagem_transporte"
 			columnNames="hospedagem_id,transporte_id"
 			constraintName="hospedagem_transporte>hospedagem_id-transporte_id" />
 		<createTable tableName="transporte" schemaName="public">
@@ -198,7 +201,8 @@
 				<constraints nullable="false" />
 			</column>
 		</createTable>
-		<createTable tableName="transporte_endereco" schemaName="public">
+		<createTable tableName="transporte_endereco"
+			schemaName="public">
 			<column autoIncrement="true" name="id" type="BIGSERIAL">
 				<constraints primaryKey="true" nullable="false" />
 			</column>
@@ -220,7 +224,8 @@
 				<constraints nullable="false" />
 			</column>
 		</createTable>
-		<createTable tableName="companhia_aerea" schemaName="public">
+		<createTable tableName="companhia_aerea"
+			schemaName="public">
 			<column autoIncrement="true" name="id" type="BIGSERIAL">
 				<constraints primaryKey="true" nullable="false" />
 			</column>
@@ -265,6 +270,39 @@
 				<constraints nullable="false" />
 			</column>
 		</createTable>
+
+		<createTable tableName="hospedagem_midia"
+			schemaName="public">
+			<column autoIncrement="true" name="id" type="BIGSERIAL">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="hospedagem_id" type="bigint">
+				<constraints nullable="false" />
+			</column>
+			<column name="midia_id" type="bigint">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+		<addUniqueConstraint tableName="hospedagem_midia"
+			columnNames="hospedagem_id,midia_id"
+			constraintName="hospedagem_midia>hospedagem_id-midia_id" />
+
+		<createTable tableName="hospedagem_proximidade"
+			schemaName="public">
+			<column autoIncrement="true" name="id" type="BIGSERIAL">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="hospedagem_id" type="bigint">
+				<constraints nullable="false" />
+			</column>
+			<column name="proximidade_id" type="bigint">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+		<addUniqueConstraint
+			tableName="hospedagem_proximidade"
+			columnNames="hospedagem_id,proximidade_id"
+			constraintName="hospedagem_proximidade>hospedagem_id-proximidade_id" />
 	</changeSet>
 	-->
 </databaseChangeLog>

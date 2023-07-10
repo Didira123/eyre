@@ -1,7 +1,6 @@
 package br.com.eyre.eyre.entity;
 
-import br.com.eyre.eyre.vo.ProximidadeVO;
-import jakarta.persistence.Column;
+import br.com.eyre.eyre.vo.HospedagemMidiaVO;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -9,38 +8,40 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "proximidade")
+@Table(name = "hospedagem_midia")
 //@EqualsAndHashCode(callSuper = true)
 //@ToString(callSuper = true)
-public class Proximidade {
+public class HospedagemMidia {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "estabelecimento_id")
-	private Estabelecimento estabelecimento;
+	@JoinColumn(name = "hospedagem_id")
+	private Hospedagem hospedagem;
 
-	@Column(name = "descricao")
-	private String descricao;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "midia_id")
+	private Midia midia;
 
-	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "endereco_id")
-	private Endereco endereco;
+	public HospedagemMidia() {
+	}
 
-	public ProximidadeVO toVO() {
-		ProximidadeVO vo = new ProximidadeVO();
+	public HospedagemMidia(Long id) {
+		setId(id);
+	}
+
+	public HospedagemMidiaVO toVO() {
+		HospedagemMidiaVO vo = new HospedagemMidiaVO();
 		vo.setId(getId());
-		vo.setEstabelecimento(getEstabelecimento().toVO());
-		vo.setDescricao(getDescricao());
-		vo.setEndereco(getEndereco().toVO());
+		vo.setHospedagem(getHospedagem().toVO());
+		vo.setMidia(getMidia().toVO());
 
 		return vo;
 	}
@@ -53,7 +54,7 @@ public class Proximidade {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Proximidade other = (Proximidade) obj;
+		HospedagemMidia other = (HospedagemMidia) obj;
 		if (getId() == null) {
 			if (other.getId() != null)
 				return false;

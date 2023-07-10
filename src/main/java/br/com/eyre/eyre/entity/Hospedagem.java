@@ -39,16 +39,16 @@ public class Hospedagem {
 	private Integer quantidadeReservas;
 
 	@OneToMany(mappedBy = "hospedagem")
-	private List<Transporte> listTransportes;
+	private List<HospedagemTransporte> listTransportes;
 
 	@OneToMany(mappedBy = "hospedagem")
-	private List<Extra> listExtras;
+	private List<HospedagemExtra> listExtras;
 
 	@OneToMany(mappedBy = "hospedagem")
-	private List<Midia> listImagens;
+	private List<HospedagemMidia> listImagens;
 
 	@OneToMany(mappedBy = "hospedagem")
-	private List<Proximidade> listProximidades;
+	private List<HospedagemProximidade> listProximidades;
 
 	@Column(name = "email")
 	private String email;
