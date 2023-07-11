@@ -8,6 +8,6 @@ import br.com.eyre.eyre.entity.Usuario;
 
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
-	public List<Usuario> findByCpfCnpj(String username);
+	public List<Usuario> findByEmail(String username);
 
 }

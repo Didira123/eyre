@@ -13,7 +13,7 @@ import br.com.eyre.eyre.entity.Usuario;
 @Controller
 public class HelloController {
 
-	@GetMapping("/")
+	@GetMapping("/hello")
 	@ResponseBody
 	public String hello(@AuthenticationPrincipal Usuario user) {
 		return "Olá "+user.getNome()+". Bem vindo a Eyre!";

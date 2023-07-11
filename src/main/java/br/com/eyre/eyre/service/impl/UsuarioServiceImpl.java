@@ -20,7 +20,7 @@ public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		List<Usuario> users = usuarioRepository.findByCpfCnpj(username);
+		List<Usuario> users = usuarioRepository.findByEmail(username);
 		if(users.isEmpty()) {
 			throw new UsernameNotFoundException("Dados inválidos!");
 		}

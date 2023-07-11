@@ -25,6 +25,9 @@
 			<column name="cidade" type="varchar(150)">
 				<constraints nullable="false" />
 			</column>
+			<column name="bairro" type="varchar(150)">
+				<constraints nullable="false" />
+			</column>
 			<column name="rua" type="varchar(150)">
 				<constraints nullable="false" />
 			</column>
@@ -216,6 +219,10 @@
 				<constraints nullable="false" />
 			</column>
 		</createTable>
+		<addUniqueConstraint
+			tableName="transporte_endereco"
+			columnNames="transporte_id,endereco_id"
+			constraintName="transporte_endereco>transporte_id-endereco_id" />
 		<createTable tableName="onibus" schemaName="public">
 			<column autoIncrement="true" name="id" type="BIGSERIAL">
 				<constraints primaryKey="true" nullable="false" />

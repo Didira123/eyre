@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,13 +33,13 @@ public class Autenticacao {
 	@PostMapping(name = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> login(@RequestBody @Valid UsuarioLoginVO login) {
 
-		UsernamePasswordAuthenticationToken dadosLogin = new UsernamePasswordAuthenticationToken(login.getNome(),
+		UsernamePasswordAuthenticationToken dadosLogin = new UsernamePasswordAuthenticationToken(login.getEmail(),
 				login.getSenha());
 		try {
 			Authentication authentication = authenticationManager.authenticate(dadosLogin);
 			String token = tokenService.generateToken(authentication);
 			return ResponseEntity.ok(new TokenVO(token, "Bearer"));
-		} catch (AuthenticationException e) {
+		} catch (UsernameNotFoundException e) {
 			return ResponseEntity.badRequest().build();
 //					.body(new Erro("N/A", "Dados Inválidos"));
 		}

@@ -7,15 +7,8 @@ import lombok.Data;
 //@ToString(callSuper = true)
 public class UsuarioLoginVO {
 
-	private String nome;
+	private String email;
 
 	private String senha;
-
-	public UsuarioLoginVO() {
-	}
-
-//	public UsuarioLoginVO(Long id) {
-//		setId(id);
-//	}
 
 }
