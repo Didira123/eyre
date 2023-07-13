@@ -6,9 +6,10 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.eyre.eyre.enums.DiaEnum;
 import br.com.eyre.eyre.enums.EnderecoEnum;
 import br.com.eyre.eyre.service.HospedagemService;
-import br.com.eyre.eyre.service.repository.HospedagemReopository;
+import br.com.eyre.eyre.service.repository.HospedagemRepository;
 import br.com.eyre.eyre.vo.HospedagemVO;
 import br.com.eyre.eyre.vo.OfertaVO;
 
@@ -16,14 +17,15 @@ import br.com.eyre.eyre.vo.OfertaVO;
 public class HospedagemServiceImpl implements HospedagemService {
 
 	@Autowired
-	public HospedagemReopository hospedagemRepository;
+	public HospedagemRepository hospedagemRepository;
 
 	@Override
 	public List<HospedagemVO> findByOrcamentoAndEnderecosAndDatas(OfertaVO vo) {
-		return hospedagemRepository
-				.findByOrcamentoAndEnderecosAndDatas(vo.getOrcamento(), vo.getPartida().getEstado(), vo.getPartida().getCidade(), vo.getDestino(),
-						vo.getDataIda(), vo.getDataVolta(), EnderecoEnum.SAIDA)
-				.stream().map(h -> h.toVO()).collect(Collectors.toList());
+		DiaEnum diaIda = DiaEnum.getByDate(vo.getDataIda());
+		DiaEnum diaVolta = DiaEnum.getByDate(vo.getDataVolta());
+		return hospedagemRepository.findByOrcamentoAndEnderecosAndDatas(vo.getOrcamento(), vo.getPartida().getEstado(),
+				vo.getPartida().getCidade(), vo.getDestino().getEstado(), vo.getDestino().getCidade(), diaIda, diaVolta,
+				EnderecoEnum.SAIDA).stream().map(h -> h.toVO()).collect(Collectors.toList());
 	}
 
 }

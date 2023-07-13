@@ -8,7 +8,9 @@ import lombok.Getter;
 
 @Getter
 public enum QuartoEnum {
-	(1, ""), (2, "");
+	STANDARD(1, "Quarto Standard"), SUITE(2, "Suite"), SUITE_JUNIOR(3, "Suíte Júnior"),
+	SUITE_EXECUTIVA(4, "Suíte Executiva"), SUITE_PRESIDENCIAL(5, "Suíte Presidencial"), SUPERIOR(6, "Quarto Superior"),
+	DELUXE(7, "Quarto Deluxe");
 
 	private Integer code;
 
