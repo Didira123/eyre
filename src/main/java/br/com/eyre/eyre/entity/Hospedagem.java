@@ -2,9 +2,12 @@ package br.com.eyre.eyre.entity;
 
 import java.util.List;
 
+import br.com.eyre.eyre.enums.QuartoEnum;
 import br.com.eyre.eyre.vo.HospedagemVO;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -31,6 +34,10 @@ public class Hospedagem {
 
 	@Column(name = "descricao")
 	private String descricao;
+
+	@Enumerated(EnumType.ORDINAL)
+	@Column(name = "tipo_quarto")
+	private QuartoEnum tipoQuarto;
 
 	@Column(name = "descricao_quarto")
 	private String descricaoQuarto;
@@ -75,6 +82,7 @@ public class Hospedagem {
 		vo.setId(getId());
 		vo.setTitulo(getTitulo());
 		vo.setDescricao(getDescricao());
+		vo.setTipoQuarto(getTipoQuarto());
 		vo.setDescricaoQuarto(getDescricaoQuarto());
 		vo.setQuantidadeReservas(getQuantidadeReservas());
 		vo.setEmail(getEmail());

@@ -30,6 +30,13 @@ public class HospedagemExtra {
 	@JoinColumn(name = "extra_id")
 	private Extra extra;
 
+	public HospedagemExtra() {
+	}
+
+	public HospedagemExtra(Long id) {
+		setId(id);
+	}
+
 	public HospedagemExtraVO toVO() {
 		HospedagemExtraVO vo = new HospedagemExtraVO();
 		vo.setId(getId());

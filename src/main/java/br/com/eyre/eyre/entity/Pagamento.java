@@ -38,6 +38,14 @@ public class Pagamento {
 	@Column(name = "valor")
 	private BigDecimal valor;
 
+	// TODO Pagamento será uma classe PAI (e abstrata) de Cartao, Pix e Boleto
+	public Pagamento() {
+	}
+
+	public Pagamento(Long id) {
+		setId(id);
+	}
+
 	public PagamentoVO toVO() {
 		PagamentoVO vo = new PagamentoVO();
 		vo.setId(getId());

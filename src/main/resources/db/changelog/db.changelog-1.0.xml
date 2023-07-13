@@ -7,7 +7,7 @@
 	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
 						http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
 						http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd">
-	<!--
+
 	<changeSet id="createTables-iniciais" author="diego.rafael">
 		<createTable tableName="endereco" schemaName="public">
 			<column autoIncrement="true" name="id" type="BIGSERIAL">
@@ -43,6 +43,7 @@
 				<constraints unique="true" nullable="false" />
 			</column>
 			<column name="descricao" type="varchar(255)" />
+			<column name="tipo_quarto" type="tinyint" />
 			<column name="descricao_quarto" type="varchar(255)" />
 			<column name="quantidade_reservas" type="smallint">
 				<constraints nullable="false" />
@@ -107,6 +108,9 @@
 			<column name="nome" type="varchar(150)">
 				<constraints nullable="false" />
 			</column>
+			<column name="tipo_extra" type="tinyint">
+				<constraints nullable="false" />
+			</column>
 		</createTable>
 		<createTable tableName="midia" schemaName="public">
 			<column autoIncrement="true" name="id" type="BIGSERIAL">
@@ -119,15 +123,7 @@
 				<constraints nullable="false" />
 			</column>
 		</createTable>
-		<createTable tableName="estabelecimento"
-			schemaName="public">
-			<column autoIncrement="true" name="id" type="BIGSERIAL">
-				<constraints primaryKey="true" nullable="false" />
-			</column>
-			<column name="nome" type="varchar(150)">
-				<constraints nullable="false" />
-			</column>
-		</createTable>
+		
 		<createTable tableName="hospedagem_extra"
 			schemaName="public">
 			<column autoIncrement="true" name="id" type="BIGSERIAL">
@@ -147,10 +143,16 @@
 			<column autoIncrement="true" name="id" type="BIGSERIAL">
 				<constraints primaryKey="true" nullable="false" />
 			</column>
-			<column name="estabelecimento_id" type="bigint">
+			<column name="nome" type="varchar(150)">
+				<constraints nullable="false" />
+			</column>
+			<column name="tipo_proximidade" type="tinyint">
 				<constraints nullable="false" />
 			</column>
 			<column name="descricao" type="varchar(255)">
+				<constraints nullable="false" />
+			</column>
+			<column name="midia_id" type="bigint">
 				<constraints nullable="false" />
 			</column>
 			<column name="endereco_id" type="bigint">
@@ -227,7 +229,7 @@
 			<column autoIncrement="true" name="id" type="BIGSERIAL">
 				<constraints primaryKey="true" nullable="false" />
 			</column>
-			<column name="tipo_assento" type="varchar(25)">
+			<column name="tipo_assento" type="tinyint">
 				<constraints nullable="false" />
 			</column>
 		</createTable>
@@ -311,5 +313,5 @@
 			columnNames="hospedagem_id,proximidade_id"
 			constraintName="hospedagem_proximidade>hospedagem_id-proximidade_id" />
 	</changeSet>
-	-->
+
 </databaseChangeLog>

@@ -1,14 +1,16 @@
 package br.com.eyre.eyre.entity;
 
+import br.com.eyre.eyre.enums.ProximidadeEnum;
 import br.com.eyre.eyre.vo.ProximidadeVO;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
@@ -23,23 +25,39 @@ public class Proximidade {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "estabelecimento_id")
-	private Estabelecimento estabelecimento;
+
+	@Column(name = "nome")
+	private String nome;
+
+	@Enumerated(EnumType.ORDINAL)
+	@Column(name = "tipo_proximidade")
+	private ProximidadeEnum tipoProximidade;
 
 	@Column(name = "descricao")
 	private String descricao;
 
 	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "midia_id")
+	private Midia foto;
+
+	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "endereco_id")
 	private Endereco endereco;
+
+	public Proximidade() {
+	}
+
+	public Proximidade(Long id) {
+		setId(id);
+	}
 
 	public ProximidadeVO toVO() {
 		ProximidadeVO vo = new ProximidadeVO();
 		vo.setId(getId());
-		vo.setEstabelecimento(getEstabelecimento().toVO());
+		vo.setNome(getNome());
+		vo.setTipoProximidade(getTipoProximidade());
 		vo.setDescricao(getDescricao());
+		vo.setFoto(getFoto().toVO());
 		vo.setEndereco(getEndereco().toVO());
 
 		return vo;

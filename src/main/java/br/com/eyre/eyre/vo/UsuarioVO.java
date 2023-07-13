@@ -15,7 +15,7 @@ public class UsuarioVO {
 
 	private String email;
 
-	private String senha;
+//	private String senha;
 
 	private LocalDate dataNascimento;
 

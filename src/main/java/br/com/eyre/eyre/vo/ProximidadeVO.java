@@ -1,5 +1,6 @@
 package br.com.eyre.eyre.vo;
 
+import br.com.eyre.eyre.enums.ProximidadeEnum;
 import lombok.Data;
 
 @Data
@@ -9,9 +10,13 @@ public class ProximidadeVO {
 
 	private Long id;
 
-	private EstabelecimentoVO estabelecimento;
+	private String nome;
+
+	private ProximidadeEnum tipoProximidade;
 
 	private String descricao;
+
+	private MidiaVO foto;
 
 	private EnderecoVO endereco;
 

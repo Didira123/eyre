@@ -54,6 +54,7 @@ public class Endereco {
 		vo.setCep(getCep());
 		vo.setPais(getPais());
 		vo.setCidade(getCidade());
+		vo.setBairro(getBairro());
 		vo.setEstado(getEstado());
 		vo.setRua(getRua());
 		vo.setNumero(getNumero());

@@ -22,5 +22,5 @@ public class EnderecoVO {
 	private String rua;
 
 	private String numero;
-
+	
 }

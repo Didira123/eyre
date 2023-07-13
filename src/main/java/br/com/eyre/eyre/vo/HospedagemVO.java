@@ -2,6 +2,7 @@ package br.com.eyre.eyre.vo;
 
 import java.util.List;
 
+import br.com.eyre.eyre.enums.QuartoEnum;
 import lombok.Data;
 
 @Data
@@ -14,7 +15,9 @@ public class HospedagemVO {
 	private String titulo;
 
 	private String descricao;
-
+	
+	private QuartoEnum tipoQuarto;
+	
 	private String descricaoQuarto;
 
 	private Integer quantidadeReservas;

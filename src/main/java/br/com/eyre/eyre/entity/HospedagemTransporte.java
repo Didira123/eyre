@@ -29,13 +29,14 @@ public class HospedagemTransporte {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "transporte_id")
 	private Transporte transporte;
-	
+
 	public HospedagemTransporte() {
 	}
+
 	public HospedagemTransporte(Long id) {
 		setId(id);
 	}
-	
+
 	public HospedagemTransporteVO toVO() {
 		HospedagemTransporteVO vo = new HospedagemTransporteVO();
 		vo.setId(getId());
