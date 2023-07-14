@@ -1,40 +1,24 @@
 package br.com.eyre.eyre.bases;
 
+import java.io.Serializable;
+
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.MappedSuperclass;
 import lombok.Data;
 
 @Data
-public class BaseEntity<I> {
-	
+@MappedSuperclass
+public class BaseEntity<I> implements Serializable {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private I id;
-	
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (!super.equals(obj))
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		BaseEntity<I> other = (BaseEntity<I>) obj;
-		if (getId() == null) {
-			if (other.getId() != null)
-				return false;
-		} else if (!getId().equals(other.getId()))
-			return false;
-		return true;
+
+	public <B extends BaseVO<I>> B toVO() {
+		throw new RuntimeException(
+				"This method from " + getClass().getName() + " must be implemented at the actual subclass.");
 	}
-	
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = super.hashCode();
-		result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
-		return result;
-	}
-	
+
 }

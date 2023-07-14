@@ -29,9 +29,9 @@ public enum ExtraEnum {
 	}
 
 	public static ExtraEnum getByCodigo(Integer codigo) {
-		for (ExtraEnum tipoQuarto : ExtraEnum.values()) {
-			if (tipoQuarto.getCode().equals(codigo)) {
-				return tipoQuarto;
+		for (ExtraEnum extra : ExtraEnum.values()) {
+			if (extra.getCode().equals(codigo)) {
+				return extra;
 			}
 		}
 		return null;

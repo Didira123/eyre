@@ -46,6 +46,7 @@ public class CompanhiaAerea extends Transporte {
 		vo.setLocalChegada(saidaChegada.get(1).getEndereco().toVO());
 		vo.setEscala(getEscala());
 		vo.setMidia(getMidia().toVO());
+		vo.setPreco(getPreco());
 
 		return vo;
 	}

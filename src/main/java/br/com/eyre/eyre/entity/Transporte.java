@@ -1,5 +1,6 @@
 package br.com.eyre.eyre.entity;
 
+import java.math.BigDecimal;
 import java.time.LocalTime;
 import java.util.List;
 
@@ -52,10 +53,12 @@ public abstract class Transporte {
 
 	@OneToMany(mappedBy = "transporte")
 	private List<TransporteEndereco> listTransporteEnderecos;
+	
+	@OneToMany(mappedBy = "transporte")
+	private List<TransporteDia> listTransporteDias;
 
-//	TODO Não informado o campo de preço do transporte!!!!!!
-//	@Column(name = "preco")
-//	private BigDecimal preco;
+	@Column(name = "preco")
+	private BigDecimal preco;
 
 	public List<TransporteEndereco> getListTransporteEndereco_Ordenado() {
 		List<TransporteEndereco> lista = getListTransporteEnderecos();

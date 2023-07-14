@@ -1,5 +1,6 @@
 package br.com.eyre.eyre.vo;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import br.com.eyre.eyre.enums.QuartoEnum;
@@ -15,9 +16,9 @@ public class HospedagemVO {
 	private String titulo;
 
 	private String descricao;
-	
+
 	private QuartoEnum tipoQuarto;
-	
+
 	private String descricaoQuarto;
 
 	private Integer quantidadeReservas;
@@ -37,5 +38,7 @@ public class HospedagemVO {
 	private EnderecoVO endereco;
 
 	private List<AvaliacaoVO> listAvaliacoes;
+
+	private BigDecimal preco;
 
 }

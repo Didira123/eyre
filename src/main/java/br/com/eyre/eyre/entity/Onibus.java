@@ -37,6 +37,7 @@ public class Onibus extends Transporte {
 		vo.setLocalSaida(saidaChegada.get(0).getEndereco().toVO());
 		vo.setLocalChegada(saidaChegada.get(1).getEndereco().toVO());
 		vo.setTipoAssento(getTipoAssento());
+		vo.setPreco(getPreco());
 
 		return vo;
 	}

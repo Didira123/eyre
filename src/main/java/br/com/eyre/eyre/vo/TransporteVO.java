@@ -1,5 +1,6 @@
 package br.com.eyre.eyre.vo;
 
+import java.math.BigDecimal;
 import java.time.LocalTime;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
@@ -32,7 +33,6 @@ public class TransporteVO {
 
 	private EnderecoVO localChegada;
 
-//	TODO Não informado o campo de preço do transporte!!!!!!
-//	private BigDecimal preco;
+	private BigDecimal preco;
 
 }

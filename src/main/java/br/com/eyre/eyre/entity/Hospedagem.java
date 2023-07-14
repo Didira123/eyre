@@ -1,5 +1,6 @@
 package br.com.eyre.eyre.entity;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import br.com.eyre.eyre.enums.QuartoEnum;
@@ -70,6 +71,9 @@ public class Hospedagem {
 	@OneToMany(mappedBy = "hospedagem")
 	private List<Avaliacao> listAvaliacoes;
 
+	@Column(name = "preco")
+	private BigDecimal preco;
+
 	public Hospedagem() {
 	}
 
@@ -88,6 +92,7 @@ public class Hospedagem {
 		vo.setEmail(getEmail());
 		vo.setTelefone(getTelefone());
 		vo.setEndereco(getEndereco().toVO());
+		vo.setPreco(getPreco());
 
 		return vo;
 	}

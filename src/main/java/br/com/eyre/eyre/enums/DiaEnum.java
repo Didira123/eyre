@@ -9,7 +9,8 @@ import lombok.Getter;
 
 @Getter
 public enum DiaEnum {
-	SERVICOS(1, "serviço"), CONDICOES(2, "condição"), SERVIÇO_PRINCIPAL(3, "serviço principal");
+	SEGUNDA(1, "segunda-feira"), TERCA(2, "terça-feira"), QUARTA(3, "quarta-feira"), QUINTA(4, "quinta-feira"),
+	SEXTA(5, "sexta-feira"), SABADO(6, "sábado"), DOMINGO(7, "domingo");
 
 	private Integer code;
 
@@ -30,9 +31,9 @@ public enum DiaEnum {
 	}
 
 	public static DiaEnum getByCodigo(Integer codigo) {
-		for (DiaEnum tipoQuarto : DiaEnum.values()) {
-			if (tipoQuarto.getCode().equals(codigo)) {
-				return tipoQuarto;
+		for (DiaEnum dia : DiaEnum.values()) {
+			if (dia.getCode().equals(codigo)) {
+				return dia;
 			}
 		}
 		return null;

@@ -7,7 +7,7 @@
 	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
 						http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
 						http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd">
-
+	<!--
 	<changeSet id="createTables-iniciais" author="diego.rafael">
 		<createTable tableName="endereco" schemaName="public">
 			<column autoIncrement="true" name="id" type="BIGSERIAL">
@@ -55,6 +55,9 @@
 				<constraints nullable="false" />
 			</column>
 			<column name="endereco_id" type="bigint">
+				<constraints nullable="false" />
+			</column>
+			<column name="preco" type="numeric(19,2)">
 				<constraints nullable="false" />
 			</column>
 		</createTable>
@@ -123,7 +126,7 @@
 				<constraints nullable="false" />
 			</column>
 		</createTable>
-		
+
 		<createTable tableName="hospedagem_extra"
 			schemaName="public">
 			<column autoIncrement="true" name="id" type="BIGSERIAL">
@@ -205,6 +208,9 @@
 			<column name="horario_chegada" type="time">
 				<constraints nullable="false" />
 			</column>
+			<column name="preco" type="numeric(19,2)">
+				<constraints nullable="false" />
+			</column>
 		</createTable>
 		<createTable tableName="transporte_endereco"
 			schemaName="public">
@@ -225,6 +231,34 @@
 			tableName="transporte_endereco"
 			columnNames="transporte_id,endereco_id"
 			constraintName="transporte_endereco>transporte_id-endereco_id" />
+
+		<createTable tableName="transporte_dia" schemaName="public">
+			<column autoIncrement="true" name="id" type="BIGSERIAL">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="transporte_id" type="bigint">
+				<constraints nullable="false" />
+			</column>
+			<column name="dia" type="tinyint">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+		
+		<createTable tableName="transporte_dia_horario" schemaName="public">
+			<column autoIncrement="true" name="id" type="BIGSERIAL">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="transporte_dia_id" type="bigint">
+				<constraints nullable="false" />
+			</column>
+			<column name="horario_saida" type="time">
+				<constraints nullable="false" />
+			</column>
+			<column name="horario_chegada" type="time">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+
 		<createTable tableName="onibus" schemaName="public">
 			<column autoIncrement="true" name="id" type="BIGSERIAL">
 				<constraints primaryKey="true" nullable="false" />
@@ -313,5 +347,5 @@
 			columnNames="hospedagem_id,proximidade_id"
 			constraintName="hospedagem_proximidade>hospedagem_id-proximidade_id" />
 	</changeSet>
-
+	-->
 </databaseChangeLog>
