@@ -65,7 +65,7 @@ public class SecurityConfiguration {
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http.authorizeHttpRequests(
-				(authz) -> authz.requestMatchers("/auth", "/actuator/**").permitAll().anyRequest().authenticated())
+				(authz) -> authz.anyRequest().permitAll())
 				.csrf(csrf -> csrf.disable())
 				.sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 				.addFilterBefore(new AutenticacaoViaTokenFilter(tokenService, usuarioRepository),

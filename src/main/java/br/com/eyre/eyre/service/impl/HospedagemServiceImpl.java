@@ -1,6 +1,7 @@
 package br.com.eyre.eyre.service.impl;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import br.com.eyre.eyre.repository.HospedagemRepository;
 import br.com.eyre.eyre.service.HospedagemService;
 import br.com.eyre.eyre.vo.HospedagemVO;
 import br.com.eyre.eyre.vo.OfertaVO;
+import jakarta.validation.ConstraintValidator;
 
 @Service
 public class HospedagemServiceImpl implements HospedagemService {
@@ -28,6 +30,11 @@ public class HospedagemServiceImpl implements HospedagemService {
 				vo.getPartida().getCidade(), vo.getDestino().getEstado(), vo.getDestino().getCidade(), diaIda, diaVolta,
 				EnderecoEnum.SAIDA);
 		return lista.stream().map(h -> h.toVO()).collect(Collectors.toList());
+	}
+
+	@Override
+	public Optional<Hospedagem> findById(Long id) {
+		return hospedagemRepository.findById(id);
 	}
 
 }

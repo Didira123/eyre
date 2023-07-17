@@ -1,6 +1,5 @@
 package br.com.eyre.eyre.api;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,25 +12,28 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import org.springframework.web.util.UriComponents;
 
-import br.com.eyre.eyre.entity.Hospedagem;
-import br.com.eyre.eyre.service.HospedagemService;
-import br.com.eyre.eyre.vo.HospedagemVO;
-import br.com.eyre.eyre.vo.OfertaVO;
+import br.com.eyre.eyre.entity.Usuario;
+import br.com.eyre.eyre.service.UsuarioService;
+import br.com.eyre.eyre.vo.UsuarioNovoVO;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/api/hospedagem")
-public class HospedagemAPI {
+@RequestMapping("/api/usuario")
+public class UsuarioAPI {
 
 	@Autowired
-	private HospedagemService hospedagemService;
+	private UsuarioService usuarioService;
 
-	@PostMapping(path = { "/ofertasAssociadas" }, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> ofertasAssociadas(@RequestBody @Valid OfertaVO vo, BindingResult result) {
+	@PostMapping(path = { "/" }, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> create(@RequestBody @Valid UsuarioNovoVO vo, BindingResult result) {
 		try {
-			List<HospedagemVO> ofertas = hospedagemService.findByOrcamentoAndEnderecosAndDatas(vo);
-			return ResponseEntity.ok(ofertas);
+			Long idSaved = usuarioService.create(vo, result).getId();
+			UriComponents uriComponents = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+					.buildAndExpand(idSaved);
+			return ResponseEntity.created(uriComponents.toUri()).build();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.internalServerError().body(e.getCause());
@@ -40,7 +42,7 @@ public class HospedagemAPI {
 
 	@GetMapping(path = { "/{id}" }, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> findById(@PathVariable("id") Long id) {
-		Optional<Hospedagem> optional = hospedagemService.findById(id);
+		Optional<Usuario> optional = usuarioService.findById(id);
 		if (optional.isPresent()) {
 			return ResponseEntity.ok(optional.get());
 		}

@@ -1,48 +1,37 @@
-//package br.com.eyre.eyre.api;
-//
-//import java.util.List;
-//import java.util.Optional;
-//import java.util.stream.Collectors;
-//
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.data.domain.Page;
-//import org.springframework.data.domain.PageRequest;
-//import org.springframework.http.ResponseEntity;
-//import org.springframework.validation.BindingResult;
-//import org.springframework.web.bind.annotation.DeleteMapping;
-//import org.springframework.web.bind.annotation.GetMapping;
-//import org.springframework.web.bind.annotation.PathVariable;
-//import org.springframework.web.bind.annotation.PostMapping;
-//import org.springframework.web.bind.annotation.PutMapping;
-//import org.springframework.web.bind.annotation.RequestBody;
-//import org.springframework.web.bind.annotation.RequestMapping;
-//import org.springframework.web.bind.annotation.RestController;
-//import org.springframework.web.util.UriComponentsBuilder;
-//
-//import br.com.eyre.eyre.entity.PacoteViagem;
-//import br.com.eyre.eyre.repository.PacoteViagemRepository;
-//import br.com.eyre.eyre.service.PacoteViagemService;
-//import br.com.eyre.eyre.vo.PacoteViagemVO;
-//import jakarta.validation.Valid;
-//
-//@RestController
-//@RequestMapping("/api/pacoteViagem")
-//public class PacoteViagemAPI {
-//
-//	@Autowired
-//	public PacoteViagemService pacoteViagemService;
-//
+package br.com.eyre.eyre.api;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import br.com.eyre.eyre.entity.PacoteViagem;
+import br.com.eyre.eyre.service.PacoteViagemService;
+import br.com.eyre.eyre.vo.PacoteViagemVO;
+
+@RestController
+@RequestMapping("/api/pacoteViagem")
+public class PacoteViagemAPI {
+
+	@Autowired
+	public PacoteViagemService pacoteViagemService;
+
 //	@Autowired
 //	public PacoteViagemRepository pacoteViagemRepository;
-//
-//	@GetMapping("/findAll")
-//	public List<PacoteViagemVO> findAll() {
-////		ResponseEntity.internalServerError().build().status(HttpStatusCode.valueOf(200)).allow(HttpMethod.GET).build();
-//		List<PacoteViagem> lista = pacoteViagemService.findAll();
-////		Page<PacoteViagem> lista1 = pacoteViagemRepository.findAll(PageRequest.of(0, 10));
-//		return lista.stream().map(pv -> pv.toVO()).collect(Collectors.toList());
-//	}
-//
+
+	@GetMapping("/list")
+	public ResponseEntity<?> findAll(@RequestBody PacoteViagemVO vo, BindingResult result) {
+//		ResponseEntity.internalServerError().build().status(HttpStatusCode.valueOf(200)).allow(HttpMethod.GET).build();
+		Page<PacoteViagem> lista = pacoteViagemService.findByFiilter(vo, result);
+//		Page<PacoteViagem> lista1 = pacoteViagemRepository.findAll(PageRequest.of(0, 10));
+		lista.getContent().stream().map(pv -> pv.toVO()).collect(); //TODO RETORNAR PAGINAÇÃO COM TOTAL DE PÁGINAS, TOTAL DE ELEMENTOS E A LISTA DO RESULTADO. COMO TAMBÉM FAZER O FINDBYFITER CORRETO E O COUNBYFILTER CORRETO!!!!
+		return ResponseEntity.ok(lista);
+	}
+
 //	@PostMapping("/")
 //	public ResponseEntity<PacoteViagemVO> create(@Valid @RequestBody PacoteViagemVO vo, BindingResult result) {
 //		return;
@@ -80,5 +69,5 @@
 //		pacoteViagemService.deleteById(id);
 //		return ResponseEntity.ok().build();
 //	}
-//
-//}
+
+}

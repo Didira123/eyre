@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 //@EqualsAndHashCode(callSuper = true)
 //@ToString(callSuper = true)
-public class UsuarioVO {
+public class UsuarioNovoVO {
 
 	private Long id;
 
@@ -17,18 +17,14 @@ public class UsuarioVO {
 
 	private String email;
 
-//	private String senha;
+	private String senha;
 
 	private LocalDate dataNascimento;
 
 	private String telefone;
 
-	private MidiaVO foto;
-
 	private RoleVO role;
 
 	private EnderecoVO endereco;
-
-	private Boolean ativo;
 
 }

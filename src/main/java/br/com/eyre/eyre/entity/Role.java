@@ -16,6 +16,9 @@ import lombok.Data;
 //@ToString(callSuper = true)
 public class Role {
 
+	public static final Long USUARIO_SUDO = 0l;
+	public static final Long USUARIO_COMUM = 1l;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;

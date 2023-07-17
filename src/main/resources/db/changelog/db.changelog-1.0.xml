@@ -7,7 +7,7 @@
 	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
 						http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
 						http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd">
-	<!--
+
 	<changeSet id="createTables-iniciais" author="diego.rafael">
 		<createTable tableName="endereco" schemaName="public">
 			<column autoIncrement="true" name="id" type="BIGSERIAL">
@@ -74,7 +74,7 @@
 			<column name="email" type="varchar(150)">
 				<constraints nullable="false" />
 			</column>
-			<column name="senha" type="varchar(12)">
+			<column name="senha" type="varchar(150)">
 				<constraints nullable="false" />
 			</column>
 			<column name="data_nascimento" type="date">
@@ -232,7 +232,8 @@
 			columnNames="transporte_id,endereco_id"
 			constraintName="transporte_endereco>transporte_id-endereco_id" />
 
-		<createTable tableName="transporte_dia" schemaName="public">
+		<createTable tableName="transporte_dia"
+			schemaName="public">
 			<column autoIncrement="true" name="id" type="BIGSERIAL">
 				<constraints primaryKey="true" nullable="false" />
 			</column>
@@ -243,8 +244,9 @@
 				<constraints nullable="false" />
 			</column>
 		</createTable>
-		
-		<createTable tableName="transporte_dia_horario" schemaName="public">
+
+		<createTable tableName="transporte_dia_horario"
+			schemaName="public">
 			<column autoIncrement="true" name="id" type="BIGSERIAL">
 				<constraints primaryKey="true" nullable="false" />
 			</column>
@@ -295,21 +297,10 @@
 			<column name="pagamento_id" type="bigint">
 				<constraints nullable="false" />
 			</column>
-		</createTable>
-		<createTable tableName="pacote_viagem" schemaName="public">
-			<column autoIncrement="true" name="id" type="BIGSERIAL">
-				<constraints primaryKey="true" nullable="false" />
-			</column>
-			<column name="usuario_id" type="bigint">
+			<column name="data_hora_ida" type="timestamp">
 				<constraints nullable="false" />
 			</column>
-			<column name="hospedagem_id" type="bigint">
-				<constraints nullable="false" />
-			</column>
-			<column name="transporte_id" type="bigint">
-				<constraints nullable="false" />
-			</column>
-			<column name="pagamento_id" type="bigint">
+			<column name="data_hora_volta" type="timestamp">
 				<constraints nullable="false" />
 			</column>
 		</createTable>
@@ -347,5 +338,4 @@
 			columnNames="hospedagem_id,proximidade_id"
 			constraintName="hospedagem_proximidade>hospedagem_id-proximidade_id" />
 	</changeSet>
-	-->
 </databaseChangeLog>

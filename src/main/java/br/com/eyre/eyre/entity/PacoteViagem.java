@@ -1,6 +1,9 @@
 package br.com.eyre.eyre.entity;
 
+import java.time.LocalDateTime;
+
 import br.com.eyre.eyre.vo.PacoteViagemVO;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -38,6 +41,12 @@ public class PacoteViagem {
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "pagamento_id")
 	public Pagamento pagamento;
+
+	@Column(name = "data_hora_ida")
+	public LocalDateTime dataHoraIda;
+
+	@Column(name = "data_hora_ida")
+	public LocalDateTime dataHoraVolta;
 
 	public PacoteViagem() {
 	}
