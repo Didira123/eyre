@@ -13,4 +13,6 @@ public interface HospedagemService {
 
 	public Optional<Hospedagem> findById(Long id);
 
+	public HospedagemVO findByIdWithListProximidadeShaped(Long id);
+
 }

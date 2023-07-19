@@ -30,6 +30,7 @@ public class Onibus extends Transporte {
 	public OnibusVO toVO() {
 		OnibusVO vo = new OnibusVO();
 		vo.setId(getId());
+		vo.setType(getDtype());
 		vo.setNome(getNome());
 		vo.setHorarioPartida(getHorarioPartida());
 		vo.setHorarioChegada(getHorarioChegada());

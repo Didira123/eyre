@@ -83,9 +83,7 @@
 			<column name="telefone" type="varchar(11)">
 				<constraints nullable="false" />
 			</column>
-			<column name="midia_id" type="bigint">
-				<constraints nullable="false" />
-			</column>
+			<column name="midia_id" type="bigint"/>
 			<column name="role_id" type="bigint">
 				<constraints nullable="false" />
 			</column>
@@ -198,6 +196,9 @@
 		<createTable tableName="transporte" schemaName="public">
 			<column autoIncrement="true" name="id" type="BIGSERIAL">
 				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="dtype" type="tinyint">
+				<constraints nullable="false" />
 			</column>
 			<column name="nome" type="varchar(150)">
 				<constraints nullable="false" />

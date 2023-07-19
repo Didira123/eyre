@@ -46,5 +46,14 @@ public class HospedagemAPI {
 		}
 		return ResponseEntity.notFound().build();
 	}
+	
+	@GetMapping(path = { "/{id}/custom" }, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> findByIdWithListProximidadeShaped(@PathVariable("id") Long id) {
+		Optional<Hospedagem> optional = hospedagemService.findByIdWithListProximidadeShaped(id);
+		if (optional.isPresent()) {
+			return ResponseEntity.ok(optional.get());
+		}
+		return ResponseEntity.notFound().build();
+	}
 
 }

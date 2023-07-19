@@ -22,7 +22,9 @@ public class TransporteVO {
 	public static final String ONIBUS = "1";
 
 	private Long id;
-
+	
+	private int type;
+	
 	private String nome;
 
 	private LocalTime horarioPartida;

@@ -38,6 +38,7 @@ public class CompanhiaAerea extends Transporte {
 	public CompanhiaAereaVO toVO() {
 		CompanhiaAereaVO vo = new CompanhiaAereaVO();
 		vo.setId(getId());
+		vo.setType(getDtype());
 		vo.setNome(getNome());
 		vo.setHorarioPartida(getHorarioPartida());
 		vo.setHorarioChegada(getHorarioChegada());

@@ -45,7 +45,7 @@ public class PacoteViagem {
 	@Column(name = "data_hora_ida")
 	public LocalDateTime dataHoraIda;
 
-	@Column(name = "data_hora_ida")
+	@Column(name = "data_hora_volta")
 	public LocalDateTime dataHoraVolta;
 
 	public PacoteViagem() {

@@ -10,7 +10,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -30,13 +29,12 @@ public class SecurityConfiguration {
 
 	@Autowired
 	private TokenService tokenService;
+
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+
 //	@Autowired
 //	private AuthenticationProvider authenticationProvider;
-
-	@Bean
-	public PasswordEncoder passwordEncoder() {
-		return PasswordEncoderFactories.createDelegatingPasswordEncoder();
-	}
 
 //	@Bean
 //	protected AuthenticationManager authentication(AuthenticationManagerBuilder auth) throws Exception {
@@ -50,7 +48,7 @@ public class SecurityConfiguration {
 	public DaoAuthenticationProvider authenticationProvider() {
 		DaoAuthenticationProvider dap = new DaoAuthenticationProvider();
 		dap.setUserDetailsService(usuarioService);
-		dap.setPasswordEncoder(passwordEncoder());
+		dap.setPasswordEncoder(passwordEncoder);
 		return dap;
 	}
 
@@ -65,7 +63,7 @@ public class SecurityConfiguration {
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http.authorizeHttpRequests(
-				(authz) -> authz.anyRequest().permitAll())
+				(authz) -> authz.requestMatchers("/auth", "/actuator/**").permitAll().anyRequest().authenticated())
 				.csrf(csrf -> csrf.disable())
 				.sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 				.addFilterBefore(new AutenticacaoViaTokenFilter(tokenService, usuarioRepository),
@@ -75,10 +73,11 @@ public class SecurityConfiguration {
 	}
 
 	// Terá aparentemente o mesmo efeito de fazer "requestMatchers(...).permitAll()"
-    @Bean
-    public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring().requestMatchers("/**.html", "/v2/api-docs", "/webjars/**", "/configuration/**", "/swagger-resources/**"); //"/swagger-ui.html" é uma URL que faz parte de "/**.html"
-    }
+	@Bean
+	public WebSecurityCustomizer webSecurityCustomizer() {
+		return (web) -> web.ignoring().requestMatchers("/**.html", "/v2/api-docs", "/webjars/**", "/configuration/**",
+				"/swagger-resources/**"); // "/swagger-ui.html" é uma URL que faz parte de "/**.html"
+	}
 
 	// LDAP AUTHENTICATION
 //    @Bean

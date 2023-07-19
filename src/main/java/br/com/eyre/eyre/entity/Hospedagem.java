@@ -2,9 +2,12 @@ package br.com.eyre.eyre.entity;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import br.com.eyre.eyre.enums.QuartoEnum;
+import br.com.eyre.eyre.vo.HospedagemCustomProximidadeVO;
 import br.com.eyre.eyre.vo.HospedagemVO;
+import br.com.eyre.eyre.vo.ProximidadeVO;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -95,6 +98,49 @@ public class Hospedagem {
 		vo.setPreco(getPreco());
 
 		return vo;
+	}
+
+	public HospedagemVO toCardVO() {
+		HospedagemVO vo = new HospedagemVO();
+		vo.setId(getId());
+		vo.setTitulo(getTitulo());
+		vo.setTipoQuarto(getTipoQuarto());
+		vo.setDescricaoQuarto(getDescricaoQuarto());
+		vo.setListExtras(getListExtras().stream().map(e -> e.getExtra().toVO()).collect(Collectors.toList()));
+		vo.setQuantidadeReservas(getQuantidadeReservas());
+		vo.setExisteVoo(false);
+		vo.setExisteOnibus(false);
+		vo.setPreco(getPreco());
+		existeTiposTransportes(vo); // verifica "existeVoo" e "existeOnibus"
+		return vo;
+	}
+
+	private void existeTiposTransportes(HospedagemVO vo) {
+		if (getListTransportes() != null && !getListTransportes().isEmpty()) {
+			List<Integer> listDtypes = getListTransportes().stream().map(ht -> ht.getTransporte().getDtype())
+					.collect(Collectors.toList());
+			int cont = 0;
+			for (; cont < listDtypes.size(); cont++) {
+				if (listDtypes.get(cont) == 0) {
+					vo.setExisteVoo(true);
+					break;
+				}
+			}
+			if (cont != 0 || (cont == 0 && listDtypes.size() != 1)) {
+				vo.setExisteOnibus(true);
+			}
+		}
+		vo.setPreco(getPreco());
+	}
+
+	public void toCustomWithProximidadeVO() {
+		HospedagemCustomProximidadeVO vo = new HospedagemCustomProximidadeVO();
+		vo.setId(getId());
+		vo.setHospedagem(toVO());
+		List<ProximidadeVO> listProximidades = getListProximidades().stream().map(hp -> hp.getProximidade().toVO())
+				.collect(Collectors.toList());
+		vo.setProximidadesAsHashMap(listProximidades);
+
 	}
 
 	@Override

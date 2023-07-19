@@ -33,7 +33,10 @@ public abstract class Transporte {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-
+	
+	@Column(name = "dtype")
+	private int dtype;
+	
 	@Column(name = "nome")
 	private String nome;
 

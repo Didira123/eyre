@@ -14,7 +14,6 @@ import br.com.eyre.eyre.repository.HospedagemRepository;
 import br.com.eyre.eyre.service.HospedagemService;
 import br.com.eyre.eyre.vo.HospedagemVO;
 import br.com.eyre.eyre.vo.OfertaVO;
-import jakarta.validation.ConstraintValidator;
 
 @Service
 public class HospedagemServiceImpl implements HospedagemService {
@@ -26,15 +25,26 @@ public class HospedagemServiceImpl implements HospedagemService {
 	public List<HospedagemVO> findByOrcamentoAndEnderecosAndDatas(OfertaVO vo) {
 		DiaEnum diaIda = DiaEnum.getByDate(vo.getDataIda());
 		DiaEnum diaVolta = DiaEnum.getByDate(vo.getDataVolta());
-		List<Hospedagem> lista = hospedagemRepository.findByOrcamentoAndEnderecosAndDatas(vo.getOrcamento(), vo.getPartida().getEstado(),
-				vo.getPartida().getCidade(), vo.getDestino().getEstado(), vo.getDestino().getCidade(), diaIda, diaVolta,
-				EnderecoEnum.SAIDA);
+		List<Hospedagem> lista = hospedagemRepository.findByOrcamentoAndEnderecosAndDatas(vo.getOrcamento(),
+				vo.getPartida().getEstado(), vo.getPartida().getCidade(), vo.getDestino().getEstado(),
+				vo.getDestino().getCidade(), diaIda, diaVolta, EnderecoEnum.SAIDA);
 		return lista.stream().map(h -> h.toVO()).collect(Collectors.toList());
 	}
 
 	@Override
 	public Optional<Hospedagem> findById(Long id) {
 		return hospedagemRepository.findById(id);
+	}
+
+	@Override
+	public HospedagemVO findByIdWithListProximidadeShaped(Long id) {
+		Optional<Hospedagem> optional = hospedagemRepository
+				.findByIdFetchEnderecoFetchTransportesFetchExtrasFetchMidiasFetchProximidadesAndCountAvaliacoes(id);
+		if (optional.isPresent()) {
+			Hospedagem h = optional.get();
+			h.toCustomWithProximidadeVO();
+		}
+		return null;
 	}
 
 }

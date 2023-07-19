@@ -30,7 +30,7 @@ public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
 	private EnderecoService enderecoService;
 
 	@Autowired
-	PasswordEncoder encoder;
+	private PasswordEncoder encoder;
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
