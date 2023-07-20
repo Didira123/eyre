@@ -8,6 +8,6 @@ import br.com.eyre.eyre.vo.PacoteViagemVO;
 
 public interface PacoteViagemService {
 
-	public Page<PacoteViagem> findByFiilter(PacoteViagemVO vo, BindingResult result);
+//	public Page<PacoteViagem> findByFiilter(PacoteViagemVO vo, BindingResult result);
 
 }

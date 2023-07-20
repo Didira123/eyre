@@ -33,14 +33,14 @@ public class Avaliacao {
 
 	@Column(name = "texto")
 	private String texto;
-	
-	public Avaliacao() {	
+
+	public Avaliacao() {
 	}
-	
-	public Avaliacao(Long id) {	
+
+	public Avaliacao(Long id) {
 		setId(id);
 	}
-	
+
 	public AvaliacaoVO toVO() {
 		AvaliacaoVO vo = new AvaliacaoVO();
 		vo.setId(getId());

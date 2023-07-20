@@ -39,7 +39,7 @@ public class HospedagemCustomProximidadeVO {
 			listBoa.add(proxim);
 			break;
 		default:
-			throw new RuntimeException("tipoProximidade = '"+proxim.getTipoProximidade()+"' desconhecido.");
+			throw new RuntimeException("tipoProximidade = '" + proxim.getTipoProximidade() + "' desconhecido.");
 		}
 		HashMap<String, List<ProximidadeVO>> map = new HashMap<>();
 		map.put(ProximidadeEnum.TURISTICO.getDescription(), listTur);

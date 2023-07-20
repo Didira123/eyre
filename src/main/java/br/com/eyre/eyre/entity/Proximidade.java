@@ -57,8 +57,12 @@ public class Proximidade {
 		vo.setNome(getNome());
 		vo.setTipoProximidade(getTipoProximidade());
 		vo.setDescricao(getDescricao());
-		vo.setFoto(getFoto().toVO());
-		vo.setEndereco(getEndereco().toVO());
+		if (getFoto() != null) {
+			vo.setFoto(getFoto().toVO());
+		}
+		if (getEndereco() != null) {
+			vo.setEndereco(getEndereco().toVO());
+		}
 
 		return vo;
 	}

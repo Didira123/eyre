@@ -12,7 +12,7 @@ import lombok.Data;
 
 @JsonInclude(Include.NON_NULL)
 @Data
-public class BaseVO<I> implements Serializable {
+public class BaseVO<I extends Serializable> implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 

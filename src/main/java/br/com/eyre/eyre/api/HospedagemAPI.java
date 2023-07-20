@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.eyre.eyre.entity.Hospedagem;
 import br.com.eyre.eyre.service.HospedagemService;
+import br.com.eyre.eyre.vo.HospedagemCustomProximidadeVO;
 import br.com.eyre.eyre.vo.HospedagemVO;
 import br.com.eyre.eyre.vo.OfertaVO;
 import jakarta.validation.Valid;
@@ -46,14 +47,19 @@ public class HospedagemAPI {
 		}
 		return ResponseEntity.notFound().build();
 	}
-	
+
 	@GetMapping(path = { "/{id}/custom" }, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> findByIdWithListProximidadeShaped(@PathVariable("id") Long id) {
-		Optional<Hospedagem> optional = hospedagemService.findByIdWithListProximidadeShaped(id);
-		if (optional.isPresent()) {
-			return ResponseEntity.ok(optional.get());
+		try {
+			HospedagemCustomProximidadeVO vo = hospedagemService.findByIdWithListProximidadeShaped(id);
+			if (vo != null) {
+				return ResponseEntity.ok(vo);
+			}
+			return ResponseEntity.notFound().build();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.internalServerError().body(e.getCause());
 		}
-		return ResponseEntity.notFound().build();
 	}
 
 }

@@ -16,16 +16,16 @@ import br.com.eyre.eyre.vo.PacoteViagemVO;
 @Service
 public class PacoteViagemServiceImpl implements PacoteViagemService {
 
-	@Autowired
-	PacoteViagemRepository pacoteViagemRepository;
-
-	@Override
-	public Page<PacoteViagem> findByFiilter(PacoteViagemVO vo, BindingResult result) {
-
-		return new PageImpl<>(pacoteViagemRepository.findByUsuario(vo.getUsuario()),
-				PageRequest.of(0, 3, Direction.ASC, "data_hora_ida"),
-				pacoteViagemRepository.countByUsuario(vo.getUsuario()));
-	}
+//	@Autowired
+//	private PacoteViagemRepository pacoteViagemRepository;
+//
+//	@Override
+//	public Page<PacoteViagem> findByFiilter(PacoteViagemFiltroVO filtro, BindingResult result) {
+//
+//		return new PageImpl<>(pacoteViagemRepository.findByFilter(filtro),
+//				PageRequest.of(filtro.getPage(), filtro.getPageSize()),
+//				pacoteViagemRepository.countByFilter(filtro));
+//	}
 
 //	@Autowired
 //	PagamentoService pagamentoService;

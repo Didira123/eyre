@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import br.com.eyre.eyre.entity.Hospedagem;
+import br.com.eyre.eyre.vo.HospedagemCustomProximidadeVO;
 import br.com.eyre.eyre.vo.HospedagemVO;
 import br.com.eyre.eyre.vo.OfertaVO;
 
@@ -13,6 +14,6 @@ public interface HospedagemService {
 
 	public Optional<Hospedagem> findById(Long id);
 
-	public HospedagemVO findByIdWithListProximidadeShaped(Long id);
+	public HospedagemCustomProximidadeVO findByIdWithListProximidadeShaped(Long id);
 
 }

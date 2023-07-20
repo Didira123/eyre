@@ -60,7 +60,9 @@ public class PacoteViagem {
 		vo.setId(getId());
 		vo.setUsuario(getUsuario().toVO());
 		vo.setHospedagem(getHospedagem().toVO());
-		vo.setTransporte(getTransporte().toVO());
+		if (getTransporte() != null) {
+			vo.setTransporte(getTransporte().toVO());
+		}
 		vo.setPagamento(getPagamento().toVO());
 
 		return vo;

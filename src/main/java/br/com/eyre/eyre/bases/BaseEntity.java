@@ -12,7 +12,7 @@ import lombok.Data;
 
 @Data
 @MappedSuperclass
-public class BaseEntity<I> implements Serializable {
+public class BaseEntity<I extends Serializable> implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 

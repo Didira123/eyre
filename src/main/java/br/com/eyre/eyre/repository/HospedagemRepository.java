@@ -2,6 +2,7 @@ package br.com.eyre.eyre.repository;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -12,7 +13,7 @@ import br.com.eyre.eyre.enums.EnderecoEnum;
 
 public interface HospedagemRepository extends JpaRepository<Hospedagem, Long> {
 
-	@Query(value = "SELECT h FROM Hospedagem h INNER JOIN h.endereco he INNER JOIN h.listTransportes lt INNER JOIN lt.transporte t "
+	@Query(value = "SELECT h FROM Hospedagem h INNER JOIN h.endereco he INNER JOIN FETCH h.listTransportes lt INNER JOIN FETCH lt.transporte t "
 			+ " INNER JOIN t.listTransporteEnderecos lte INNER JOIN lte.endereco et INNER JOIN t.listTransporteDias ltd "
 			+ " INNER JOIN ltd.listTransporteDiaHorarios ltdh "
 			+ " WHERE (he.estado=:estadoChegada AND he.cidade=:cidadeChegada) " // Endereco Chegada (Hospedagem)
@@ -26,6 +27,14 @@ public interface HospedagemRepository extends JpaRepository<Hospedagem, Long> {
 	public List<Hospedagem> findByOrcamentoAndEnderecosAndDatas(BigDecimal orcamento, String estadoSaida,
 			String cidadeSaida, String estadoChegada, String cidadeChegada, DiaEnum diaIda, DiaEnum diaVolta,
 			EnderecoEnum saida);
+
+	@Query(value = "SELECT new br.com.eyre.eyre.vo.HospedagemFetchsCountAvaliacoesVO(h, count(la.id)) FROM Hospedagem h "
+			+ " INNER JOIN FETCH h.endereco he INNER JOIN FETCH h.listTransportes lt INNER JOIN FETCH lt.transporte t "
+			+ " INNER JOIN FETCH t.listTransporteDias ltd INNER JOIN FETCH ltd.listTransporteDiaHorarios ltdh LEFT JOIN FETCH h.listExtras le "
+			+ " LEFT JOIN FETCH le.extra ext LEFT JOIN FETCH h.listImagens li LEFT JOIN FETCH li.midia mid LEFT JOIN FETCH h.listProximidades lp "
+			+ " LEFT JOIN FETCH lp.proximidade prox LEFT JOIN FETCH h.listAvaliacoes la WHERE h.id =:id")
+	public Optional<Hospedagem> findByIdFetchEnderecoFetchTransportesFetchExtrasFetchMidiasFetchProximidadesAndCountAvaliacoes(
+			Long id);
 
 //	TODO Possivelmente a query abaixo é mais leve para a execução acima (menos dados e menos iterações necessárias devido as condições intermitentes na consulta:
 //	

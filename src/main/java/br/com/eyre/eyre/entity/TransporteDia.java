@@ -1,6 +1,7 @@
 package br.com.eyre.eyre.entity;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import br.com.eyre.eyre.enums.DiaEnum;
 import br.com.eyre.eyre.vo.TransporteDiaVO;
@@ -52,6 +53,10 @@ public class TransporteDia {
 		vo.setId(getId());
 		vo.setTransporte(getTransporte().toVO());
 		vo.setDia(getDia());
+		if (getListTransporteDiaHorarios() != null && getListTransporteDiaHorarios().isEmpty()) {
+			vo.setListTransporteDiaHorarios(
+					getListTransporteDiaHorarios().stream().map(tdh -> tdh.toVO()).collect(Collectors.toList()));
+		}
 
 		return vo;
 	}

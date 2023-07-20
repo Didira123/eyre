@@ -77,7 +77,7 @@ public class Usuario implements UserDetails {
 	public Usuario(Long id) {
 		setId(id);
 	}
-	
+
 	public UsuarioVO toVO() {
 		UsuarioVO vo = new UsuarioVO();
 		vo.setId(getId());
@@ -87,14 +87,18 @@ public class Usuario implements UserDetails {
 //		vo.setSenha(getSenha());
 		vo.setDataNascimento(getDataNascimento());
 		vo.setTelefone(getTelefone());
-		vo.setFoto(getFoto().toVO());
+		if (getFoto() != null) {
+			vo.setFoto(getFoto().toVO());
+		}
 		vo.setRole(getRole().toVO());
-		vo.setEndereco(getEndereco().toVO());
+		if (getEndereco() != null) {
+			vo.setEndereco(getEndereco().toVO());
+		}
 		vo.setAtivo(getAtivo());
 
 		return vo;
 	}
-	
+
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		List<GrantedAuthority> authorities = new ArrayList<>();

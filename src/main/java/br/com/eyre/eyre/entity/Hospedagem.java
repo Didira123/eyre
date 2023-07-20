@@ -56,7 +56,7 @@ public class Hospedagem {
 	private List<HospedagemExtra> listExtras;
 
 	@OneToMany(mappedBy = "hospedagem")
-	private List<HospedagemMidia> listImagens;
+	private List<HospedagemMidia> listMidias;
 
 	@OneToMany(mappedBy = "hospedagem")
 	private List<HospedagemProximidade> listProximidades;
@@ -92,9 +92,28 @@ public class Hospedagem {
 		vo.setTipoQuarto(getTipoQuarto());
 		vo.setDescricaoQuarto(getDescricaoQuarto());
 		vo.setQuantidadeReservas(getQuantidadeReservas());
+		if (getListTransportes() != null && !getListTransportes().isEmpty()) {
+			vo.setListTransportes(
+					getListTransportes().stream().map(ht -> ht.getTransporte().toVO()).collect(Collectors.toList()));
+		}
+		if (getListExtras() != null && !getListExtras().isEmpty()) {
+			vo.setListExtras(getListExtras().stream().map(e -> e.getExtra().toVO()).collect(Collectors.toList()));
+		}
+		if (getListMidias() != null && !getListMidias().isEmpty()) {
+			vo.setListImagens(getListMidias().stream().map(m -> m.getMidia().toVO()).collect(Collectors.toList()));
+		}
+		if (getListProximidades() != null && !getListTransportes().isEmpty()) {
+			vo.setListProximidades(getListProximidades().stream().map(prox -> prox.getProximidade().toVO())
+					.collect(Collectors.toList()));
+		}
 		vo.setEmail(getEmail());
 		vo.setTelefone(getTelefone());
-		vo.setEndereco(getEndereco().toVO());
+		if (getEndereco() != null) {
+			vo.setEndereco(getEndereco().toVO());
+		}
+		if (getListAvaliacoes() != null && !getListAvaliacoes().isEmpty()) {
+			vo.setListAvaliacoes(getListAvaliacoes().stream().map(a -> a.toVO()).collect(Collectors.toList()));
+		}
 		vo.setPreco(getPreco());
 
 		return vo;
@@ -133,14 +152,14 @@ public class Hospedagem {
 		vo.setPreco(getPreco());
 	}
 
-	public void toCustomWithProximidadeVO() {
+	public HospedagemCustomProximidadeVO toCustomWithProximidadeVO() {
 		HospedagemCustomProximidadeVO vo = new HospedagemCustomProximidadeVO();
 		vo.setId(getId());
 		vo.setHospedagem(toVO());
 		List<ProximidadeVO> listProximidades = getListProximidades().stream().map(hp -> hp.getProximidade().toVO())
 				.collect(Collectors.toList());
 		vo.setProximidadesAsHashMap(listProximidades);
-
+		return vo;
 	}
 
 	@Override

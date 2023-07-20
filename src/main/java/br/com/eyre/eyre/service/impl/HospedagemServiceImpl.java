@@ -12,6 +12,7 @@ import br.com.eyre.eyre.enums.DiaEnum;
 import br.com.eyre.eyre.enums.EnderecoEnum;
 import br.com.eyre.eyre.repository.HospedagemRepository;
 import br.com.eyre.eyre.service.HospedagemService;
+import br.com.eyre.eyre.vo.HospedagemCustomProximidadeVO;
 import br.com.eyre.eyre.vo.HospedagemVO;
 import br.com.eyre.eyre.vo.OfertaVO;
 
@@ -37,12 +38,11 @@ public class HospedagemServiceImpl implements HospedagemService {
 	}
 
 	@Override
-	public HospedagemVO findByIdWithListProximidadeShaped(Long id) {
+	public HospedagemCustomProximidadeVO findByIdWithListProximidadeShaped(Long id) {
 		Optional<Hospedagem> optional = hospedagemRepository
 				.findByIdFetchEnderecoFetchTransportesFetchExtrasFetchMidiasFetchProximidadesAndCountAvaliacoes(id);
 		if (optional.isPresent()) {
-			Hospedagem h = optional.get();
-			h.toCustomWithProximidadeVO();
+			return optional.get().toCustomWithProximidadeVO();
 		}
 		return null;
 	}

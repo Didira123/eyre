@@ -45,7 +45,9 @@ public class TransporteDiaHorario {
 	public TransporteDiaHorarioVO toVO() {
 		TransporteDiaHorarioVO vo = new TransporteDiaHorarioVO();
 		vo.setId(getId());
-		vo.setTransporteDia(getTransporteDia().toVO());
+		if (getTransporteDia() != null) {
+			vo.setTransporteDia(getTransporteDia().toVO());
+		}
 		vo.setHorarioSaida(getHorarioSaida());
 		vo.setHorarioChegada(getHorarioChegada());
 

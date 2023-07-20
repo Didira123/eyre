@@ -1,5 +1,6 @@
 package br.com.eyre.eyre.bases;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
 
@@ -9,7 +10,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 //informar o ID (ID), Classe Entidade (E), Classe VO (V), Classe Repositório (R)
-public class BaseServiceImpl<ID, E extends BaseEntity<ID>, V extends BaseVO<ID>, R extends JpaRepository<E, ID>>
+public class BaseServiceImpl<ID extends Serializable, E extends BaseEntity<ID>, V extends BaseVO<ID>, R extends JpaRepository<E, ID>>
 		implements BaseService<ID, E> {
 
 	public List<E> findAll() {
@@ -20,8 +21,14 @@ public class BaseServiceImpl<ID, E extends BaseEntity<ID>, V extends BaseVO<ID>,
 		return getRepository().findById(id);
 	}
 
-	public R getRepository() {
+	@Override
+	public void deleteById(ID id) {
+		getRepository().deleteById(id);
+	}
+
+	private R getRepository() {
 		throw new NotImplementedException(
 				"This method from " + getClass().getName() + " must be implemented at the actual subclass.");
 	}
+
 }
