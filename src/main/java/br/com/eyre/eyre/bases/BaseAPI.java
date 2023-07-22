@@ -3,6 +3,7 @@ package br.com.eyre.eyre.bases;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.NotImplementedException;
 import org.springframework.http.MediaType;
@@ -24,10 +25,12 @@ public class BaseAPI<ID extends Serializable, E extends BaseEntity<ID>, VRQ exte
 	@GetMapping(path = { "/findAll" }, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> findAll() {
 		try {
-			List<?> lista = getService().findAll();
-			return ResponseEntity.ok(lista);
+			List<? extends BaseVO<ID>> listVOs = getService().findAll().stream().map(e -> (BaseVO<ID>) e.toVO())
+					.collect(Collectors.toList());
+			return ResponseEntity.ok(listVOs);
 		} catch (Exception e) {
-			return ResponseEntity.internalServerError().body(e.getCause());
+			e.printStackTrace();
+			return ResponseEntity.internalServerError().body(e.getMessage());
 		}
 	}
 
@@ -38,9 +41,9 @@ public class BaseAPI<ID extends Serializable, E extends BaseEntity<ID>, VRQ exte
 			try {
 				BaseVO<ID> vo = optional.get().toVO();
 				return ResponseEntity.ok(vo);
-			} catch (NotImplementedException ex) {
-				ex.printStackTrace();
-				return ResponseEntity.internalServerError().body(ex.getCause());
+			} catch (NotImplementedException e) {
+				e.printStackTrace();
+				return ResponseEntity.internalServerError().body(e.getMessage());
 			}
 		}
 		return ResponseEntity.notFound().build();
@@ -53,7 +56,7 @@ public class BaseAPI<ID extends Serializable, E extends BaseEntity<ID>, VRQ exte
 			return ResponseEntity.noContent().build();
 		} catch (Exception e) {
 			e.printStackTrace();
-			return ResponseEntity.internalServerError().body(e.getCause());
+			return ResponseEntity.internalServerError().body(e.getMessage());
 		}
 	}
 

@@ -11,7 +11,7 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "companhia_aerea")
+@Table(name = "onibus")
 //@EqualsAndHashCode(callSuper = true)
 //@ToString(callSuper = true)
 @DiscriminatorValue(value = Transporte.ONIBUS)
@@ -30,11 +30,11 @@ public class Onibus extends Transporte {
 	public OnibusVO toVO() {
 		OnibusVO vo = new OnibusVO();
 		vo.setId(getId());
-		vo.setType(getDtype());
+//		vo.setType(getDtype());
 		vo.setNome(getNome());
 		vo.setHorarioPartida(getHorarioPartida());
 		vo.setHorarioChegada(getHorarioChegada());
-		if(getListTransporteEnderecos() != null && getListTransporteEnderecos().size() != 2) {
+		if(getListTransporteEnderecos() != null && getListTransporteEnderecos().size() == 2) {
 			List<TransporteEndereco> saidaChegada = getListTransporteEndereco_Ordenado();
 			vo.setLocalSaida(saidaChegada.get(0).getEndereco().toVO());
 			vo.setLocalChegada(saidaChegada.get(1).getEndereco().toVO());

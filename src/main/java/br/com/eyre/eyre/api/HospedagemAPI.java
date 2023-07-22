@@ -15,10 +15,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.eyre.eyre.entity.Hospedagem;
+import br.com.eyre.eyre.repository.HospedagemRepository;
 import br.com.eyre.eyre.service.HospedagemService;
 import br.com.eyre.eyre.vo.HospedagemCustomProximidadeVO;
 import br.com.eyre.eyre.vo.HospedagemVO;
 import br.com.eyre.eyre.vo.OfertaVO;
+import br.com.eyre.eyre.vo.TransporteVO;
 import jakarta.validation.Valid;
 
 @RestController
@@ -35,7 +37,7 @@ public class HospedagemAPI {
 			return ResponseEntity.ok(ofertas);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return ResponseEntity.internalServerError().body(e.getCause());
+			return ResponseEntity.internalServerError().body(e.getMessage());
 		}
 	}
 
@@ -58,7 +60,7 @@ public class HospedagemAPI {
 			return ResponseEntity.notFound().build();
 		} catch (Exception e) {
 			e.printStackTrace();
-			return ResponseEntity.internalServerError().body(e.getCause());
+			return ResponseEntity.internalServerError().body(e.getMessage());
 		}
 	}
 

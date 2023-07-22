@@ -36,7 +36,7 @@ public class UsuarioAPI {
 			return ResponseEntity.created(uriComponents.toUri()).build();
 		} catch (Exception e) {
 			e.printStackTrace();
-			return ResponseEntity.internalServerError().body(e.getCause());
+			return ResponseEntity.internalServerError().body(e.getMessage());
 		}
 	}
 

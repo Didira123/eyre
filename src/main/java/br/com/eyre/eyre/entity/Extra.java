@@ -1,11 +1,8 @@
 package br.com.eyre.eyre.entity;
 
-import br.com.eyre.eyre.enums.ExtraEnum;
 import br.com.eyre.eyre.vo.ExtraVO;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -26,10 +23,6 @@ public class Extra {
 	@Column(name = "nome")
 	private String nome;
 
-	@Enumerated(EnumType.ORDINAL)
-	@Column(name = "tipo_extra")
-	private ExtraEnum tipoExtra;
-
 	public Extra() {
 	}
 
@@ -41,7 +34,6 @@ public class Extra {
 		ExtraVO vo = new ExtraVO();
 		vo.setId(getId());
 		vo.setNome(getNome());
-		vo.setTipoExtra(getTipoExtra());
 
 		return vo;
 	}

@@ -1,7 +1,9 @@
 package br.com.eyre.eyre.enums;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 
@@ -41,5 +43,11 @@ public enum DiaEnum {
 
 	public static DiaEnum getByDate(LocalDate data) {
 		return getByCodigo(data.getDayOfWeek().getValue());
+	}
+
+	public static List<DiaEnum> getByListCodigo(List<Integer> codigos) {
+		List<DiaEnum> dias = new ArrayList<>();
+		codigos.forEach(c -> dias.add(getByCodigo(c)));
+		return dias;
 	}
 }

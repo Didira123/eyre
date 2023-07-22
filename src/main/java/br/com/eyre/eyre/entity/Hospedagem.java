@@ -2,6 +2,7 @@ package br.com.eyre.eyre.entity;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import br.com.eyre.eyre.enums.QuartoEnum;
@@ -50,16 +51,16 @@ public class Hospedagem {
 	private Integer quantidadeReservas;
 
 	@OneToMany(mappedBy = "hospedagem")
-	private List<HospedagemTransporte> listTransportes;
+	private Set<HospedagemTransporte> listTransportes;
 
 	@OneToMany(mappedBy = "hospedagem")
-	private List<HospedagemExtra> listExtras;
+	private Set<HospedagemExtra> listExtras;
 
 	@OneToMany(mappedBy = "hospedagem")
-	private List<HospedagemMidia> listMidias;
+	private Set<HospedagemMidia> listMidias;
 
 	@OneToMany(mappedBy = "hospedagem")
-	private List<HospedagemProximidade> listProximidades;
+	private Set<HospedagemProximidade> listProximidades;
 
 	@Column(name = "email")
 	private String email;
@@ -72,7 +73,7 @@ public class Hospedagem {
 	private Endereco endereco;
 
 	@OneToMany(mappedBy = "hospedagem")
-	private List<Avaliacao> listAvaliacoes;
+	private Set<Avaliacao> listAvaliacoes;
 
 	@Column(name = "preco")
 	private BigDecimal preco;
@@ -85,36 +86,36 @@ public class Hospedagem {
 	}
 
 	public HospedagemVO toVO() {
-		HospedagemVO vo = new HospedagemVO();
-		vo.setId(getId());
-		vo.setTitulo(getTitulo());
-		vo.setDescricao(getDescricao());
-		vo.setTipoQuarto(getTipoQuarto());
-		vo.setDescricaoQuarto(getDescricaoQuarto());
-		vo.setQuantidadeReservas(getQuantidadeReservas());
-		if (getListTransportes() != null && !getListTransportes().isEmpty()) {
-			vo.setListTransportes(
-					getListTransportes().stream().map(ht -> ht.getTransporte().toVO()).collect(Collectors.toList()));
-		}
-		if (getListExtras() != null && !getListExtras().isEmpty()) {
-			vo.setListExtras(getListExtras().stream().map(e -> e.getExtra().toVO()).collect(Collectors.toList()));
-		}
-		if (getListMidias() != null && !getListMidias().isEmpty()) {
-			vo.setListImagens(getListMidias().stream().map(m -> m.getMidia().toVO()).collect(Collectors.toList()));
-		}
-		if (getListProximidades() != null && !getListTransportes().isEmpty()) {
-			vo.setListProximidades(getListProximidades().stream().map(prox -> prox.getProximidade().toVO())
-					.collect(Collectors.toList()));
-		}
-		vo.setEmail(getEmail());
-		vo.setTelefone(getTelefone());
-		if (getEndereco() != null) {
-			vo.setEndereco(getEndereco().toVO());
-		}
-		if (getListAvaliacoes() != null && !getListAvaliacoes().isEmpty()) {
-			vo.setListAvaliacoes(getListAvaliacoes().stream().map(a -> a.toVO()).collect(Collectors.toList()));
-		}
-		vo.setPreco(getPreco());
+		HospedagemVO vo = new HospedagemVO(this);
+//		vo.setId(getId());
+//		vo.setTitulo(getTitulo());
+//		vo.setDescricao(getDescricao());
+//		vo.setTipoQuarto(getTipoQuarto());
+//		vo.setDescricaoQuarto(getDescricaoQuarto());
+//		vo.setQuantidadeReservas(getQuantidadeReservas());
+//		if (getListTransportes() != null && !getListTransportes().isEmpty()) {
+//			vo.setListTransportes(
+//					getListTransportes().stream().map(ht -> ht.getTransporte().toVO()).collect(Collectors.toList()));
+//		}
+//		if (getListExtras() != null && !getListExtras().isEmpty()) {
+//			vo.setListExtras(getListExtras().stream().map(e -> e.getExtra().toVO()).collect(Collectors.toList()));
+//		}
+//		if (getListMidias() != null && !getListMidias().isEmpty()) {
+//			vo.setListImagens(getListMidias().stream().map(m -> m.getMidia().toVO()).collect(Collectors.toList()));
+//		}
+//		if (getListProximidades() != null && !getListTransportes().isEmpty()) {
+//			vo.setListProximidades(getListProximidades().stream().map(prox -> prox.getProximidade().toVO())
+//					.collect(Collectors.toList()));
+//		}
+//		vo.setEmail(getEmail());
+//		vo.setTelefone(getTelefone());
+//		if (getEndereco() != null) {
+//			vo.setEndereco(getEndereco().toVO());
+//		}
+//		if (getListAvaliacoes() != null && !getListAvaliacoes().isEmpty()) {
+//			vo.setListAvaliacoes(getListAvaliacoes().stream().map(a -> a.toVO()).collect(Collectors.toList()));
+//		}
+//		vo.setPreco(getPreco());
 
 		return vo;
 	}
@@ -127,17 +128,18 @@ public class Hospedagem {
 		vo.setDescricaoQuarto(getDescricaoQuarto());
 		vo.setListExtras(getListExtras().stream().map(e -> e.getExtra().toVO()).collect(Collectors.toList()));
 		vo.setQuantidadeReservas(getQuantidadeReservas());
-		vo.setExisteVoo(false);
-		vo.setExisteOnibus(false);
 		vo.setPreco(getPreco());
 		existeTiposTransportes(vo); // verifica "existeVoo" e "existeOnibus"
 		return vo;
 	}
 
 	private void existeTiposTransportes(HospedagemVO vo) {
+		vo.setExisteVoo(false);
+		vo.setExisteOnibus(false);
 		if (getListTransportes() != null && !getListTransportes().isEmpty()) {
-			List<Integer> listDtypes = getListTransportes().stream().map(ht -> ht.getTransporte().getDtype())
-					.collect(Collectors.toList());
+			List<Integer> listDtypes = getListTransportes().stream().map(ht -> {
+				return (ht.getTransporte() instanceof Onibus) ? 1 : 0;
+			}).collect(Collectors.toList());
 			int cont = 0;
 			for (; cont < listDtypes.size(); cont++) {
 				if (listDtypes.get(cont) == 0) {
@@ -145,11 +147,10 @@ public class Hospedagem {
 					break;
 				}
 			}
-			if (cont != 0 || (cont == 0 && listDtypes.size() != 1)) {
+			if (cont != 0 || (cont == 0 && listDtypes.size() != 1 && listDtypes.size() != 0)) {
 				vo.setExisteOnibus(true);
 			}
 		}
-		vo.setPreco(getPreco());
 	}
 
 	public HospedagemCustomProximidadeVO toCustomWithProximidadeVO() {

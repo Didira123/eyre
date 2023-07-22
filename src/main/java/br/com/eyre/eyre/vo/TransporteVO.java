@@ -23,8 +23,6 @@ public class TransporteVO {
 
 	private Long id;
 	
-	private int type;
-	
 	private String nome;
 
 	private LocalTime horarioPartida;

@@ -1,5 +1,6 @@
 package br.com.eyre.eyre.service.impl;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import br.com.eyre.eyre.entity.Hospedagem;
 import br.com.eyre.eyre.enums.DiaEnum;
 import br.com.eyre.eyre.enums.EnderecoEnum;
+import br.com.eyre.eyre.enums.ExtraEnum;
 import br.com.eyre.eyre.repository.HospedagemRepository;
 import br.com.eyre.eyre.service.HospedagemService;
 import br.com.eyre.eyre.vo.HospedagemCustomProximidadeVO;
@@ -24,12 +26,17 @@ public class HospedagemServiceImpl implements HospedagemService {
 
 	@Override
 	public List<HospedagemVO> findByOrcamentoAndEnderecosAndDatas(OfertaVO vo) {
-		DiaEnum diaIda = DiaEnum.getByDate(vo.getDataIda());
-		DiaEnum diaVolta = DiaEnum.getByDate(vo.getDataVolta());
+		int diaIda = vo.getDataIda().getDayOfWeek().getValue();
+		List<DiaEnum> diasIda = DiaEnum.getByListCodigo(
+				Arrays.asList(diaIda - 1 == 0 ? 7 : diaIda - 1, diaIda, diaIda + 1 == 8 ? 1 : diaIda + 1));
+		int diaVolta = vo.getDataVolta().getDayOfWeek().getValue();
+		List<DiaEnum> diasVolta = DiaEnum.getByListCodigo(
+				Arrays.asList(diaVolta - 1 == 0 ? 7 : diaVolta - 1, diaVolta, diaVolta + 1 == 8 ? 1 : diaVolta + 1));
+
 		List<Hospedagem> lista = hospedagemRepository.findByOrcamentoAndEnderecosAndDatas(vo.getOrcamento(),
 				vo.getPartida().getEstado(), vo.getPartida().getCidade(), vo.getDestino().getEstado(),
-				vo.getDestino().getCidade(), diaIda, diaVolta, EnderecoEnum.SAIDA);
-		return lista.stream().map(h -> h.toVO()).collect(Collectors.toList());
+				vo.getDestino().getCidade(), diasIda, diasVolta, EnderecoEnum.SAIDA, ExtraEnum.SERVIÇO_PRINCIPAL);
+		return lista.stream().map(h -> h.toCardVO()).collect(Collectors.toList());
 	}
 
 	@Override

@@ -25,7 +25,7 @@ public class BaseFilterAPI<F extends BaseFilterVO<?>> {
 			return ResponseEntity.ok(response);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return ResponseEntity.internalServerError().body(e.getCause());
+			return ResponseEntity.internalServerError().body(e.getMessage());
 		}
 	}
 

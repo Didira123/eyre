@@ -1,7 +1,11 @@
 package br.com.eyre.eyre.entity;
 
+import br.com.eyre.eyre.enums.ExtraEnum;
 import br.com.eyre.eyre.vo.HospedagemExtraVO;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -30,6 +34,10 @@ public class HospedagemExtra {
 	@JoinColumn(name = "extra_id")
 	private Extra extra;
 
+	@Enumerated(EnumType.ORDINAL)
+	@Column(name = "tipo_extra")
+	private ExtraEnum tipoExtra;
+
 	public HospedagemExtra() {
 	}
 
@@ -42,6 +50,7 @@ public class HospedagemExtra {
 		vo.setId(getId());
 		vo.setHospedagem(getHospedagem().toVO());
 		vo.setExtra(getExtra().toVO());
+		vo.setTipoExtra(getTipoExtra());
 
 		return vo;
 	}

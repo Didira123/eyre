@@ -1,5 +1,6 @@
 package br.com.eyre.eyre.vo;
 
+import br.com.eyre.eyre.enums.ExtraEnum;
 import lombok.Data;
 
 @Data
@@ -12,5 +13,7 @@ public class HospedagemExtraVO {
 	private HospedagemVO hospedagem;
 
 	private ExtraVO extra;
+
+	private ExtraEnum tipoExtra;
 
 }
