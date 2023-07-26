@@ -1,0 +1,450 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+	xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+						http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+						http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd">
+
+	<changeSet id="createTables-iniciais" author="diego.rafael">
+		<createTable tableName="endereco" schemaName="public">
+			<column autoIncrement="true" name="id" type="BIGSERIAL">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="cep" type="varchar(8)">
+				<constraints nullable="false" />
+			</column>
+			<column name="pais" type="varchar(150)">
+				<constraints nullable="false" />
+			</column>
+			<column name="estado" type="varchar(150)">
+				<constraints nullable="false" />
+			</column>
+			<column name="cidade" type="varchar(150)">
+				<constraints nullable="false" />
+			</column>
+			<column name="bairro" type="varchar(150)">
+				<constraints nullable="false" />
+			</column>
+			<column name="rua" type="varchar(150)">
+				<constraints nullable="false" />
+			</column>
+			<column name="numero" type="varchar(8)">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+		<createTable tableName="hospedagem" schemaName="public">
+			<column autoIncrement="true" name="id" type="BIGSERIAL">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="titulo" type="varchar(50)">
+				<constraints unique="true" nullable="false" />
+			</column>
+			<column name="descricao" type="varchar(255)" />
+			<column name="tipo_quarto" type="tinyint" />
+			<column name="descricao_quarto" type="varchar(255)" />
+			<column name="quantidade_reservas" type="smallint">
+				<constraints nullable="false" />
+			</column>
+			<column name="email" type="varchar(150)">
+				<constraints nullable="false" />
+			</column>
+			<column name="telefone" type="varchar(11)">
+				<constraints nullable="false" />
+			</column>
+			<column name="endereco_id" type="bigint">
+				<constraints nullable="false" />
+			</column>
+			<column name="preco" type="numeric(19,2)">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+		<createTable tableName="usuario" schemaName="public">
+			<column autoIncrement="true" name="id" type="BIGSERIAL">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="cpf_cnpj" type="varchar(14)">
+				<constraints nullable="false" />
+			</column>
+			<column name="nome" type="varchar(150)">
+				<constraints nullable="false" />
+			</column>
+			<column name="email" type="varchar(150)">
+				<constraints nullable="false" />
+			</column>
+			<column name="senha" type="varchar(150)">
+				<constraints nullable="false" />
+			</column>
+			<column name="data_nascimento" type="date">
+				<constraints nullable="false" />
+			</column>
+			<column name="telefone" type="varchar(11)">
+				<constraints nullable="false" />
+			</column>
+			<column name="midia_id" type="bigint" />
+			<column name="role_id" type="bigint">
+				<constraints nullable="false" />
+			</column>
+			<column name="endereco_id" type="bigint">
+				<constraints nullable="false" />
+			</column>
+			<column name="ativo" type="boolean">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+		<createTable tableName="role" schemaName="public">
+			<column autoIncrement="true" name="id" type="BIGSERIAL">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="nome" type="varchar(150)">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+		<createTable tableName="extra" schemaName="public">
+			<column autoIncrement="true" name="id" type="BIGSERIAL">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="nome" type="varchar(150)">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+		<createTable tableName="midia" schemaName="public">
+			<column autoIncrement="true" name="id" type="BIGSERIAL">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="nome" type="varchar(150)">
+				<constraints nullable="false" />
+			</column>
+			<column name="dados" type="bytea">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+
+		<createTable tableName="hospedagem_extra"
+			schemaName="public">
+			<column autoIncrement="true" name="id" type="BIGSERIAL">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="hospedagem_id" type="bigint">
+				<constraints nullable="false" />
+			</column>
+			<column name="extra_id" type="bigint">
+				<constraints nullable="false" />
+			</column>
+			<column name="tipo_extra" type="tinyint">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+		<addUniqueConstraint
+			constraintName="hospedagem_extra>hospedagem_id,extra_id"
+			tableName="hospedagem_extra" columnNames="hospedagem_id,extra_id" />
+		<createTable tableName="proximidade" schemaName="public">
+			<column autoIncrement="true" name="id" type="BIGSERIAL">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="nome" type="varchar(150)">
+				<constraints nullable="false" />
+			</column>
+			<column name="tipo_proximidade" type="tinyint">
+				<constraints nullable="false" />
+			</column>
+			<column name="descricao" type="varchar(255)">
+				<constraints nullable="false" />
+			</column>
+			<column name="midia_id" type="bigint">
+				<constraints nullable="false" />
+			</column>
+			<column name="endereco_id" type="bigint">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+		<createTable tableName="avaliacao" schemaName="public">
+			<column autoIncrement="true" name="id" type="BIGSERIAL">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="hospedagem_id" type="bigint">
+				<constraints nullable="false" />
+			</column>
+			<column name="usuario_id" type="bigint">
+				<constraints nullable="false" />
+			</column>
+			<column name="texto" type="varchar(255)">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+		<addUniqueConstraint
+			constraintName="avaliacao>hospedagem_id,usuario_id"
+			tableName="avaliacao" columnNames="usuario_id,hospedagem_id" />
+		<createTable tableName="hospedagem_transporte"
+			schemaName="public">
+			<column autoIncrement="true" name="id" type="BIGSERIAL">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="hospedagem_id" type="bigint">
+				<constraints nullable="false" />
+			</column>
+			<column name="transporte_id" type="bigint">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+		<addUniqueConstraint
+			constraintName="hospedagem_transporte>hospedagem_id,transporte_id"
+			tableName="hospedagem_transporte"
+			columnNames="hospedagem_id,transporte_id" />
+		<createTable tableName="transporte" schemaName="public">
+			<column autoIncrement="true" name="id" type="BIGSERIAL">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="dtype" type="int">
+				<constraints nullable="false" />
+			</column>
+			<column name="nome" type="varchar(150)">
+				<constraints nullable="false" />
+			</column>
+			<column name="horario_partida" type="time">
+				<constraints nullable="false" />
+			</column>
+			<column name="horario_chegada" type="time">
+				<constraints nullable="false" />
+			</column>
+			<column name="preco" type="numeric(19,2)">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+		<createTable tableName="transporte_endereco"
+			schemaName="public">
+			<column autoIncrement="true" name="id" type="BIGSERIAL">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="transporte_id" type="bigint">
+				<constraints nullable="false" />
+			</column>
+			<column name="endereco_id" type="bigint">
+				<constraints nullable="false" />
+			</column>
+			<column name="tipo_endereco" type="tinyint">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+		<addUniqueConstraint
+			constraintName="transporte_endereco>transporte_id,endereco_id"
+			tableName="transporte_endereco"
+			columnNames="transporte_id,endereco_id" />
+
+		<createTable tableName="transporte_dia"
+			schemaName="public">
+			<column autoIncrement="true" name="id" type="BIGSERIAL">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="transporte_id" type="bigint">
+				<constraints nullable="false" />
+			</column>
+			<column name="dia" type="tinyint">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+		<createTable tableName="transporte_dia_horario"
+			schemaName="public">
+			<column autoIncrement="true" name="id" type="BIGSERIAL">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="transporte_dia_id" type="bigint">
+				<constraints nullable="false" />
+			</column>
+			<column name="horario_saida" type="time">
+				<constraints nullable="false" />
+			</column>
+			<column name="horario_chegada" type="time">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+		<createTable tableName="onibus" schemaName="public">
+			<column autoIncrement="true" name="id" type="BIGSERIAL">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="tipo_assento" type="tinyint">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+		<createTable tableName="companhia_aerea"
+			schemaName="public">
+			<column autoIncrement="true" name="id" type="BIGSERIAL">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="escala" type="time">
+				<constraints nullable="false" />
+			</column>
+			<column name="midia_id" type="bigint">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+		<createTable tableName="pacote_viagem" schemaName="public">
+			<column autoIncrement="true" name="id" type="BIGSERIAL">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="usuario_id" type="bigint">
+				<constraints nullable="false" />
+			</column>
+			<column name="hospedagem_id" type="bigint">
+				<constraints nullable="false" />
+			</column>
+			<column name="transporte_id" type="bigint">
+				<constraints nullable="false" />
+			</column>
+			<column name="pagamento_id" type="bigint">
+				<constraints nullable="false" />
+			</column>
+			<column name="data_hora_ida" type="timestamp">
+				<constraints nullable="false" />
+			</column>
+			<column name="data_hora_volta" type="timestamp">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+		<addUniqueConstraint
+			constraintName="pacote_viagem>pagamento_id" tableName="pacote_viagem"
+			columnNames="pagamento_id" />
+		<createTable tableName="hospedagem_midia"
+			schemaName="public">
+			<column autoIncrement="true" name="id" type="BIGSERIAL">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="hospedagem_id" type="bigint">
+				<constraints nullable="false" />
+			</column>
+			<column name="midia_id" type="bigint">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+		<addUniqueConstraint
+			constraintName="hospedagem_midia>hospedagem_id,midia_id"
+			tableName="hospedagem_midia" columnNames="hospedagem_id,midia_id" />
+
+		<createTable tableName="hospedagem_proximidade"
+			schemaName="public">
+			<column autoIncrement="true" name="id" type="BIGSERIAL">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="hospedagem_id" type="bigint">
+				<constraints nullable="false" />
+			</column>
+			<column name="proximidade_id" type="bigint">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+		<createTable tableName="pagamento" schemaName="public"> <!-- TODO ENTIDADE NÃO IMPLEMENTADO CORRETAMENTE -->
+			<column autoIncrement="true" name="id" type="BIGSERIAL">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+		</createTable>
+		<addUniqueConstraint
+			constraintName="hospedagem_proximidade>hospedagem_id,proximidade_id"
+			tableName="hospedagem_proximidade"
+			columnNames="hospedagem_id,proximidade_id" />
+		<addForeignKeyConstraint
+			constraintName="hospedagem-endereco" baseTableName="hospedagem"
+			baseColumnNames="endereco_id" referencedTableName="endereco"
+			referencedColumnNames="id" />
+		<addForeignKeyConstraint
+			constraintName="usuario-midia" baseTableName="usuario"
+			baseColumnNames="midia_id" referencedTableName="midia"
+			referencedColumnNames="id" />
+		<addForeignKeyConstraint
+			constraintName="usuario-role" baseTableName="usuario"
+			baseColumnNames="role_id" referencedTableName="role"
+			referencedColumnNames="id" />
+		<addForeignKeyConstraint
+			constraintName="usuario-endereco" baseTableName="usuario"
+			baseColumnNames="endereco_id" referencedTableName="endereco"
+			referencedColumnNames="id" />
+		<addForeignKeyConstraint
+			constraintName="hospedagem_extra-hospedagem"
+			baseTableName="hospedagem_extra" baseColumnNames="hospedagem_id"
+			referencedTableName="hospedagem" referencedColumnNames="id" />
+		<addForeignKeyConstraint
+			constraintName="hospedagem_extra-extra"
+			baseTableName="hospedagem_extra" baseColumnNames="extra_id"
+			referencedTableName="extra" referencedColumnNames="id" />
+		<addForeignKeyConstraint
+			constraintName="proximidade-midia" baseTableName="proximidade"
+			baseColumnNames="midia_id" referencedTableName="midia"
+			referencedColumnNames="id" />
+		<addForeignKeyConstraint
+			constraintName="proximidade-endereco" baseTableName="proximidade"
+			baseColumnNames="endereco_id" referencedTableName="endereco"
+			referencedColumnNames="id" />
+		<addForeignKeyConstraint
+			constraintName="avaliacao-hospedagem" baseTableName="avaliacao"
+			baseColumnNames="hospedagem_id" referencedTableName="hospedagem"
+			referencedColumnNames="id" />
+		<addForeignKeyConstraint
+			constraintName="avaliacao-usuario" baseTableName="avaliacao"
+			baseColumnNames="usuario_id" referencedTableName="usuario"
+			referencedColumnNames="id" />
+		<addForeignKeyConstraint
+			constraintName="hospedagem_transporte-hospedagem"
+			baseTableName="hospedagem_transporte" baseColumnNames="hospedagem_id"
+			referencedTableName="hospedagem" referencedColumnNames="id" />
+		<addForeignKeyConstraint
+			constraintName="hospedagem_transporte-transporte"
+			baseTableName="hospedagem_transporte" baseColumnNames="transporte_id"
+			referencedTableName="transporte" referencedColumnNames="id" />
+		<addForeignKeyConstraint
+			constraintName="transporte_endereco-transporte"
+			baseTableName="transporte_endereco" baseColumnNames="transporte_id"
+			referencedTableName="transporte" referencedColumnNames="id" />
+		<addForeignKeyConstraint
+			constraintName="transporte_endereco-endereco"
+			baseTableName="transporte_endereco" baseColumnNames="endereco_id"
+			referencedTableName="endereco" referencedColumnNames="id" />
+		<addForeignKeyConstraint
+			constraintName="transporte_dia-transporte"
+			baseTableName="transporte_dia" baseColumnNames="transporte_id"
+			referencedTableName="transporte" referencedColumnNames="id" />
+		<addForeignKeyConstraint
+			constraintName="transporte_dia_horario-transporte_dia"
+			baseTableName="transporte_dia_horario"
+			baseColumnNames="transporte_dia_id"
+			referencedTableName="transporte_dia" referencedColumnNames="id" />
+		<addForeignKeyConstraint
+			constraintName="companhia_aerea-midia"
+			baseTableName="companhia_aerea" baseColumnNames="midia_id"
+			referencedTableName="midia" referencedColumnNames="id" />
+		<addForeignKeyConstraint
+			constraintName="pacote_viagem-usuario" baseTableName="pacote_viagem"
+			baseColumnNames="usuario_id" referencedTableName="usuario"
+			referencedColumnNames="id" />
+		<addForeignKeyConstraint
+			constraintName="pacote_viagem-hospedagem"
+			baseTableName="pacote_viagem" baseColumnNames="hospedagem_id"
+			referencedTableName="hospedagem" referencedColumnNames="id" />
+		<addForeignKeyConstraint
+			constraintName="pacote_viagem-transporte"
+			baseTableName="pacote_viagem" baseColumnNames="transporte_id"
+			referencedTableName="transporte" referencedColumnNames="id" />
+		<addForeignKeyConstraint
+			constraintName="pacote_viagem-pagamento"
+			baseTableName="pacote_viagem" baseColumnNames="pagamento_id"
+			referencedTableName="pagamento" referencedColumnNames="id" />
+		<addForeignKeyConstraint
+			constraintName="hospedagem_midia-hospedagem"
+			baseTableName="hospedagem_midia" baseColumnNames="hospedagem_id"
+			referencedTableName="hospedagem" referencedColumnNames="id" />
+		<addForeignKeyConstraint
+			constraintName="hospedagem_midia-midia"
+			baseTableName="hospedagem_midia" baseColumnNames="midia_id"
+			referencedTableName="midia" referencedColumnNames="id" />
+		<addForeignKeyConstraint
+			constraintName="hospedagem_proximidade-hospedagem"
+			baseTableName="hospedagem_proximidade"
+			baseColumnNames="hospedagem_id" referencedTableName="hospedagem"
+			referencedColumnNames="id" />
+		<addForeignKeyConstraint
+			constraintName="hospedagem_proximidade-proximidade"
+			baseTableName="hospedagem_proximidade"
+			baseColumnNames="proximidade_id" referencedTableName="proximidade"
+			referencedColumnNames="id" />
+	</changeSet>
+</databaseChangeLog>

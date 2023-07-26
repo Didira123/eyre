@@ -147,7 +147,7 @@ public class Hospedagem {
 					break;
 				}
 			}
-			if (cont != 0 || (cont == 0 && listDtypes.size() != 1 && listDtypes.size() != 0)) {
+			if (cont != 0 || (cont == 0 && listDtypes.size() != 1 && !listDtypes.isEmpty())) {
 				vo.setExisteOnibus(true);
 			}
 		}

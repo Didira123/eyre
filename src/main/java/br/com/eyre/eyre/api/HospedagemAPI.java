@@ -45,7 +45,7 @@ public class HospedagemAPI {
 	public ResponseEntity<?> findById(@PathVariable("id") Long id) {
 		Optional<Hospedagem> optional = hospedagemService.findById(id);
 		if (optional.isPresent()) {
-			return ResponseEntity.ok(optional.get());
+			return ResponseEntity.ok(optional.get().toVO());
 		}
 		return ResponseEntity.notFound().build();
 	}

@@ -1,5 +1,7 @@
 package br.com.eyre.eyre.service.impl;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
@@ -27,6 +29,11 @@ public class EnderecoServiceImpl implements EnderecoService {
 		entity.setNumero(vo.getNumero());
 
 		return enderecoRepository.save(entity);
+	}
+
+	@Override
+	public Optional<Endereco> findById(Long id) {
+		return enderecoRepository.findById(id);
 	}
 
 }

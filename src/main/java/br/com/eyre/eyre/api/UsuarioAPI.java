@@ -44,7 +44,7 @@ public class UsuarioAPI {
 	public ResponseEntity<?> findById(@PathVariable("id") Long id) {
 		Optional<Usuario> optional = usuarioService.findById(id);
 		if (optional.isPresent()) {
-			return ResponseEntity.ok(optional.get());
+			return ResponseEntity.ok(optional.get().toVO());
 		}
 		return ResponseEntity.notFound().build();
 	}

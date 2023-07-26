@@ -13,21 +13,27 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 
 import br.com.eyre.eyre.entity.Endereco;
-import br.com.eyre.eyre.entity.Role;
 import br.com.eyre.eyre.entity.Usuario;
 import br.com.eyre.eyre.repository.UsuarioRepository;
 import br.com.eyre.eyre.service.EnderecoService;
+import br.com.eyre.eyre.service.RoleService;
 import br.com.eyre.eyre.service.UsuarioService;
+import br.com.eyre.eyre.vo.EnderecoVO;
 import br.com.eyre.eyre.vo.UsuarioNovoVO;
 
 @Service
 public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
+
+	private static final String USUARIO_COMUM = "Usuário Comum";
 
 	@Autowired
 	private UsuarioRepository usuarioRepository;
 
 	@Autowired
 	private EnderecoService enderecoService;
+
+	@Autowired
+	private RoleService roleService;
 
 	@Autowired
 	private PasswordEncoder encoder;
@@ -60,11 +66,17 @@ public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
 		entity.setSenha(encoder.encode(vo.getSenha()));
 		entity.setDataNascimento(vo.getDataNascimento());
 		entity.setTelefone(vo.getTelefone());
-		entity.setRole(new Role(Role.USUARIO_COMUM));
+		entity.setRole(roleService.findByNome(USUARIO_COMUM));
 		entity.setAtivo(true);
 
-		if (vo.getEndereco() != null) {
-			Endereco endereco = enderecoService.create(vo.getEndereco(), result);
+		EnderecoVO enderecoVO = vo.getEndereco();
+		if (enderecoVO != null) {
+			Endereco endereco;
+			if (enderecoVO.getId() != null) {
+				endereco = enderecoService.findById(enderecoVO.getId()).get();
+			} else {
+				endereco = enderecoService.create(vo.getEndereco(), result);
+			}
 			entity.setEndereco(new Endereco(endereco.getId()));
 		}
 

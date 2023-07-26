@@ -1,11 +1,15 @@
 package br.com.eyre.eyre.bases;
 
+import java.io.Serializable;
+
 import lombok.Data;
 
 @Data
 //@EqualsAndHashCode(callSuper = true)
 //@ToString(callSuper = true)
-public class BaseFilterVO<F> {
+public class BaseFilterVO<F extends Serializable> implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	private Integer page;
 
@@ -15,7 +19,7 @@ public class BaseFilterVO<F> {
 
 	private String direction;
 
-	private F filter;
+	private F content;
 
 	public BaseFilterVO() {
 		super();
@@ -23,11 +27,12 @@ public class BaseFilterVO<F> {
 		this.pageSize = 10;
 	}
 
-	public BaseFilterVO(Integer page, Integer pageSize, String order) {
+	public BaseFilterVO(Integer page, Integer pageSize, String order, String direction) {
 		super();
-		this.page = (page==null?0:page);
-		this.pageSize = (pageSize==null?10:pageSize);
-		this.order = (order==null?"id":order);
+		this.page = (page == null ? 0 : page);
+		this.pageSize = (pageSize == null ? 10 : pageSize);
+		this.order = (order == null ? "id" : order);
+		this.direction = (direction == null ? "" : direction);
 	}
 
 }

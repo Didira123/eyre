@@ -14,7 +14,7 @@ import br.com.eyre.eyre.enums.ExtraEnum;
 
 public interface HospedagemRepository extends JpaRepository<Hospedagem, Long> {
 
-	@Query(value = "SELECT new br.com.eyre.eyre.vo.HospedagemVO(h) FROM Hospedagem h "
+	@Query(value = "SELECT h FROM Hospedagem h "
 			+ "	INNER JOIN h.endereco he "
 			+ "	INNER JOIN FETCH h.listTransportes lt "
 			+ "	INNER JOIN FETCH lt.transporte t "
@@ -34,10 +34,19 @@ public interface HospedagemRepository extends JpaRepository<Hospedagem, Long> {
 			List<DiaEnum> diasVolta, EnderecoEnum saida, ExtraEnum extraPrincipal);
 
 	@Query(value = "SELECT new br.com.eyre.eyre.vo.HospedagemFetchsCountAvaliacoesVO(h, count(la.id)) FROM Hospedagem h "
-			+ " INNER JOIN FETCH h.endereco he INNER JOIN FETCH h.listTransportes lt INNER JOIN FETCH lt.transporte t "
-			+ " INNER JOIN FETCH t.listTransporteDias ltd INNER JOIN FETCH ltd.listTransporteDiaHorarios ltdh LEFT JOIN FETCH h.listExtras le "
-			+ " LEFT JOIN FETCH le.extra ext LEFT JOIN FETCH h.listMidias lm LEFT JOIN FETCH lm.midia mid LEFT JOIN FETCH h.listProximidades lp "
-			+ " LEFT JOIN FETCH lp.proximidade prox LEFT JOIN FETCH h.listAvaliacoes la WHERE h.id =:id")
+			+ " INNER JOIN FETCH h.endereco he "
+			+ " INNER JOIN FETCH h.listTransportes lt "
+			+ " INNER JOIN FETCH lt.transporte t "
+			+ " INNER JOIN FETCH t.listTransporteDias ltd "
+			+ " INNER JOIN FETCH ltd.listTransporteDiaHorarios ltdh "
+			+ " LEFT JOIN FETCH h.listExtras le "
+			+ " LEFT JOIN FETCH le.extra ext "
+			+ " LEFT JOIN FETCH h.listMidias lm "
+			+ " LEFT JOIN FETCH lm.midia mid "
+			+ " LEFT JOIN FETCH h.listProximidades lp "
+			+ " LEFT JOIN FETCH lp.proximidade prox "
+			+ " LEFT JOIN h.listAvaliacoes la "
+			+ " WHERE h.id =:id")
 	public Optional<Hospedagem> findByIdFetchEnderecoFetchTransportesFetchExtrasFetchMidiasFetchProximidadesAndCountAvaliacoes(
 			Long id);
 

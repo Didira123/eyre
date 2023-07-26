@@ -17,6 +17,7 @@ public class HospedagemFetchsCountAvaliacoesVO extends BaseVO<Long> {
 
 	public HospedagemFetchsCountAvaliacoesVO(Hospedagem hospedagem, Long count) {
 		setHospedagem(hospedagem.toVO());
+		setCountAvaliacoes(count);
 	}
 
 }

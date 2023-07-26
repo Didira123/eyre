@@ -12,6 +12,8 @@
 //import br.com.eyre.eyre.entity.PacoteViagem;
 //import br.com.eyre.eyre.service.PacoteViagemService;
 //import br.com.eyre.eyre.vo.PacoteViagemVO;
+//import br.com.eyre.eyre.vo.filter.PacoteViagemFilterVO;
+//import br.com.eyre.eyre.vo.filter.PacoteViagemFiltroVO;
 //
 //@RestController
 //@RequestMapping("/api/pacoteViagem")
@@ -24,7 +26,7 @@
 ////	public PacoteViagemRepository pacoteViagemRepository;
 //
 //	@GetMapping("/list")
-//	public ResponseEntity<?> findAll(@RequestBody PacoteViagemVO vo, BindingResult result) {
+//	public ResponseEntity<?> list(@RequestBody PacoteViagemFiltroVO vo, BindingResult result) {
 ////		ResponseEntity.internalServerError().build().status(HttpStatusCode.valueOf(200)).allow(HttpMethod.GET).build();
 //		Page<PacoteViagem> lista = pacoteViagemService.findByFiilter(vo, result);
 ////		Page<PacoteViagem> lista1 = pacoteViagemRepository.findAll(PageRequest.of(0, 10));
