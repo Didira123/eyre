@@ -25,12 +25,7 @@ public class Autenticacao {
 	@Autowired
 	private TokenService tokenService;
 
-//	@PostMapping(name = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
-//	public ResponseEntity<Usuario> login(UriComponentsBuilder uriBuilder) {
-//		return ResponseEntity.created(uriBuilder.path("").buildAndExpand("123").toUri()).body(new Usuario());
-//	}
-
-	@PostMapping(name = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(path = { "/" }, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> login(@RequestBody @Valid UsuarioLoginVO login) {
 
 		UsernamePasswordAuthenticationToken dadosLogin = new UsernamePasswordAuthenticationToken(login.getEmail(),

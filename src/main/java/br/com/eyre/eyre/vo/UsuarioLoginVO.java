@@ -1,14 +1,13 @@
 package br.com.eyre.eyre.vo;
 
-import br.com.eyre.eyre.bases.BaseVO;
+import java.io.Serializable;
+
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
 
 @Data
-@EqualsAndHashCode(callSuper = true)
-@ToString(callSuper = true)
-public class UsuarioLoginVO extends BaseVO<Long> {
+//@EqualsAndHashCode(callSuper = true)
+//@ToString(callSuper = true)
+public class UsuarioLoginVO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 

@@ -51,7 +51,7 @@ public class Usuario extends BaseEntity<Long> implements UserDetails {
 	@JoinColumn(name = "midia_id")
 	private Midia foto;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "role_id")
 	private Role role;
 
