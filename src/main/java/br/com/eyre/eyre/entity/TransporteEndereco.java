@@ -1,5 +1,6 @@
 package br.com.eyre.eyre.entity;
 
+import br.com.eyre.eyre.bases.BaseEntity;
 import br.com.eyre.eyre.enums.EnderecoEnum;
 import br.com.eyre.eyre.vo.TransporteEnderecoVO;
 import jakarta.persistence.Column;
@@ -7,9 +8,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
@@ -20,11 +18,9 @@ import lombok.Data;
 @Table(name = "transporte_endereco")
 //@EqualsAndHashCode(callSuper = true)
 //@ToString(callSuper = true)
-public class TransporteEndereco {
+public class TransporteEndereco extends BaseEntity<Long> {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private static final long serialVersionUID = 1L;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "transporte_id")

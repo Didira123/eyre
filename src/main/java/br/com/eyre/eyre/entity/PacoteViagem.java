@@ -2,13 +2,11 @@ package br.com.eyre.eyre.entity;
 
 import java.time.LocalDateTime;
 
+import br.com.eyre.eyre.bases.BaseEntity;
 import br.com.eyre.eyre.vo.PacoteViagemVO;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
@@ -20,11 +18,9 @@ import lombok.Data;
 @Table(name = "pacote_viagem")
 //@EqualsAndHashCode(callSuper = true)
 //@ToString(callSuper = true)
-public class PacoteViagem {
+public class PacoteViagem extends BaseEntity<Long> {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private static final long serialVersionUID = 1L;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "usuario_id")
@@ -59,7 +55,7 @@ public class PacoteViagem {
 		PacoteViagemVO vo = new PacoteViagemVO();
 		vo.setId(getId());
 		vo.setUsuario(getUsuario().toVO());
-		vo.setHospedagem(getHospedagem().toVO());
+		vo.setHospedagem(getHospedagem().toSmallVO());
 		if (getTransporte() != null) {
 			vo.setTransporte(getTransporte().toVO());
 		}

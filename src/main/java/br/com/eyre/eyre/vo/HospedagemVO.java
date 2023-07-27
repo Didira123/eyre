@@ -1,19 +1,21 @@
 package br.com.eyre.eyre.vo;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
-import br.com.eyre.eyre.entity.Hospedagem;
+import br.com.eyre.eyre.bases.BaseVO;
 import br.com.eyre.eyre.enums.QuartoEnum;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 @Data
-//@EqualsAndHashCode(callSuper = true)
-//@ToString(callSuper = true)
-public class HospedagemVO {
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
+public class HospedagemVO extends BaseVO<Long> {
 
-	private Long id;
+	private static final long serialVersionUID = 1L;
 
 	private String titulo;
 
@@ -25,13 +27,13 @@ public class HospedagemVO {
 
 	private Integer quantidadeReservas;
 
-	private List<TransporteVO> listTransportes;
+	private List<TransporteVO> listTransportes = new ArrayList<>();
 
-	private List<ExtraVO> listExtras;
+	private List<ExtraVO> listExtras = new ArrayList<>();
 
-	private List<MidiaVO> listImagens;
+	private List<MidiaVO> listImagens = new ArrayList<>();
 
-	private List<ProximidadeVO> listProximidades;
+	private List<ProximidadeVO> listProximidades = new ArrayList<>();
 
 	private String email;
 
@@ -39,7 +41,7 @@ public class HospedagemVO {
 
 	private EnderecoVO endereco;
 
-	private List<AvaliacaoVO> listAvaliacoes;
+	private List<AvaliacaoVO> listAvaliacoes = new ArrayList<>();
 
 	private BigDecimal preco;
 
@@ -52,39 +54,6 @@ public class HospedagemVO {
 
 	public HospedagemVO(Long id) {
 		setId(id);
-	}
-
-	public HospedagemVO(Hospedagem h) {
-		setId(h.getId());
-		setTitulo(h.getTitulo());
-		setDescricao(h.getDescricao());
-		setTipoQuarto(h.getTipoQuarto());
-		setDescricaoQuarto(h.getDescricaoQuarto());
-		setQuantidadeReservas(h.getQuantidadeReservas());
-		if (h.getListTransportes() != null && !h.getListTransportes().isEmpty()) {
-			setListTransportes(
-					h.getListTransportes().stream().map(ht -> ht.getTransporte().toVO()).collect(Collectors.toList()));
-		}
-		if (h.getListExtras() != null && !h.getListExtras().isEmpty()) {
-			setListExtras(h.getListExtras().stream().map(e -> e.getExtra().toVO()).collect(Collectors.toList()));
-		}
-		if (h.getListMidias() != null && !h.getListMidias().isEmpty()) {
-			setListImagens(h.getListMidias().stream().map(m -> m.getMidia().toVO()).collect(Collectors.toList()));
-		}
-		if (h.getListProximidades() != null && !h.getListTransportes().isEmpty()) {
-			setListProximidades(h.getListProximidades().stream()
-					.map(prox -> prox.getProximidade().toVO())
-					.collect(Collectors.toList()));
-		}
-		setEmail(h.getEmail());
-		setTelefone(h.getTelefone());
-		if (h.getEndereco() != null) {
-			setEndereco(h.getEndereco().toVO());
-		}
-		if (h.getListAvaliacoes() != null && !h.getListAvaliacoes().isEmpty()) {
-			setListAvaliacoes(h.getListAvaliacoes().stream().map(a -> a.toVO()).collect(Collectors.toList()));
-		}
-		setPreco(h.getPreco());
 	}
 
 }

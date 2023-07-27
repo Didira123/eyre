@@ -1,5 +1,6 @@
 package br.com.eyre.eyre.entity;
 
+import br.com.eyre.eyre.bases.BaseEntity;
 import br.com.eyre.eyre.vo.AvaliacaoVO;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -17,7 +18,9 @@ import lombok.Data;
 @Table(name = "avaliacao")
 //@EqualsAndHashCode(callSuper = true)
 //@ToString(callSuper = true)
-public class Avaliacao {
+public class Avaliacao extends BaseEntity<Long> {
+
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,8 +47,23 @@ public class Avaliacao {
 	public AvaliacaoVO toVO() {
 		AvaliacaoVO vo = new AvaliacaoVO();
 		vo.setId(getId());
-		vo.setUsuario(getUsuario().toVO());
-		vo.setHospedagem(getHospedagem().toVO());
+		if (getUsuario() != null) {
+			vo.setUsuario(getUsuario().toVO());
+		}
+		if (getHospedagem() != null) {
+			vo.setHospedagem(getHospedagem().toTiny());
+		}
+		vo.setTexto(getTexto());
+
+		return vo;
+	}
+
+	public AvaliacaoVO toSmallVO() {
+		AvaliacaoVO vo = new AvaliacaoVO();
+		vo.setId(getId());
+		if (getUsuario() != null) {
+			vo.setUsuario(getUsuario().toTinyVO());
+		}
 		vo.setTexto(getTexto());
 
 		return vo;

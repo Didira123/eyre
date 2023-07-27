@@ -2,16 +2,15 @@ package br.com.eyre.eyre.entity;
 
 import java.math.BigDecimal;
 import java.time.LocalTime;
-import java.util.List;
+import java.util.Set;
 
+import br.com.eyre.eyre.bases.BaseEntity;
+import br.com.eyre.eyre.enums.EnderecoEnum;
 import br.com.eyre.eyre.vo.TransporteVO;
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorColumn;
 import jakarta.persistence.DiscriminatorType;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 import jakarta.persistence.OneToMany;
@@ -25,18 +24,16 @@ import lombok.Data;
 //@ToString(callSuper = true)
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(columnDefinition = "dtype", discriminatorType = DiscriminatorType.INTEGER)
-public abstract class Transporte {
+public abstract class Transporte extends BaseEntity<Long> {
+
+	private static final long serialVersionUID = 1L;
 
 	public static final String COMPANHIA_AEREA = "0";
 	public static final String ONIBUS = "1";
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	
 //	@Column(name = "dtype")
 //	private int dtype;
-	
+
 	@Column(name = "nome")
 	private String nome;
 
@@ -55,18 +52,22 @@ public abstract class Transporte {
 //	private Endereco localChegada;
 
 	@OneToMany(mappedBy = "transporte")
-	private List<TransporteEndereco> listTransporteEnderecos;
-	
+	private Set<TransporteEndereco> listTransporteEnderecos;
+
 	@OneToMany(mappedBy = "transporte")
-	private List<TransporteDia> listTransporteDias;
+	private Set<TransporteDia> listTransporteDias;
 
 	@Column(name = "preco")
 	private BigDecimal preco;
 
-	public List<TransporteEndereco> getListTransporteEndereco_Ordenado() {
-		List<TransporteEndereco> lista = getListTransporteEnderecos();
-		lista.sort((a, b) -> a.getTipoEndereco().getCode().compareTo(b.getTipoEndereco().getCode()));
-		return lista;
+	public TransporteEndereco[] getListTransporteEndereco_Ordenado() {
+		TransporteEndereco[] array = (TransporteEndereco[]) getListTransporteEnderecos().toArray();
+		if (array[0].getTipoEndereco() == EnderecoEnum.CHEGADA) {
+			TransporteEndereco te = array[1];
+			array[1] = array[0];
+			array[0] = te;
+		}
+		return array;
 	}
 
 	public TransporteVO toVO() {

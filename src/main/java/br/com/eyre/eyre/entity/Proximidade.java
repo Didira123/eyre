@@ -1,5 +1,6 @@
 package br.com.eyre.eyre.entity;
 
+import br.com.eyre.eyre.bases.BaseEntity;
 import br.com.eyre.eyre.enums.ProximidadeEnum;
 import br.com.eyre.eyre.vo.ProximidadeVO;
 import jakarta.persistence.Column;
@@ -7,9 +8,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
@@ -20,11 +18,9 @@ import lombok.Data;
 @Table(name = "proximidade")
 //@EqualsAndHashCode(callSuper = true)
 //@ToString(callSuper = true)
-public class Proximidade {
+public class Proximidade extends BaseEntity<Long> {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private static final long serialVersionUID = 1L;
 
 	@Column(name = "nome")
 	private String nome;
@@ -62,6 +58,18 @@ public class Proximidade {
 		}
 		if (getEndereco() != null) {
 			vo.setEndereco(getEndereco().toVO());
+		}
+
+		return vo;
+	}
+
+	public ProximidadeVO toSmallVO() {
+		ProximidadeVO vo = new ProximidadeVO();
+		vo.setId(getId());
+		vo.setNome(getNome());
+		vo.setTipoProximidade(getTipoProximidade());
+		if (getFoto() != null) {
+			vo.setFoto(getFoto().toVO());
 		}
 
 		return vo;

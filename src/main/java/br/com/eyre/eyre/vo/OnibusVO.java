@@ -9,6 +9,8 @@ import lombok.ToString;
 @ToString(callSuper = true)
 public class OnibusVO extends TransporteVO {
 
+	private static final long serialVersionUID = 1L;
+
 	private String tipoAssento;
 
 }

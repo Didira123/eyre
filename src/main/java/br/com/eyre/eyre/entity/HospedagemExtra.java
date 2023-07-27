@@ -1,5 +1,6 @@
 package br.com.eyre.eyre.entity;
 
+import br.com.eyre.eyre.bases.BaseEntity;
 import br.com.eyre.eyre.enums.ExtraEnum;
 import br.com.eyre.eyre.vo.HospedagemExtraVO;
 import jakarta.persistence.Column;
@@ -7,9 +8,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
@@ -20,11 +18,9 @@ import lombok.Data;
 @Table(name = "hospedagem_extra")
 //@EqualsAndHashCode(callSuper = true)
 //@ToString(callSuper = true)
-public class HospedagemExtra {
+public class HospedagemExtra extends BaseEntity<Long> {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private static final long serialVersionUID = 1L;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "hospedagem_id")
@@ -48,7 +44,6 @@ public class HospedagemExtra {
 	public HospedagemExtraVO toVO() {
 		HospedagemExtraVO vo = new HospedagemExtraVO();
 		vo.setId(getId());
-		vo.setHospedagem(getHospedagem().toVO());
 		vo.setExtra(getExtra().toVO());
 		vo.setTipoExtra(getTipoExtra());
 

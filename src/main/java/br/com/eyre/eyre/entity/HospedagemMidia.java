@@ -1,11 +1,9 @@
 package br.com.eyre.eyre.entity;
 
+import br.com.eyre.eyre.bases.BaseEntity;
 import br.com.eyre.eyre.vo.HospedagemMidiaVO;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
@@ -16,11 +14,9 @@ import lombok.Data;
 @Table(name = "hospedagem_midia")
 //@EqualsAndHashCode(callSuper = true)
 //@ToString(callSuper = true)
-public class HospedagemMidia {
+public class HospedagemMidia extends BaseEntity<Long> {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private static final long serialVersionUID = 1L;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "hospedagem_id")
@@ -40,7 +36,6 @@ public class HospedagemMidia {
 	public HospedagemMidiaVO toVO() {
 		HospedagemMidiaVO vo = new HospedagemMidiaVO();
 		vo.setId(getId());
-		vo.setHospedagem(getHospedagem().toVO());
 		vo.setMidia(getMidia().toVO());
 
 		return vo;

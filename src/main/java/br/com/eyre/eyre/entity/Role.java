@@ -1,11 +1,9 @@
 package br.com.eyre.eyre.entity;
 
+import br.com.eyre.eyre.bases.BaseEntity;
 import br.com.eyre.eyre.vo.RoleVO;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Data;
 
@@ -14,16 +12,14 @@ import lombok.Data;
 @Table(name = "role")
 //@EqualsAndHashCode(callSuper = true)
 //@ToString(callSuper = true)
-public class Role {
+public class Role extends BaseEntity<Long> {
+
+	private static final long serialVersionUID = 1L;
 
 	public static final Long USUARIO_SUDO = 0l;
 	public static final Long USUARIO_COMUM = 1l;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-
-	@Column(name = "name")
+	@Column(name = "nome")
 	private String nome;
 
 	public Role() {

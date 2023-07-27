@@ -60,7 +60,7 @@ public class BaseAPI<ID extends Serializable, E extends BaseEntity<ID>, VRQ exte
 		}
 	}
 
-	private S getService() {
+	protected S getService() {
 		throw new NotImplementedException(
 				"This method from " + getClass().getName() + " must be implemented at the actual subclass.");
 	}

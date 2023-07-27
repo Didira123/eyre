@@ -6,23 +6,29 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
+import br.com.eyre.eyre.bases.BaseServiceImpl;
 import br.com.eyre.eyre.entity.Hospedagem;
 import br.com.eyre.eyre.enums.DiaEnum;
 import br.com.eyre.eyre.enums.EnderecoEnum;
 import br.com.eyre.eyre.enums.ExtraEnum;
 import br.com.eyre.eyre.repository.HospedagemRepository;
 import br.com.eyre.eyre.service.HospedagemService;
-import br.com.eyre.eyre.vo.HospedagemCustomProximidadeVO;
 import br.com.eyre.eyre.vo.HospedagemVO;
 import br.com.eyre.eyre.vo.OfertaVO;
 
 @Service
-public class HospedagemServiceImpl implements HospedagemService {
+public class HospedagemServiceImpl extends BaseServiceImpl<Long, Hospedagem> implements HospedagemService {
 
 	@Autowired
 	public HospedagemRepository hospedagemRepository;
+
+	@Override
+	protected JpaRepository<Hospedagem, Long> getRepository() {
+		return hospedagemRepository;
+	}
 
 	@Override
 	public List<HospedagemVO> findByOrcamentoAndEnderecosAndDatas(OfertaVO vo) {
@@ -41,17 +47,12 @@ public class HospedagemServiceImpl implements HospedagemService {
 
 	@Override
 	public Optional<Hospedagem> findById(Long id) {
-		return hospedagemRepository.findById(id);
+		return hospedagemRepository.findByIdFetchEnderecoFetchTransportesFetchExtrasFetchMidiasFetchProximidades(id);
 	}
 
 	@Override
-	public HospedagemCustomProximidadeVO findByIdWithListProximidadeShaped(Long id) {
-		Optional<Hospedagem> optional = hospedagemRepository
-				.findByIdFetchEnderecoFetchTransportesFetchExtrasFetchMidiasFetchProximidadesAndCountAvaliacoes(id);
-		if (optional.isPresent()) {
-			return optional.get().toCustomWithProximidadeVO();
-		}
-		return null;
+	public Long countAvaliacoesById(Long id) {
+		return hospedagemRepository.countAvaliacoesById(id);
 	}
 
 }

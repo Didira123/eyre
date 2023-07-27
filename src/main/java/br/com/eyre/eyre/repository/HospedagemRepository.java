@@ -33,12 +33,12 @@ public interface HospedagemRepository extends JpaRepository<Hospedagem, Long> {
 			String cidadeSaida, String estadoChegada, String cidadeChegada, List<DiaEnum> diasIda,
 			List<DiaEnum> diasVolta, EnderecoEnum saida, ExtraEnum extraPrincipal);
 
-	@Query(value = "SELECT new br.com.eyre.eyre.vo.HospedagemFetchsCountAvaliacoesVO(h, count(la.id)) FROM Hospedagem h "
-			+ " INNER JOIN FETCH h.endereco he "
-			+ " INNER JOIN FETCH h.listTransportes lt "
-			+ " INNER JOIN FETCH lt.transporte t "
-			+ " INNER JOIN FETCH t.listTransporteDias ltd "
-			+ " INNER JOIN FETCH ltd.listTransporteDiaHorarios ltdh "
+	@Query(value = "SELECT h FROM Hospedagem h "
+			+ " LEFT JOIN FETCH h.endereco he "
+			+ " LEFT JOIN FETCH h.listTransportes lt "
+			+ " LEFT JOIN FETCH lt.transporte t "
+			+ " LEFT JOIN FETCH t.listTransporteDias ltd "
+			+ " LEFT JOIN FETCH ltd.listTransporteDiaHorarios ltdh "
 			+ " LEFT JOIN FETCH h.listExtras le "
 			+ " LEFT JOIN FETCH le.extra ext "
 			+ " LEFT JOIN FETCH h.listMidias lm "
@@ -47,7 +47,12 @@ public interface HospedagemRepository extends JpaRepository<Hospedagem, Long> {
 			+ " LEFT JOIN FETCH lp.proximidade prox "
 			+ " LEFT JOIN h.listAvaliacoes la "
 			+ " WHERE h.id =:id")
-	public Optional<Hospedagem> findByIdFetchEnderecoFetchTransportesFetchExtrasFetchMidiasFetchProximidadesAndCountAvaliacoes(
+	public Optional<Hospedagem> findByIdFetchEnderecoFetchTransportesFetchExtrasFetchMidiasFetchProximidades(
 			Long id);
+	
+	@Query(value="SELECT count(la.id) FROM Hospedagem h "
+			+ " INNER JOIN h.listAvaliacoes la "
+			+ " WHERE h.id =:id")
+	public Long countAvaliacoesById(Long id);
 
 }

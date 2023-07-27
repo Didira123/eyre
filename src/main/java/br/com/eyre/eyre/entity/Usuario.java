@@ -9,13 +9,11 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import br.com.eyre.eyre.bases.BaseEntity;
 import br.com.eyre.eyre.vo.UsuarioVO;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
@@ -27,16 +25,9 @@ import lombok.Data;
 @Table(name = "usuario")
 //@EqualsAndHashCode(callSuper = true)
 //@ToString(callSuper = true)
-public class Usuario implements UserDetails {
+public class Usuario extends BaseEntity<Long> implements UserDetails {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
 
 	@Column(name = "cpf_cnpj")
 	private String cpfCnpj;
@@ -84,7 +75,6 @@ public class Usuario implements UserDetails {
 		vo.setCpfCnpj(getCpfCnpj());
 		vo.setNome(getNome());
 		vo.setEmail(getEmail());
-//		vo.setSenha(getSenha());
 		vo.setDataNascimento(getDataNascimento());
 		vo.setTelefone(getTelefone());
 		if (getFoto() != null) {
@@ -161,6 +151,18 @@ public class Usuario implements UserDetails {
 		int result = super.hashCode();
 		result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
 		return result;
+	}
+
+	public UsuarioVO toTinyVO() {
+		UsuarioVO vo = new UsuarioVO();
+
+		vo.setId(getId());
+		vo.setNome(getNome());
+		if (getFoto() != null) {
+			vo.setFoto(getFoto().toVO());
+		}
+
+		return vo;
 	}
 
 }

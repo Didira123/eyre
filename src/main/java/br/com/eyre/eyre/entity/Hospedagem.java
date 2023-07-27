@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import br.com.eyre.eyre.bases.BaseEntity;
 import br.com.eyre.eyre.enums.QuartoEnum;
 import br.com.eyre.eyre.vo.HospedagemCustomProximidadeVO;
 import br.com.eyre.eyre.vo.HospedagemVO;
@@ -14,9 +15,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
@@ -28,11 +26,9 @@ import lombok.Data;
 @Table(name = "hospedagem")
 //@EqualsAndHashCode(callSuper = true)
 //@ToString(callSuper = true)
-public class Hospedagem {
+public class Hospedagem extends BaseEntity<Long> {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private static final long serialVersionUID = 1L;
 
 	@Column(name = "titulo")
 	private String titulo;
@@ -85,38 +81,40 @@ public class Hospedagem {
 		setId(id);
 	}
 
-	public HospedagemVO toVO() {
-		HospedagemVO vo = new HospedagemVO(this);
+	public HospedagemCustomProximidadeVO toVO() {
+		HospedagemCustomProximidadeVO vo = new HospedagemCustomProximidadeVO();
 //		vo.setId(getId());
-//		vo.setTitulo(getTitulo());
-//		vo.setDescricao(getDescricao());
-//		vo.setTipoQuarto(getTipoQuarto());
-//		vo.setDescricaoQuarto(getDescricaoQuarto());
-//		vo.setQuantidadeReservas(getQuantidadeReservas());
-//		if (getListTransportes() != null && !getListTransportes().isEmpty()) {
-//			vo.setListTransportes(
-//					getListTransportes().stream().map(ht -> ht.getTransporte().toVO()).collect(Collectors.toList()));
-//		}
-//		if (getListExtras() != null && !getListExtras().isEmpty()) {
-//			vo.setListExtras(getListExtras().stream().map(e -> e.getExtra().toVO()).collect(Collectors.toList()));
-//		}
-//		if (getListMidias() != null && !getListMidias().isEmpty()) {
-//			vo.setListImagens(getListMidias().stream().map(m -> m.getMidia().toVO()).collect(Collectors.toList()));
-//		}
-//		if (getListProximidades() != null && !getListTransportes().isEmpty()) {
-//			vo.setListProximidades(getListProximidades().stream().map(prox -> prox.getProximidade().toVO())
-//					.collect(Collectors.toList()));
-//		}
-//		vo.setEmail(getEmail());
-//		vo.setTelefone(getTelefone());
-//		if (getEndereco() != null) {
-//			vo.setEndereco(getEndereco().toVO());
-//		}
-//		if (getListAvaliacoes() != null && !getListAvaliacoes().isEmpty()) {
-//			vo.setListAvaliacoes(getListAvaliacoes().stream().map(a -> a.toVO()).collect(Collectors.toList()));
-//		}
-//		vo.setPreco(getPreco());
+		vo.setHospedagem(toFullInnerVO());
+		List<ProximidadeVO> listProximidades = getListProximidades().stream().map(hp -> hp.getProximidade().toSmallVO())
+				.collect(Collectors.toList());
+		vo.setProximidadesAsHashMap(listProximidades);
+		return vo;
+	}
 
+	public HospedagemVO toFullInnerVO() {
+		HospedagemVO vo = new HospedagemVO();
+		vo.setId(getId());
+		vo.setTitulo(getTitulo());
+		vo.setDescricao(getDescricao());
+		vo.setTipoQuarto(getTipoQuarto());
+		vo.setDescricaoQuarto(getDescricaoQuarto());
+		vo.setQuantidadeReservas(getQuantidadeReservas());
+		if (getListTransportes() != null && !getListTransportes().isEmpty()) {
+			vo.setListTransportes(
+					getListTransportes().stream().map(ht -> ht.getTransporte().toVO()).collect(Collectors.toList()));
+		}
+		if (getListExtras() != null && !getListExtras().isEmpty()) {
+			vo.setListExtras(getListExtras().stream().map(e -> e.getExtra().toVO()).collect(Collectors.toList()));
+		}
+		if (getListMidias() != null && !getListMidias().isEmpty()) {
+			vo.setListImagens(getListMidias().stream().map(m -> m.getMidia().toVO()).collect(Collectors.toList()));
+		}
+		vo.setEmail(getEmail());
+		vo.setTelefone(getTelefone());
+		if (getEndereco() != null) {
+			vo.setEndereco(getEndereco().toVO());
+		}
+		vo.setPreco(getPreco());
 		return vo;
 	}
 
@@ -126,7 +124,9 @@ public class Hospedagem {
 		vo.setTitulo(getTitulo());
 		vo.setTipoQuarto(getTipoQuarto());
 		vo.setDescricaoQuarto(getDescricaoQuarto());
-		vo.setListExtras(getListExtras().stream().map(e -> e.getExtra().toVO()).collect(Collectors.toList()));
+		if (getListExtras() != null && !getListExtras().isEmpty()) {
+			vo.setListExtras(getListExtras().stream().map(e -> e.getExtra().toVO()).collect(Collectors.toList()));
+		}
 		vo.setQuantidadeReservas(getQuantidadeReservas());
 		vo.setPreco(getPreco());
 		existeTiposTransportes(vo); // verifica "existeVoo" e "existeOnibus"
@@ -153,14 +153,14 @@ public class Hospedagem {
 		}
 	}
 
-	public HospedagemCustomProximidadeVO toCustomWithProximidadeVO() {
-		HospedagemCustomProximidadeVO vo = new HospedagemCustomProximidadeVO();
-		vo.setId(getId());
-		vo.setHospedagem(toVO());
-		List<ProximidadeVO> listProximidades = getListProximidades().stream().map(hp -> hp.getProximidade().toVO())
-				.collect(Collectors.toList());
-		vo.setProximidadesAsHashMap(listProximidades);
-		return vo;
+	public HospedagemVO toSmallVO() {
+		throw new RuntimeException("NÃO IMPLEMENTADO POR MIM AINDA");
+//		return null;
+	}
+
+	public HospedagemVO toTiny() {
+		throw new RuntimeException("NÃO IMPLEMENTADO POR MIM AINDA");
+//		return null;
 	}
 
 	@Override

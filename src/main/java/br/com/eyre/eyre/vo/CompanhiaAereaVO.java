@@ -11,6 +11,8 @@ import lombok.ToString;
 @ToString(callSuper = true)
 public class CompanhiaAereaVO extends TransporteVO {
 
+	private static final long serialVersionUID = 1L;
+
 	private LocalTime escala;
 
 	private MidiaVO midia;

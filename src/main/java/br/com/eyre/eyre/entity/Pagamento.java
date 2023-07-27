@@ -3,12 +3,10 @@ package br.com.eyre.eyre.entity;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+import br.com.eyre.eyre.bases.BaseEntity;
 import br.com.eyre.eyre.vo.PagamentoVO;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Data;
 
@@ -17,11 +15,9 @@ import lombok.Data;
 @Table(name = "pagamento")
 //@EqualsAndHashCode(callSuper = true)
 //@ToString(callSuper = true)
-public class Pagamento {
+public class Pagamento extends BaseEntity<Long> {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private static final long serialVersionUID = 1L;
 
 	@Column(name = "numero_cartao")
 	private String numeroCartao;

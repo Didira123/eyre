@@ -3,6 +3,7 @@ package br.com.eyre.eyre.entity;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import br.com.eyre.eyre.bases.BaseEntity;
 import br.com.eyre.eyre.enums.DiaEnum;
 import br.com.eyre.eyre.vo.TransporteDiaVO;
 import jakarta.persistence.Column;
@@ -10,9 +11,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
@@ -24,11 +22,9 @@ import lombok.Data;
 @Table(name = "transporte_dia")
 //@EqualsAndHashCode(callSuper = true)
 //@ToString(callSuper = true)
-public class TransporteDia {
+public class TransporteDia extends BaseEntity<Long> {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private static final long serialVersionUID = 1L;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "transporte_id")
@@ -51,7 +47,6 @@ public class TransporteDia {
 	public TransporteDiaVO toVO() {
 		TransporteDiaVO vo = new TransporteDiaVO();
 		vo.setId(getId());
-		vo.setTransporte(getTransporte().toVO());
 		vo.setDia(getDia());
 		if (getListTransporteDiaHorarios() != null && getListTransporteDiaHorarios().isEmpty()) {
 			vo.setListTransporteDiaHorarios(

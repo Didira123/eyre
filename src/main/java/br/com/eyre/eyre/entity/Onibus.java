@@ -35,9 +35,9 @@ public class Onibus extends Transporte {
 		vo.setHorarioPartida(getHorarioPartida());
 		vo.setHorarioChegada(getHorarioChegada());
 		if(getListTransporteEnderecos() != null && getListTransporteEnderecos().size() == 2) {
-			List<TransporteEndereco> saidaChegada = getListTransporteEndereco_Ordenado();
-			vo.setLocalSaida(saidaChegada.get(0).getEndereco().toVO());
-			vo.setLocalChegada(saidaChegada.get(1).getEndereco().toVO());
+			TransporteEndereco[] tes = getListTransporteEndereco_Ordenado();
+			vo.setLocalSaida(tes[0].getEndereco().toVO());
+			vo.setLocalChegada(tes[1].getEndereco().toVO());
 		}
 		vo.setTipoAssento(getTipoAssento());
 		vo.setPreco(getPreco());

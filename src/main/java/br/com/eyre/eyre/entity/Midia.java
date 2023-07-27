@@ -1,11 +1,9 @@
 package br.com.eyre.eyre.entity;
 
+import br.com.eyre.eyre.bases.BaseEntity;
 import br.com.eyre.eyre.vo.MidiaVO;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Data;
 
@@ -14,11 +12,9 @@ import lombok.Data;
 @Table(name = "midia")
 //@EqualsAndHashCode(callSuper = true)
 //@ToString(callSuper = true)
-public class Midia {
+public class Midia extends BaseEntity<Long> {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private static final long serialVersionUID = 1L;
 
 	@Column(name = "nome")
 	private String nome;

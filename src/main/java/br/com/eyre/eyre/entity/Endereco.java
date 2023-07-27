@@ -1,5 +1,6 @@
 package br.com.eyre.eyre.entity;
 
+import br.com.eyre.eyre.bases.BaseEntity;
 import br.com.eyre.eyre.vo.EnderecoVO;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -14,11 +15,9 @@ import lombok.Data;
 @Table(name = "endereco")
 //@EqualsAndHashCode(callSuper = true)
 //@ToString(callSuper = true)
-public class Endereco {
+public class Endereco extends BaseEntity<Long> {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private static final long serialVersionUID = 1L;
 
 	@Column(name = "cep")
 	private String cep;
@@ -31,7 +30,7 @@ public class Endereco {
 
 	@Column(name = "cidade")
 	private String cidade;
-	
+
 	@Column(name = "bairro")
 	private String bairro;
 
@@ -40,14 +39,14 @@ public class Endereco {
 
 	@Column(name = "numero")
 	private String numero;
-	
-	public Endereco() {	
+
+	public Endereco() {
 	}
-	
-	public Endereco(Long id) {	
+
+	public Endereco(Long id) {
 		setId(id);
 	}
-	
+
 	public EnderecoVO toVO() {
 		EnderecoVO vo = new EnderecoVO();
 		vo.setId(getId());

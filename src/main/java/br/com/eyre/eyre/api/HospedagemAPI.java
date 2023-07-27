@@ -3,29 +3,28 @@ package br.com.eyre.eyre.api;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.commons.lang3.NotImplementedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.eyre.eyre.bases.BaseAPI;
 import br.com.eyre.eyre.entity.Hospedagem;
-import br.com.eyre.eyre.repository.HospedagemRepository;
 import br.com.eyre.eyre.service.HospedagemService;
 import br.com.eyre.eyre.vo.HospedagemCustomProximidadeVO;
 import br.com.eyre.eyre.vo.HospedagemVO;
 import br.com.eyre.eyre.vo.OfertaVO;
-import br.com.eyre.eyre.vo.TransporteVO;
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/hospedagem")
-public class HospedagemAPI {
+public class HospedagemAPI extends BaseAPI<Long, Hospedagem, HospedagemVO, HospedagemVO, HospedagemService> {
 
 	@Autowired
 	private HospedagemService hospedagemService;
@@ -41,27 +40,26 @@ public class HospedagemAPI {
 		}
 	}
 
-	@GetMapping(path = { "/{id}" }, produces = MediaType.APPLICATION_JSON_VALUE)
+	@Override
 	public ResponseEntity<?> findById(@PathVariable("id") Long id) {
 		Optional<Hospedagem> optional = hospedagemService.findById(id);
 		if (optional.isPresent()) {
-			return ResponseEntity.ok(optional.get().toVO());
+			try {
+				Long count = hospedagemService.countAvaliacoesById(id);
+				HospedagemCustomProximidadeVO vo = optional.get().toVO();
+				vo.setCountAvaliacoes(count);
+				return ResponseEntity.ok(vo);
+			} catch (NotImplementedException e) {
+				e.printStackTrace();
+				return ResponseEntity.internalServerError().body(e.getMessage());
+			}
 		}
 		return ResponseEntity.notFound().build();
 	}
 
-	@GetMapping(path = { "/{id}/custom" }, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> findByIdWithListProximidadeShaped(@PathVariable("id") Long id) {
-		try {
-			HospedagemCustomProximidadeVO vo = hospedagemService.findByIdWithListProximidadeShaped(id);
-			if (vo != null) {
-				return ResponseEntity.ok(vo);
-			}
-			return ResponseEntity.notFound().build();
-		} catch (Exception e) {
-			e.printStackTrace();
-			return ResponseEntity.internalServerError().body(e.getMessage());
-		}
+	@Override
+	protected HospedagemService getService() {
+		return hospedagemService;
 	}
 
 }
