@@ -1,27 +1,23 @@
 package br.com.eyre.eyre.vo;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 
-import br.com.eyre.eyre.bases.BaseVO;
+import br.com.eyre.eyre.enums.DiaEnum;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
 
 @Data
-@EqualsAndHashCode(callSuper = true)
-@ToString(callSuper = true)
-public class OfertaVO extends BaseVO<Long> {
+public class OfertaVO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	@NotNull
-	@Positive
 	private BigDecimal orcamento;
 
 	@NotNull
@@ -31,11 +27,15 @@ public class OfertaVO extends BaseVO<Long> {
 	private EnderecoVO destino;
 
 	@JsonFormat(shape = Shape.STRING, pattern = "dd/MM/yyyy")
-	@NotNull
 	private LocalDate dataIda;
 
 	@JsonFormat(shape = Shape.STRING, pattern = "dd/MM/yyyy")
-	@NotNull
 	private LocalDate dataVolta;
+
+	public static List<DiaEnum> getDiaAntesAtualEDepois(LocalDate data) {
+		int codeDia = data.getDayOfWeek().getValue();
+		return DiaEnum.getByListCodigo(
+				Arrays.asList(codeDia - 1 == 0 ? 7 : codeDia - 1, codeDia, codeDia + 1 == 8 ? 1 : codeDia + 1));
+	}
 
 }

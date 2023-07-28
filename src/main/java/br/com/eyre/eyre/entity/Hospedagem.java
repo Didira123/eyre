@@ -119,38 +119,8 @@ public class Hospedagem extends BaseEntity<Long> {
 	}
 
 	public HospedagemVO toCardVO() {
-		HospedagemVO vo = new HospedagemVO();
-		vo.setId(getId());
-		vo.setTitulo(getTitulo());
-		vo.setTipoQuarto(getTipoQuarto());
-		vo.setDescricaoQuarto(getDescricaoQuarto());
-		if (getListExtras() != null && !getListExtras().isEmpty()) {
-			vo.setListExtras(getListExtras().stream().map(e -> e.getExtra().toVO()).collect(Collectors.toList()));
-		}
-		vo.setQuantidadeReservas(getQuantidadeReservas());
-		vo.setPreco(getPreco());
-		existeTiposTransportes(vo); // verifica "existeVoo" e "existeOnibus"
+		HospedagemVO vo = new HospedagemVO(this);
 		return vo;
-	}
-
-	private void existeTiposTransportes(HospedagemVO vo) {
-		vo.setExisteVoo(false);
-		vo.setExisteOnibus(false);
-		if (getListTransportes() != null && !getListTransportes().isEmpty()) {
-			List<Integer> listDtypes = getListTransportes().stream().map(ht -> {
-				return (ht.getTransporte() instanceof Onibus) ? 1 : 0;
-			}).collect(Collectors.toList());
-			int cont = 0;
-			for (; cont < listDtypes.size(); cont++) {
-				if (listDtypes.get(cont) == 0) {
-					vo.setExisteVoo(true);
-					break;
-				}
-			}
-			if (cont != 0 || (cont == 0 && listDtypes.size() != 1 && !listDtypes.isEmpty())) {
-				vo.setExisteOnibus(true);
-			}
-		}
 	}
 
 	public HospedagemVO toSmallVO() {

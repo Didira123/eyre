@@ -117,6 +117,9 @@
 			<column name="nome" type="varchar(150)">
 				<constraints nullable="false" />
 			</column>
+			<column name="tipo_midia" type="tinyint">
+				<constraints nullable="false" />
+			</column>
 			<column name="dados" type="bytea">
 				<constraints nullable="false" />
 			</column>
@@ -201,12 +204,6 @@
 				<constraints nullable="false" />
 			</column>
 			<column name="nome" type="varchar(150)">
-				<constraints nullable="false" />
-			</column>
-			<column name="horario_partida" type="time">
-				<constraints nullable="false" />
-			</column>
-			<column name="horario_chegada" type="time">
 				<constraints nullable="false" />
 			</column>
 			<column name="preco" type="numeric(19,2)">
@@ -304,7 +301,8 @@
 			</column>
 		</createTable>
 		<addUniqueConstraint
-			constraintName="pacote_viagem>pagamento_id" tableName="pacote_viagem"
+			constraintName="pacote_viagem>pagamento_id"
+			tableName="pacote_viagem"
 			columnNames="pagamento_id" />
 		<createTable tableName="hospedagem_midia"
 			schemaName="public">
@@ -334,7 +332,8 @@
 				<constraints nullable="false" />
 			</column>
 		</createTable>
-		<createTable tableName="pagamento" schemaName="public"> <!-- TODO ENTIDADE NÃO IMPLEMENTADO CORRETAMENTE -->
+		<createTable tableName="pagamento" schemaName="public"> <!-- TODO
+			ENTIDADE NÃO IMPLEMENTADO CORRETAMENTE -->
 			<column autoIncrement="true" name="id" type="BIGSERIAL">
 				<constraints primaryKey="true" nullable="false" />
 			</column>
@@ -385,11 +384,13 @@
 			referencedColumnNames="id" />
 		<addForeignKeyConstraint
 			constraintName="hospedagem_transporte-hospedagem"
-			baseTableName="hospedagem_transporte" baseColumnNames="hospedagem_id"
+			baseTableName="hospedagem_transporte"
+			baseColumnNames="hospedagem_id"
 			referencedTableName="hospedagem" referencedColumnNames="id" />
 		<addForeignKeyConstraint
 			constraintName="hospedagem_transporte-transporte"
-			baseTableName="hospedagem_transporte" baseColumnNames="transporte_id"
+			baseTableName="hospedagem_transporte"
+			baseColumnNames="transporte_id"
 			referencedTableName="transporte" referencedColumnNames="id" />
 		<addForeignKeyConstraint
 			constraintName="transporte_endereco-transporte"
@@ -399,6 +400,16 @@
 			constraintName="transporte_endereco-endereco"
 			baseTableName="transporte_endereco" baseColumnNames="endereco_id"
 			referencedTableName="endereco" referencedColumnNames="id" />
+		<addForeignKeyConstraint
+			constraintName="onibus-transporte"
+			baseTableName="onibus"
+			baseColumnNames="id" referencedTableName="transporte"
+			referencedColumnNames="id" />
+		<addForeignKeyConstraint
+			constraintName="companhia_aerea-transporte"
+			baseTableName="companhia_aerea"
+			baseColumnNames="id" referencedTableName="transporte"
+			referencedColumnNames="id" />
 		<addForeignKeyConstraint
 			constraintName="transporte_dia-transporte"
 			baseTableName="transporte_dia" baseColumnNames="transporte_id"
@@ -447,12 +458,13 @@
 			baseColumnNames="proximidade_id" referencedTableName="proximidade"
 			referencedColumnNames="id" />
 	</changeSet>
-	<changeSet id="popularTables" author="diego.rafael" >
+	<changeSet id="popularTables" author="diego.rafael">
 		<sql>
 			insert into role (nome) values ('Usuário Sudo'),('Usuário Comum');
-			insert into endereco values (1,'cep','pais','estado','cidade','bairro','rua','numero');
-			insert into usuario values (1,'00000000000000','Usuário Sudo para Verificações','usuarioSudo@gmail.com','{bcrypt}$2a$10$0XcRCPfjgisUYFBN95WXJe8tB3kuZOvIUcSPiZx/kSw5Vn21EslQy','2022-11-17','00000000000',null,1,1,true);
-			
+			insert into endereco values
+			(1,'cep','pais','estado','cidade','bairro','rua','numero');
+			insert into usuario values (1,'00000000000000','Usuário Sudo para
+			Verificações','usuarioSudo@gmail.com','{bcrypt}$2a$10$0XcRCPfjgisUYFBN95WXJe8tB3kuZOvIUcSPiZx/kSw5Vn21EslQy','2022-11-17','00000000000',null,1,1,true);
 			SELECT setval('usuario_id_seq', (select max(id) from usuario));
 			SELECT setval('endereco_id_seq', (select max(id) from endereco));
 		</sql>

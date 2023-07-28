@@ -37,12 +37,6 @@ public abstract class Transporte extends BaseEntity<Long> {
 	@Column(name = "nome")
 	private String nome;
 
-	@Column(name = "horario_partida")
-	private LocalTime horarioPartida;
-
-	@Column(name = "horario_chegada")
-	private LocalTime horarioChegada;
-
 //	@OneToOne(fetch = FetchType.LAZY)
 //	@Column(name = "local_saida")
 //	private Endereco localSaida;

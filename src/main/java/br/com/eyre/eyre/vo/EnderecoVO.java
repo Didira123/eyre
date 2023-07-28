@@ -1,6 +1,7 @@
 package br.com.eyre.eyre.vo;
 
 import br.com.eyre.eyre.bases.BaseVO;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -16,8 +17,10 @@ public class EnderecoVO extends BaseVO<Long> {
 
 	private String pais;
 
+	@NotBlank
 	private String estado;
 
+	@NotBlank
 	private String cidade;
 
 	private String bairro;

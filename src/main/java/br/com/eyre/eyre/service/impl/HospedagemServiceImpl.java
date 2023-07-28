@@ -1,23 +1,22 @@
 package br.com.eyre.eyre.service.impl;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import br.com.eyre.eyre.bases.BaseServiceImpl;
+import br.com.eyre.eyre.bases.BaseVO;
 import br.com.eyre.eyre.entity.Hospedagem;
-import br.com.eyre.eyre.enums.DiaEnum;
-import br.com.eyre.eyre.enums.EnderecoEnum;
-import br.com.eyre.eyre.enums.ExtraEnum;
 import br.com.eyre.eyre.repository.HospedagemRepository;
 import br.com.eyre.eyre.service.HospedagemService;
 import br.com.eyre.eyre.vo.HospedagemVO;
 import br.com.eyre.eyre.vo.OfertaVO;
+import br.com.eyre.eyre.vo.filter.HospedagemFiltroVO;
 
 @Service
 public class HospedagemServiceImpl extends BaseServiceImpl<Long, Hospedagem> implements HospedagemService {
@@ -31,18 +30,12 @@ public class HospedagemServiceImpl extends BaseServiceImpl<Long, Hospedagem> imp
 	}
 
 	@Override
-	public List<HospedagemVO> findByOrcamentoAndEnderecosAndDatas(OfertaVO vo) {
-		int diaIda = vo.getDataIda().getDayOfWeek().getValue();
-		List<DiaEnum> diasIda = DiaEnum.getByListCodigo(
-				Arrays.asList(diaIda - 1 == 0 ? 7 : diaIda - 1, diaIda, diaIda + 1 == 8 ? 1 : diaIda + 1));
-		int diaVolta = vo.getDataVolta().getDayOfWeek().getValue();
-		List<DiaEnum> diasVolta = DiaEnum.getByListCodigo(
-				Arrays.asList(diaVolta - 1 == 0 ? 7 : diaVolta - 1, diaVolta, diaVolta + 1 == 8 ? 1 : diaVolta + 1));
-
-		List<Hospedagem> lista = hospedagemRepository.findByOrcamentoAndEnderecosAndDatas(vo.getOrcamento(),
-				vo.getPartida().getEstado(), vo.getPartida().getCidade(), vo.getDestino().getEstado(),
-				vo.getDestino().getCidade(), diasIda, diasVolta, EnderecoEnum.SAIDA, ExtraEnum.SERVIÇO_PRINCIPAL);
-		return lista.stream().map(h -> h.toCardVO()).collect(Collectors.toList());
+	public Page<? extends BaseVO<?>> findByFilter(HospedagemFiltroVO filter) {
+		if (filter.getContent() == null) {
+			filter.setContent(new OfertaVO());
+		}
+		return new PageImpl<HospedagemVO>(hospedagemRepository.findByFilter(filter),
+				PageRequest.of(filter.getPage(), filter.getPageSize()), hospedagemRepository.countByFilter(filter));
 	}
 
 	@Override
@@ -56,26 +49,3 @@ public class HospedagemServiceImpl extends BaseServiceImpl<Long, Hospedagem> imp
 	}
 
 }
-
-// T --> listHospedagemDias                                                                                    
-//                                                                                     
-//                                                                                     
-//                                                                                     
-//                                                                                     
-//                                                                                     
-//                                                                                     
-//                                                                                     
-//                                                                                     
-//                                                                                     
-//                                                                                     
-//                                                                                     
-//                                                                                     
-//                                                                                     
-//                                                                                     
-//                                                                                     
-//                                                                                     
-//                                                                                     
-//                                                                                     
-//                                                                                     
-//                                                                                     
-//                                                                                     

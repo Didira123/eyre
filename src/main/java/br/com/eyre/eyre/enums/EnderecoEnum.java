@@ -8,7 +8,7 @@ import lombok.Getter;
 
 @Getter
 public enum EnderecoEnum {
-	SAIDA(1, "local saida"), CHEGADA(2, "local chegada");
+	SAIDA(0, "local saida"), CHEGADA(1, "local chegada");
 
 	private Integer code;
 

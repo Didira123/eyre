@@ -32,10 +32,6 @@ public class TransporteVO extends BaseVO<Long> {
 
 	private String nome;
 
-	private LocalTime horarioPartida;
-
-	private LocalTime horarioChegada;
-
 	private EnderecoVO localSaida;
 
 	private EnderecoVO localChegada;

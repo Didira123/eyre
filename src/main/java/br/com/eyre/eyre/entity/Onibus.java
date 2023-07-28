@@ -1,7 +1,5 @@
 package br.com.eyre.eyre.entity;
 
-import java.util.List;
-
 import br.com.eyre.eyre.vo.OnibusVO;
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
@@ -16,6 +14,8 @@ import lombok.Data;
 //@ToString(callSuper = true)
 @DiscriminatorValue(value = Transporte.ONIBUS)
 public class Onibus extends Transporte {
+
+	private static final long serialVersionUID = 1L;
 
 	@Column(name = "tipo_assento")
 	private String tipoAssento;
@@ -32,9 +32,7 @@ public class Onibus extends Transporte {
 		vo.setId(getId());
 //		vo.setType(getDtype());
 		vo.setNome(getNome());
-		vo.setHorarioPartida(getHorarioPartida());
-		vo.setHorarioChegada(getHorarioChegada());
-		if(getListTransporteEnderecos() != null && getListTransporteEnderecos().size() == 2) {
+		if (getListTransporteEnderecos() != null && getListTransporteEnderecos().size() == 2) {
 			TransporteEndereco[] tes = getListTransporteEndereco_Ordenado();
 			vo.setLocalSaida(tes[0].getEndereco().toVO());
 			vo.setLocalChegada(tes[1].getEndereco().toVO());

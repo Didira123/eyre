@@ -20,6 +20,8 @@ import lombok.Data;
 @DiscriminatorValue(value = Transporte.COMPANHIA_AEREA)
 public class CompanhiaAerea extends Transporte {
 
+	private static final long serialVersionUID = 1L;
+
 	@Column(name = "escala")
 	private LocalTime escala;
 
@@ -39,8 +41,6 @@ public class CompanhiaAerea extends Transporte {
 		vo.setId(getId());
 //		vo.setType(getDtype());
 		vo.setNome(getNome());
-		vo.setHorarioPartida(getHorarioPartida());
-		vo.setHorarioChegada(getHorarioChegada());
 		if (getListTransporteEnderecos() != null && getListTransporteEnderecos().size() == 2) {
 			TransporteEndereco[] tes = getListTransporteEndereco_Ordenado();
 			vo.setLocalSaida(tes[0].getEndereco().toVO());
