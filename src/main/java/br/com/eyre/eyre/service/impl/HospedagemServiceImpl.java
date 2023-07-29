@@ -8,6 +8,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import br.com.eyre.eyre.bases.BaseServiceImpl;
 import br.com.eyre.eyre.bases.BaseVO;
@@ -30,6 +31,7 @@ public class HospedagemServiceImpl extends BaseServiceImpl<Long, Hospedagem> imp
 	}
 
 	@Override
+	@Transactional()
 	public Page<? extends BaseVO<?>> findByFilter(HospedagemFiltroVO filter) {
 		if (filter.getContent() == null) {
 			filter.setContent(new OfertaVO());

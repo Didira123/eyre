@@ -80,7 +80,7 @@ public class HospedagemVO extends BaseVO<Long> {
 	private void existeTiposTransportes(Set<HospedagemTransporte> ts) {
 		setExisteVoo(false);
 		setExisteOnibus(false);
-		if (getListTransportes() != null && !getListTransportes().isEmpty()) {
+		if (ts != null && !ts.isEmpty()) {
 			List<Integer> listDtypes = ts.stream().map(ht -> {
 				return (ht.getTransporte() instanceof Onibus) ? 1 : 0;
 			}).collect(Collectors.toList());

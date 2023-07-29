@@ -1,21 +1,21 @@
-package br.com.eyre.eyre.service.impl;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort.Direction;
-import org.springframework.stereotype.Service;
-import org.springframework.validation.BindingResult;
-
-import br.com.eyre.eyre.entity.PacoteViagem;
-import br.com.eyre.eyre.repository.PacoteViagemRepository;
-import br.com.eyre.eyre.service.PacoteViagemService;
-import br.com.eyre.eyre.vo.PacoteViagemVO;
-
-@Service
-public class PacoteViagemServiceImpl implements PacoteViagemService {
-
+//package br.com.eyre.eyre.service.impl;
+//
+//import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.data.domain.Page;
+//import org.springframework.data.domain.PageImpl;
+//import org.springframework.data.domain.PageRequest;
+//import org.springframework.data.domain.Sort.Direction;
+//import org.springframework.stereotype.Service;
+//import org.springframework.validation.BindingResult;
+//
+//import br.com.eyre.eyre.entity.PacoteViagem;
+//import br.com.eyre.eyre.repository.PacoteViagemRepository;
+//import br.com.eyre.eyre.service.PacoteViagemService;
+//import br.com.eyre.eyre.vo.PacoteViagemVO;
+//
+//@Service
+//public class PacoteViagemServiceImpl implements PacoteViagemService {
+//
 //	@Autowired
 //	private PacoteViagemRepository pacoteViagemRepository;
 //
@@ -26,10 +26,10 @@ public class PacoteViagemServiceImpl implements PacoteViagemService {
 //				PageRequest.of(filtro.getPage(), filtro.getPageSize()),
 //				pacoteViagemRepository.countByFilter(filtro));
 //	}
-
+//
 //	@Autowired
 //	PagamentoService pagamentoService;
-
+//
 //	public Optional<PacoteViagem> findById(Long id) {
 //		Optional<PacoteViagem> optional = pacoteViagemRepository.findById(id);
 //		return optional;
@@ -62,5 +62,5 @@ public class PacoteViagemServiceImpl implements PacoteViagemService {
 //	public void deleteById(Long id) {
 //		pacoteViagemRepository.deleteById(id);
 //	}
-
-}
+//
+//}

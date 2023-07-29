@@ -14,6 +14,7 @@ public interface HospedagemRepository extends JpaRepository<Hospedagem, Long>, H
 			+ " LEFT JOIN FETCH h.endereco he "
 			+ " LEFT JOIN FETCH h.listTransportes lt "
 			+ " LEFT JOIN FETCH lt.transporte t "
+			+ " LEFT JOIN FETCH t.listTransporteEnderecos lte "
 			+ " LEFT JOIN FETCH t.listTransporteDias ltd "
 			+ " LEFT JOIN FETCH ltd.listTransporteDiaHorarios ltdh "
 			+ " LEFT JOIN FETCH h.listExtras le "

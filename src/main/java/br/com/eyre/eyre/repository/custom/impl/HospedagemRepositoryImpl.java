@@ -2,6 +2,8 @@ package br.com.eyre.eyre.repository.custom.impl;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import br.com.eyre.eyre.enums.EnderecoEnum;
 import br.com.eyre.eyre.enums.ExtraEnum;
 import br.com.eyre.eyre.enums.MidiaEnum;
@@ -13,6 +15,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
 
+@Repository
 public class HospedagemRepositoryImpl implements HospedagemRepositoryCustom {
 
 	@PersistenceContext
@@ -24,8 +27,8 @@ public class HospedagemRepositoryImpl implements HospedagemRepositoryCustom {
 		builder.append(" INNER JOIN h.endereco he ");
 		builder.append(" INNER JOIN h.listMidias lm ");
 		builder.append(" INNER JOIN lm.midia m WITH m.tipoMidia=:midiaPrincipal ");
-		builder.append(" INNER JOIN FETCH h.listTransportes lt ");
-		builder.append(" INNER JOIN FETCH lt.transporte t ");
+		builder.append(" INNER JOIN h.listTransportes lt ");
+		builder.append(" INNER JOIN lt.transporte t ");
 		builder.append(" INNER JOIN t.listTransporteEnderecos lte ");
 		builder.append(" INNER JOIN lte.endereco et ");
 		builder.append(" INNER JOIN t.listTransporteDias ltd ");
@@ -42,7 +45,7 @@ public class HospedagemRepositoryImpl implements HospedagemRepositoryCustom {
 
 		Query query = createQueryWithFiltro(filtro, builder);
 		if (filtro.getPage() != null && filtro.getPageSize() != null) {
-			query.setFirstResult(filtro.getPage());
+			query.setFirstResult(filtro.getPage() * filtro.getPageSize());
 			query.setMaxResults(filtro.getPageSize());
 		}
 		return query.getResultList();

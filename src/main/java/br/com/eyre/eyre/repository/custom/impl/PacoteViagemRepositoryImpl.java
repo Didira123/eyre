@@ -1,17 +1,17 @@
-package br.com.eyre.eyre.repository.custom.impl;
-
-import java.util.List;
-
-import org.springframework.stereotype.Repository;
-
-import br.com.eyre.eyre.entity.PacoteViagem;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.Query;
-
-@Repository
-public class PacoteViagemRepositoryImpl {
-
+//package br.com.eyre.eyre.repository.custom.impl;
+//
+//import java.util.List;
+//
+//import org.springframework.stereotype.Repository;
+//
+//import br.com.eyre.eyre.entity.PacoteViagem;
+//import jakarta.persistence.EntityManager;
+//import jakarta.persistence.PersistenceContext;
+//import jakarta.persistence.Query;
+//
+//@Repository
+//public class PacoteViagemRepositoryImpl {
+//
 //	@PersistenceContext
 //	private EntityManager entityManager;
 //
@@ -69,5 +69,5 @@ public class PacoteViagemRepositoryImpl {
 //		}
 //		return query.getResultList();
 //	}
-
-}
+//
+//}

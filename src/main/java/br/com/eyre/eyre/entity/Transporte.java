@@ -1,7 +1,6 @@
 package br.com.eyre.eyre.entity;
 
 import java.math.BigDecimal;
-import java.time.LocalTime;
 import java.util.Set;
 
 import br.com.eyre.eyre.bases.BaseEntity;
