@@ -1,5 +1,6 @@
 package br.com.eyre.eyre.vo;
 
+import br.com.eyre.eyre.enums.AssentoEnum;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -11,6 +12,6 @@ public class OnibusVO extends TransporteVO {
 
 	private static final long serialVersionUID = 1L;
 
-	private String tipoAssento;
+	private AssentoEnum tipoAssento;
 
 }

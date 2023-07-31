@@ -4,11 +4,11 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
+import br.com.eyre.eyre.entity.Hospedagem;
 import br.com.eyre.eyre.enums.EnderecoEnum;
 import br.com.eyre.eyre.enums.ExtraEnum;
 import br.com.eyre.eyre.enums.MidiaEnum;
 import br.com.eyre.eyre.repository.custom.HospedagemRepositoryCustom;
-import br.com.eyre.eyre.vo.HospedagemVO;
 import br.com.eyre.eyre.vo.OfertaVO;
 import br.com.eyre.eyre.vo.filter.HospedagemFiltroVO;
 import jakarta.persistence.EntityManager;
@@ -21,14 +21,14 @@ public class HospedagemRepositoryImpl implements HospedagemRepositoryCustom {
 	@PersistenceContext
 	private EntityManager entityManager;
 
-	public List<HospedagemVO> findByFilter(HospedagemFiltroVO filtro) {
+	public List<Hospedagem> findByFilter(HospedagemFiltroVO filtro) {
 		StringBuilder builder = new StringBuilder();
-		builder.append("SELECT distinct new br.com.eyre.eyre.vo.HospedagemVO(h) FROM Hospedagem h ");
-		builder.append(" INNER JOIN h.endereco he ");
-		builder.append(" INNER JOIN h.listMidias lm ");
+		builder.append("SELECT distinct (h) FROM Hospedagem h ");
+		builder.append(" INNER JOIN FETCH h.endereco he ");
+		builder.append(" INNER JOIN FETCH h.listMidias lm ");
 		builder.append(" INNER JOIN lm.midia m WITH m.tipoMidia=:midiaPrincipal ");
-		builder.append(" INNER JOIN h.listTransportes lt ");
-		builder.append(" INNER JOIN lt.transporte t ");
+		builder.append(" INNER JOIN FETCH h.listTransportes lt ");
+		builder.append(" INNER JOIN FETCH lt.transporte t ");
 		builder.append(" INNER JOIN t.listTransporteEnderecos lte ");
 		builder.append(" INNER JOIN lte.endereco et ");
 		builder.append(" INNER JOIN t.listTransporteDias ltd ");
@@ -53,7 +53,7 @@ public class HospedagemRepositoryImpl implements HospedagemRepositoryCustom {
 
 	public Long countByFilter(HospedagemFiltroVO filtro) {
 		StringBuilder builder = new StringBuilder();
-		builder.append("SELECT count(h.id) FROM Hospedagem h ");
+		builder.append("SELECT count(distinct h.id) FROM Hospedagem h ");
 		builder.append(" INNER JOIN h.endereco he ");
 		builder.append(" INNER JOIN h.listMidias lm WITH lm.midia.tipoMidia=:midiaPrincipal ");
 		builder.append(" INNER JOIN lm.midia m ");

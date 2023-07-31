@@ -1,6 +1,7 @@
 package br.com.eyre.eyre.service.impl;
 
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -36,7 +37,8 @@ public class HospedagemServiceImpl extends BaseServiceImpl<Long, Hospedagem> imp
 		if (filter.getContent() == null) {
 			filter.setContent(new OfertaVO());
 		}
-		return new PageImpl<HospedagemVO>(hospedagemRepository.findByFilter(filter),
+		return new PageImpl<HospedagemVO>(
+				hospedagemRepository.findByFilter(filter).stream().map(h -> h.toCardVO()).collect(Collectors.toList()),
 				PageRequest.of(filter.getPage(), filter.getPageSize()), hospedagemRepository.countByFilter(filter));
 	}
 

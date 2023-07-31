@@ -2,10 +2,13 @@ package br.com.eyre.eyre.entity;
 
 import java.util.stream.Collectors;
 
+import br.com.eyre.eyre.enums.AssentoEnum;
 import br.com.eyre.eyre.vo.OnibusVO;
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.Table;
 import lombok.Data;
 
@@ -19,8 +22,9 @@ public class Onibus extends Transporte {
 
 	private static final long serialVersionUID = 1L;
 
+	@Enumerated(EnumType.ORDINAL)
 	@Column(name = "tipo_assento")
-	private String tipoAssento;
+	private AssentoEnum tipoAssento;
 
 	public Onibus() {
 	}
