@@ -54,7 +54,8 @@ public abstract class Transporte extends BaseEntity<Long> {
 	private BigDecimal preco;
 
 	public TransporteEndereco[] getListTransporteEndereco_Ordenado() {
-		TransporteEndereco[] array = (TransporteEndereco[]) getListTransporteEnderecos().toArray();
+		TransporteEndereco[] array = new TransporteEndereco[2];
+		array = getListTransporteEnderecos().toArray(array);
 		if (array[0].getTipoEndereco() == EnderecoEnum.CHEGADA) {
 			TransporteEndereco te = array[1];
 			array[1] = array[0];

@@ -12,10 +12,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 //informar o ID (ID), Classe Entidade (E), Classe VO (V), Classe Repositório (R)
 public class BaseServiceImpl<ID extends Serializable, E extends BaseEntity<ID>> implements BaseService<ID, E> {
 
+	@Override
 	public List<E> findAll() {
 		return getRepository().findAll(Sort.by(Direction.ASC, "id"));
 	}
 
+	@Override
 	public Optional<E> findById(ID id) {
 		return getRepository().findById(id);
 	}

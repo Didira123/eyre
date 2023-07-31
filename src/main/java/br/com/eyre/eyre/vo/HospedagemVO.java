@@ -38,7 +38,7 @@ public class HospedagemVO extends BaseVO<Long> {
 
 	private List<MidiaVO> listImagens = new ArrayList<>();
 
-	private List<ProximidadeVO> listProximidades = new ArrayList<>();
+//	private List<ProximidadeVO> listProximidades = new ArrayList<>();
 
 	private String email;
 

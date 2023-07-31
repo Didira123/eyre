@@ -3,6 +3,7 @@ package br.com.eyre.eyre.entity;
 import java.time.LocalDateTime;
 
 import br.com.eyre.eyre.bases.BaseEntity;
+import br.com.eyre.eyre.vo.PacoteViagemHistoricoVO;
 import br.com.eyre.eyre.vo.PacoteViagemVO;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -61,6 +62,11 @@ public class PacoteViagem extends BaseEntity<Long> {
 		}
 		vo.setPagamento(getPagamento().toVO());
 
+		return vo;
+	}
+
+	public PacoteViagemHistoricoVO toHistorico() {
+		PacoteViagemHistoricoVO vo = new PacoteViagemHistoricoVO(this);
 		return vo;
 	}
 

@@ -22,6 +22,9 @@
 			<column name="estado" type="varchar(150)">
 				<constraints nullable="false" />
 			</column>
+			<column name="sigla" type="varchar(2)">
+				<constraints nullable="false" />
+			</column>
 			<column name="cidade" type="varchar(150)">
 				<constraints nullable="false" />
 			</column>
@@ -462,7 +465,7 @@
 		<sql>
 			insert into role (nome) values ('Usuário Sudo'),('Usuário Comum');
 			insert into endereco values
-			(1,'cep','pais','estado','cidade','bairro','rua','numero');
+			(1,'cep','pais','estado','MG','cidade','bairro','rua','numero');
 			insert into usuario values (1,'00000000000000','Usuário Sudo para Verificações','usuarioSudo@gmail.com','{bcrypt}$2a$10$0XcRCPfjgisUYFBN95WXJe8tB3kuZOvIUcSPiZx/kSw5Vn21EslQy','2022-11-17','00000000000',null,1,1,true);
 			SELECT setval('usuario_id_seq', (select max(id) from usuario));
 			SELECT setval('endereco_id_seq', (select max(id) from endereco));

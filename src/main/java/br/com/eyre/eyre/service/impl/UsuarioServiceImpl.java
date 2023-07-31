@@ -1,7 +1,6 @@
 package br.com.eyre.eyre.service.impl;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -12,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 
+import br.com.eyre.eyre.bases.BaseServiceImpl;
 import br.com.eyre.eyre.entity.Endereco;
 import br.com.eyre.eyre.entity.Usuario;
 import br.com.eyre.eyre.repository.UsuarioRepository;
@@ -22,7 +22,7 @@ import br.com.eyre.eyre.vo.EnderecoVO;
 import br.com.eyre.eyre.vo.UsuarioNovoVO;
 
 @Service
-public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
+public class UsuarioServiceImpl extends BaseServiceImpl<Long, Usuario> implements UserDetailsService, UsuarioService {
 
 	private static final String USUARIO_COMUM = "Usuário Comum";
 
@@ -49,11 +49,6 @@ public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
 //		}
 
 		return users.get(0);
-	}
-
-	@Override
-	public Optional<Usuario> findById(Long id) {
-		return usuarioRepository.findById(id);
 	}
 
 	@Transactional()

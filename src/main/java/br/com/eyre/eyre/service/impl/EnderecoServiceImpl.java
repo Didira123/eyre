@@ -23,6 +23,7 @@ public class EnderecoServiceImpl implements EnderecoService {
 		entity.setCep(vo.getCep());
 		entity.setPais(vo.getPais());
 		entity.setEstado(vo.getEstado());
+		entity.setSigla(vo.getSigla());
 		entity.setCidade(vo.getCidade());
 		entity.setBairro(vo.getBairro());
 		entity.setRua(vo.getRua());

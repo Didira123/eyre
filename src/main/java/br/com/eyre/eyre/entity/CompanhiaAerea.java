@@ -1,6 +1,7 @@
 package br.com.eyre.eyre.entity;
 
 import java.time.LocalTime;
+import java.util.stream.Collectors;
 
 import br.com.eyre.eyre.vo.CompanhiaAereaVO;
 import jakarta.persistence.Column;
@@ -47,6 +48,10 @@ public class CompanhiaAerea extends Transporte {
 			vo.setLocalChegada(tes[1].getEndereco().toVO());
 		}
 		vo.setEscala(getEscala());
+		if (getListTransporteDias() != null && !getListTransporteDias().isEmpty()) {
+			vo.setListTransporteDias(
+					getListTransporteDias().stream().map(td -> td.toVO()).collect(Collectors.toList()));
+		}
 		if (getMidia() != null) {
 			vo.setMidia(getMidia().toVO());
 		}

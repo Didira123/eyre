@@ -48,7 +48,7 @@ public class TransporteDia extends BaseEntity<Long> {
 		TransporteDiaVO vo = new TransporteDiaVO();
 		vo.setId(getId());
 		vo.setDia(getDia());
-		if (getListTransporteDiaHorarios() != null && getListTransporteDiaHorarios().isEmpty()) {
+		if (getListTransporteDiaHorarios() != null && !getListTransporteDiaHorarios().isEmpty()) {
 			vo.setListTransporteDiaHorarios(
 					getListTransporteDiaHorarios().stream().map(tdh -> tdh.toVO()).collect(Collectors.toList()));
 		}

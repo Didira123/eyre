@@ -1,40 +1,39 @@
-//package br.com.eyre.eyre.service.impl;
-//
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.data.domain.Page;
-//import org.springframework.data.domain.PageImpl;
-//import org.springframework.data.domain.PageRequest;
-//import org.springframework.data.domain.Sort.Direction;
-//import org.springframework.stereotype.Service;
-//import org.springframework.validation.BindingResult;
-//
-//import br.com.eyre.eyre.entity.PacoteViagem;
-//import br.com.eyre.eyre.repository.PacoteViagemRepository;
-//import br.com.eyre.eyre.service.PacoteViagemService;
-//import br.com.eyre.eyre.vo.PacoteViagemVO;
-//
-//@Service
-//public class PacoteViagemServiceImpl implements PacoteViagemService {
-//
-//	@Autowired
-//	private PacoteViagemRepository pacoteViagemRepository;
-//
-//	@Override
-//	public Page<PacoteViagem> findByFiilter(PacoteViagemFiltroVO filtro, BindingResult result) {
-//
-//		return new PageImpl<>(pacoteViagemRepository.findByFilter(filtro),
-//				PageRequest.of(filtro.getPage(), filtro.getPageSize()),
-//				pacoteViagemRepository.countByFilter(filtro));
-//	}
-//
-//	@Autowired
-//	PagamentoService pagamentoService;
-//
-//	public Optional<PacoteViagem> findById(Long id) {
-//		Optional<PacoteViagem> optional = pacoteViagemRepository.findById(id);
-//		return optional;
-//	}
-//	
+package br.com.eyre.eyre.service.impl;
+
+import java.util.stream.Collectors;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.stereotype.Service;
+
+import br.com.eyre.eyre.bases.BaseServiceImpl;
+import br.com.eyre.eyre.entity.PacoteViagem;
+import br.com.eyre.eyre.repository.PacoteViagemRepository;
+import br.com.eyre.eyre.service.PacoteViagemService;
+import br.com.eyre.eyre.vo.PacoteViagemHistoricoVO;
+import br.com.eyre.eyre.vo.filter.PacoteViagemFilterVO;
+import br.com.eyre.eyre.vo.filter.PacoteViagemFiltroVO;
+
+@Service
+public class PacoteViagemServiceImpl extends BaseServiceImpl<Long, PacoteViagem> implements PacoteViagemService {
+
+	@Autowired
+	private PacoteViagemRepository pacoteViagemRepository;
+
+	@Override
+	public Page<PacoteViagemHistoricoVO> findByFilter(PacoteViagemFiltroVO filtro) {
+
+		if (filtro.getContent() == null) {
+			filtro.setContent(new PacoteViagemFilterVO());
+		}
+		return new PageImpl<>(
+				pacoteViagemRepository.findByFilter(filtro).stream().map(pv -> pv.toHistorico())
+						.collect(Collectors.toList()),
+				PageRequest.of(filtro.getPage(), filtro.getPageSize()), pacoteViagemRepository.countByFilter(filtro));
+	}
+
 //	@Transactional()
 //	public PacoteViagem update(PacoteViagem entity, PacoteViagemVO vo, BindingResult result) {
 //
@@ -57,10 +56,5 @@
 //		return entity;
 //		
 //	}
-//	
-//	@Transactional()
-//	public void deleteById(Long id) {
-//		pacoteViagemRepository.deleteById(id);
-//	}
-//
-//}
+
+}

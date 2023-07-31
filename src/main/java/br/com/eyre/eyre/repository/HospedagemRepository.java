@@ -16,14 +16,13 @@ public interface HospedagemRepository extends JpaRepository<Hospedagem, Long>, H
 			+ " LEFT JOIN FETCH lt.transporte t "
 			+ " LEFT JOIN FETCH t.listTransporteEnderecos lte "
 			+ " LEFT JOIN FETCH t.listTransporteDias ltd "
-			+ " LEFT JOIN FETCH ltd.listTransporteDiaHorarios ltdh "
+			+ " LEFT JOIN ltd.listTransporteDiaHorarios ltdh "
 			+ " LEFT JOIN FETCH h.listExtras le "
 			+ " LEFT JOIN FETCH le.extra ext "
 			+ " LEFT JOIN FETCH h.listMidias lm "
 			+ " LEFT JOIN FETCH lm.midia mid "
 			+ " LEFT JOIN FETCH h.listProximidades lp "
 			+ " LEFT JOIN FETCH lp.proximidade prox "
-			+ " LEFT JOIN h.listAvaliacoes la "
 			+ " WHERE h.id =:id")
 	public Optional<Hospedagem> findByIdFetchEnderecoFetchTransportesFetchExtrasFetchMidiasFetchProximidades(
 			Long id);

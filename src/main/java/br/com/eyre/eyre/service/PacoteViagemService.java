@@ -1,13 +1,10 @@
 package br.com.eyre.eyre.service;
 
-import org.springframework.data.domain.Page;
-import org.springframework.validation.BindingResult;
-
+import br.com.eyre.eyre.bases.BaseFilterService;
+import br.com.eyre.eyre.bases.BaseService;
 import br.com.eyre.eyre.entity.PacoteViagem;
-import br.com.eyre.eyre.vo.PacoteViagemVO;
+import br.com.eyre.eyre.vo.filter.PacoteViagemFiltroVO;
 
-public interface PacoteViagemService {
-
-//	public Page<PacoteViagem> findByFiilter(PacoteViagemVO vo, BindingResult result);
+public interface PacoteViagemService extends BaseService<Long, PacoteViagem>, BaseFilterService<PacoteViagemFiltroVO> {
 
 }

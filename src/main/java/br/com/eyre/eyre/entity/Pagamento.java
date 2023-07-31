@@ -15,6 +15,7 @@ import lombok.Data;
 @Table(name = "pagamento")
 //@EqualsAndHashCode(callSuper = true)
 //@ToString(callSuper = true)
+// TODO ENTIDADE NÃO IMPLEMENTADO CORRETAMENTE NEM AQUI NEM NO BANCO
 public class Pagamento extends BaseEntity<Long> {
 
 	private static final long serialVersionUID = 1L;

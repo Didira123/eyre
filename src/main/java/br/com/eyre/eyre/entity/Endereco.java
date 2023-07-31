@@ -27,6 +27,9 @@ public class Endereco extends BaseEntity<Long> {
 
 	@Column(name = "estado")
 	private String estado;
+	
+	@Column(name = "sigla")
+	private String sigla;
 
 	@Column(name = "cidade")
 	private String cidade;
@@ -52,9 +55,10 @@ public class Endereco extends BaseEntity<Long> {
 		vo.setId(getId());
 		vo.setCep(getCep());
 		vo.setPais(getPais());
+		vo.setEstado(getEstado());
+		vo.setSigla(getSigla());
 		vo.setCidade(getCidade());
 		vo.setBairro(getBairro());
-		vo.setEstado(getEstado());
 		vo.setRua(getRua());
 		vo.setNumero(getNumero());
 
