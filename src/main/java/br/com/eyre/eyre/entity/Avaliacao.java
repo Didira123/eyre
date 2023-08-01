@@ -51,7 +51,7 @@ public class Avaliacao extends BaseEntity<Long> {
 			vo.setUsuario(getUsuario().toVO());
 		}
 		if (getHospedagem() != null) {
-			vo.setHospedagem(getHospedagem().toTiny());
+			vo.setHospedagem(getHospedagem().toTinyVO());
 		}
 		vo.setTexto(getTexto());
 

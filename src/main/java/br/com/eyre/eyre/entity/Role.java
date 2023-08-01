@@ -16,11 +16,14 @@ public class Role extends BaseEntity<Long> {
 
 	private static final long serialVersionUID = 1L;
 
-	public static final Long USUARIO_SUDO = 0l;
-	public static final Long USUARIO_COMUM = 1l;
+	public static final Long SUDO = 1l;
+	public static final Long COMUM = 2l;
 
 	@Column(name = "nome")
 	private String nome;
+
+	@Column(name = "access_level")
+	private Long accessLevel;
 
 	public Role() {
 
@@ -34,6 +37,7 @@ public class Role extends BaseEntity<Long> {
 		RoleVO vo = new RoleVO();
 		vo.setId(getId());
 		vo.setNome(getNome());
+		vo.setAccessLevel(getAccessLevel());
 
 		return vo;
 	}

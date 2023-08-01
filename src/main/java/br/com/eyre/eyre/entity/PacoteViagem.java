@@ -61,6 +61,8 @@ public class PacoteViagem extends BaseEntity<Long> {
 			vo.setTransporte(getTransporte().toVO());
 		}
 		vo.setPagamento(getPagamento().toVO());
+		vo.setDataHoraIda(getDataHoraIda());
+		vo.setDataHoraVolta(getDataHoraVolta());
 
 		return vo;
 	}

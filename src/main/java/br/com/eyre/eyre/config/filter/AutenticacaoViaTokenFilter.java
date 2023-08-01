@@ -1,4 +1,4 @@
-package br.com.eyre.eyre.config.security;
+package br.com.eyre.eyre.config.filter;
 
 import java.io.IOException;
 
@@ -7,6 +7,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import br.com.eyre.eyre.config.security.TokenService;
 import br.com.eyre.eyre.entity.Usuario;
 import br.com.eyre.eyre.repository.UsuarioRepository;
 import jakarta.servlet.FilterChain;

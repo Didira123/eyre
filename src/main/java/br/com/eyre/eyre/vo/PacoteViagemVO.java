@@ -1,5 +1,7 @@
 package br.com.eyre.eyre.vo;
 
+import java.time.LocalDateTime;
+
 import br.com.eyre.eyre.bases.BaseVO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -19,5 +21,9 @@ public class PacoteViagemVO extends BaseVO<Long> {
 	private TransporteVO transporte;
 
 	private PagamentoVO pagamento;
+
+	private LocalDateTime dataHoraIda;
+
+	private LocalDateTime dataHoraVolta;
 
 }

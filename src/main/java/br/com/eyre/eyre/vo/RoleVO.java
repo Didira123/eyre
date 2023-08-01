@@ -14,4 +14,6 @@ public class RoleVO extends BaseVO<Long> {
 
 	private String nome;
 
+	private Long accessLevel;
+
 }

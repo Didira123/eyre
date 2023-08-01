@@ -123,14 +123,12 @@ public class Hospedagem extends BaseEntity<Long> {
 		return vo;
 	}
 
-	public HospedagemVO toSmallVO() {
-		throw new RuntimeException("NÃO IMPLEMENTADO POR MIM AINDA");
-//		return null;
-	}
-
-	public HospedagemVO toTiny() {
-		throw new RuntimeException("NÃO IMPLEMENTADO POR MIM AINDA");
-//		return null;
+	@Override
+	public HospedagemVO toTinyVO() {
+		HospedagemVO vo = new HospedagemVO();
+		vo.setId(getId());
+		vo.setTitulo(getTitulo());
+		return vo;
 	}
 
 	@Override

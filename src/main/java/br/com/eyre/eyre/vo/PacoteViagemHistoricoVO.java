@@ -1,5 +1,7 @@
 package br.com.eyre.eyre.vo;
 
+import java.time.LocalDateTime;
+
 import br.com.eyre.eyre.bases.BaseVO;
 import br.com.eyre.eyre.entity.Hospedagem;
 import br.com.eyre.eyre.entity.HospedagemMidia;
@@ -12,6 +14,8 @@ import lombok.Data;
 //@EqualsAndHashCode(callSuper = true)
 //@ToString(callSuper = true)
 public class PacoteViagemHistoricoVO extends BaseVO<Long> {
+
+	private static final long serialVersionUID = 1L;
 
 	private String titulo;
 
@@ -29,7 +33,9 @@ public class PacoteViagemHistoricoVO extends BaseVO<Long> {
 
 	private String enderecoChegada;
 
-	private static final long serialVersionUID = 1L;
+	private LocalDateTime dataHoraIda;
+
+	private LocalDateTime dataHoraVolta;
 
 	public PacoteViagemHistoricoVO() {
 	}
@@ -50,6 +56,8 @@ public class PacoteViagemHistoricoVO extends BaseVO<Long> {
 		TransporteEndereco[] lte = pv.getTransporte().getListTransporteEndereco_Ordenado();
 		setEnderecoSaida(EnderecoVO.formatEndereco(lte[0].getEndereco()));
 		setEnderecoChegada(EnderecoVO.formatEndereco(lte[1].getEndereco()));
+		setDataHoraIda(pv.getDataHoraIda());
+		setDataHoraVolta(pv.getDataHoraVolta());
 	}
 
 }

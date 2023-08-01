@@ -1,5 +1,6 @@
 package br.com.eyre.eyre.repository.custom.impl;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
@@ -66,6 +67,10 @@ public class PacoteViagemRepositoryImpl implements PacoteViagemRepositoryCustom 
 			builder.append(" AND (pv.usuario.id = :idUsuario) ");
 		}
 
+		if (content.isEmAndamento()) {
+			builder.append(" AND (:dataAtual BETWEEN pv.dataHoraIda AND pv.dataHoraVolta) ");
+		}
+
 	}
 
 	private Query createQueryWithFiltro(PacoteViagemFiltroVO filtro, StringBuilder builder) {
@@ -74,6 +79,9 @@ public class PacoteViagemRepositoryImpl implements PacoteViagemRepositoryCustom 
 		query.setParameter("midiaPrincipal", MidiaEnum.FOTO_PRINCIPAL);
 		if (content.getIdUsuario() != null) {
 			query.setParameter("idUsuario", content.getIdUsuario());
+		}
+		if (content.isEmAndamento()) {
+			query.setParameter("dataAtual", LocalDateTime.now());
 		}
 		return query;
 	}

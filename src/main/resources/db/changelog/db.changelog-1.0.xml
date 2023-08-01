@@ -104,6 +104,9 @@
 			<column name="nome" type="varchar(150)">
 				<constraints nullable="false" />
 			</column>
+			<column name="access_level" type="tinyint">
+				<constraints nullable="false" />
+			</column>
 		</createTable>
 		<createTable tableName="extra" schemaName="public">
 			<column autoIncrement="true" name="id" type="BIGSERIAL">
@@ -463,7 +466,7 @@
 	</changeSet>
 	<changeSet id="popularTables" author="diego.rafael">
 		<sql>
-			insert into role (nome) values ('Usuário Sudo'),('Usuário Comum');
+			insert into role (nome,access_level) values ('Usuário Sudo',1),('Usuário Comum',2);
 			insert into endereco values
 			(1,'cep','pais','estado','MG','cidade','bairro','rua','numero');
 			insert into usuario values (1,'00000000000000','Usuário Sudo para Verificações','usuarioSudo@gmail.com','{bcrypt}$2a$10$0XcRCPfjgisUYFBN95WXJe8tB3kuZOvIUcSPiZx/kSw5Vn21EslQy','2022-11-17','00000000000',null,1,1,true);

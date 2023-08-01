@@ -9,6 +9,8 @@ public class PacoteViagemFilterVO implements Serializable {
 
 	private Long idUsuario;
 
+	private boolean emAndamento;
+
 	private static final long serialVersionUID = 1L;
 
 }
