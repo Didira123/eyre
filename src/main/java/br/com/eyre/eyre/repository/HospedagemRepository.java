@@ -26,10 +26,5 @@ public interface HospedagemRepository extends JpaRepository<Hospedagem, Long>, H
 			+ " WHERE h.id =:id")
 	public Optional<Hospedagem> findByIdFetchEnderecoFetchTransportesFetchExtrasFetchMidiasFetchProximidades(
 			Long id);
-	
-	@Query(value="SELECT count(la.id) FROM Hospedagem h "
-			+ " INNER JOIN h.listAvaliacoes la "
-			+ " WHERE h.id =:id")
-	public Long countAvaliacoesById(Long id);
 
 }

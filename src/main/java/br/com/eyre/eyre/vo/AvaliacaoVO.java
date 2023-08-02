@@ -20,4 +20,6 @@ public class AvaliacaoVO extends BaseVO<Long> {
 
 	private String texto;
 
+	private Double nota;
+
 }

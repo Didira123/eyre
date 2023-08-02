@@ -182,6 +182,9 @@
 			<column name="texto" type="varchar(255)">
 				<constraints nullable="false" />
 			</column>
+			<column name="nota" type="numeric(2,2)">
+				<constraints nullable="false" />
+			</column>
 		</createTable>
 		<addUniqueConstraint
 			constraintName="avaliacao>hospedagem_id,usuario_id"

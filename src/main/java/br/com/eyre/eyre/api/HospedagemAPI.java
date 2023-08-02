@@ -13,7 +13,9 @@ import br.com.eyre.eyre.bases.BaseAPI;
 import br.com.eyre.eyre.bases.BaseFilterAPI;
 import br.com.eyre.eyre.bases.BaseFilterService;
 import br.com.eyre.eyre.entity.Hospedagem;
+import br.com.eyre.eyre.service.AvaliacaoService;
 import br.com.eyre.eyre.service.HospedagemService;
+import br.com.eyre.eyre.vo.AvaliacoesInfoVO;
 import br.com.eyre.eyre.vo.HospedagemCustomProximidadeVO;
 import br.com.eyre.eyre.vo.HospedagemVO;
 import br.com.eyre.eyre.vo.filter.HospedagemFiltroVO;
@@ -26,14 +28,17 @@ public class HospedagemAPI extends BaseAPI<Long, Hospedagem, HospedagemVO, Hospe
 	@Autowired
 	private HospedagemService hospedagemService;
 
+	@Autowired
+	private AvaliacaoService avaliacaoService;
+
 	@Override
 	public ResponseEntity<?> findById(@PathVariable("id") Long id) {
 		Optional<Hospedagem> optional = hospedagemService.findById(id);
 		if (optional.isPresent()) {
 			try {
-				Long count = hospedagemService.countAvaliacoesById(id);
+				AvaliacoesInfoVO avaliacoesInfo = avaliacaoService.countAndMediaByHospedagem(id);
 				HospedagemCustomProximidadeVO vo = optional.get().toVO();
-				vo.setCountAvaliacoes(count);
+				vo.setAvaliacoesInfo(avaliacoesInfo);
 				return ResponseEntity.ok(vo);
 			} catch (NotImplementedException e) {
 				e.printStackTrace();

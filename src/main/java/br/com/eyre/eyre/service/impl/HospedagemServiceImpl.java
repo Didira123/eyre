@@ -16,6 +16,7 @@ import br.com.eyre.eyre.bases.BaseVO;
 import br.com.eyre.eyre.entity.Hospedagem;
 import br.com.eyre.eyre.repository.HospedagemRepository;
 import br.com.eyre.eyre.service.HospedagemService;
+import br.com.eyre.eyre.vo.AvaliacoesInfoVO;
 import br.com.eyre.eyre.vo.HospedagemVO;
 import br.com.eyre.eyre.vo.OfertaVO;
 import br.com.eyre.eyre.vo.filter.HospedagemFiltroVO;
@@ -48,8 +49,8 @@ public class HospedagemServiceImpl extends BaseServiceImpl<Long, Hospedagem> imp
 	}
 
 	@Override
-	public Long countAvaliacoesById(Long id) {
-		return hospedagemRepository.countAvaliacoesById(id);
+	public AvaliacoesInfoVO countAndMediaAvaliacoesById(Long id) {
+		return hospedagemRepository.countAndMediaAvaliacoesById(id);
 	}
 
 }

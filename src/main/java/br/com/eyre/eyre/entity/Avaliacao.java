@@ -37,6 +37,9 @@ public class Avaliacao extends BaseEntity<Long> {
 	@Column(name = "texto")
 	private String texto;
 
+	@Column(name = "nota")
+	private Double nota;
+
 	public Avaliacao() {
 	}
 
@@ -54,6 +57,7 @@ public class Avaliacao extends BaseEntity<Long> {
 			vo.setHospedagem(getHospedagem().toTinyVO());
 		}
 		vo.setTexto(getTexto());
+		vo.setNota(getNota());
 
 		return vo;
 	}
@@ -65,6 +69,7 @@ public class Avaliacao extends BaseEntity<Long> {
 			vo.setUsuario(getUsuario().toTinyVO());
 		}
 		vo.setTexto(getTexto());
+		vo.setNota(getNota());
 
 		return vo;
 	}
