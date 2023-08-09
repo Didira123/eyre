@@ -1,6 +1,7 @@
 package br.com.eyre.eyre.vo;
 
 import java.math.BigDecimal;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -43,6 +44,10 @@ public class HospedagemVO extends BaseVO<Long> {
 	private String email;
 
 	private String telefone;
+
+	private LocalTime checkIn;
+
+	private LocalTime checkOut;
 
 	private EnderecoVO endereco;
 

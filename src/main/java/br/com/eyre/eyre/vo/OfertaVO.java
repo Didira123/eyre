@@ -11,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 
 import br.com.eyre.eyre.enums.DiaEnum;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import lombok.Data;
 
 @Data
@@ -18,6 +19,7 @@ public class OfertaVO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+	@Positive
 	private BigDecimal orcamento;
 
 	@NotNull
@@ -31,6 +33,8 @@ public class OfertaVO implements Serializable {
 
 	@JsonFormat(shape = Shape.STRING, pattern = "dd/MM/yyyy")
 	private LocalDate dataVolta;
+
+	private boolean diasAMais;
 
 	public static List<DiaEnum> getDiaAntesAtualEDepois(LocalDate data) {
 		int codeDia = data.getDayOfWeek().getValue();

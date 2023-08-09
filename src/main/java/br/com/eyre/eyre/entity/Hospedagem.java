@@ -1,6 +1,7 @@
 package br.com.eyre.eyre.entity;
 
 import java.math.BigDecimal;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -64,6 +65,12 @@ public class Hospedagem extends BaseEntity<Long> {
 	@Column(name = "telefone")
 	private String telefone;
 
+	@Column(name = "check_in")
+	private LocalTime checkIn;
+
+	@Column(name = "check_out")
+	private LocalTime checkOut;
+
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "endereco_id")
 	private Endereco endereco;
@@ -111,6 +118,8 @@ public class Hospedagem extends BaseEntity<Long> {
 		}
 		vo.setEmail(getEmail());
 		vo.setTelefone(getTelefone());
+		vo.setCheckIn(getCheckIn());
+		vo.setCheckOut(getCheckOut());
 		if (getEndereco() != null) {
 			vo.setEndereco(getEndereco().toVO());
 		}

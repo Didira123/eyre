@@ -79,7 +79,11 @@ public class HospedagemRepositoryImpl implements HospedagemRepositoryCustom {
 			builder.append(" AND (lte.tipoEndereco=:saida AND (et.estado=:estadoSaida AND et.cidade=:cidadeSaida)) ");
 		}
 		if (content.getDataIda() != null && content.getDataVolta() != null) {
-			builder.append(" AND (ltd.dia in(:diasIda) AND ltd2.dia in(:diasVolta)) ");
+			if (content.isDiasAMais()) {
+				builder.append(" AND (ltd.dia in(:diasIda) AND ltd2.dia in(:diasVolta)) ");
+			} else {
+				builder.append(" AND (ltd.dia =:diaIda AND ltd2.dia =:diaVolta) ");
+			}
 		}
 		if (content.getOrcamento() != null) {
 			builder.append(" AND (((h.preco + t.preco)/1.15<=:orcamento) AND ((h.preco + t.preco)/0.85>=:orcamento)) ");
@@ -100,8 +104,13 @@ public class HospedagemRepositoryImpl implements HospedagemRepositoryCustom {
 			query.setParameter("cidadeSaida", content.getPartida().getCidade());
 		}
 		if (content.getDataIda() != null && content.getDataVolta() != null) {
-			query.setParameter("diasIda", OfertaVO.getDiaAntesAtualEDepois(content.getDataIda()));
-			query.setParameter("diasVolta", OfertaVO.getDiaAntesAtualEDepois(content.getDataVolta()));
+			if (content.isDiasAMais()) {
+				query.setParameter("diasIda", OfertaVO.getDiaAntesAtualEDepois(content.getDataIda()));
+				query.setParameter("diasVolta", OfertaVO.getDiaAntesAtualEDepois(content.getDataVolta()));
+			} else {
+				query.setParameter("diaIda", content.getDataIda());
+				query.setParameter("diaVolta", content.getDataVolta());
+			}
 		}
 		if (content.getOrcamento() != null) {
 			query.setParameter("orcamento", content.getOrcamento());

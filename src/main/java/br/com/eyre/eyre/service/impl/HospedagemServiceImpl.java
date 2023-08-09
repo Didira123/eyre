@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import br.com.eyre.eyre.bases.BaseServiceImpl;
 import br.com.eyre.eyre.bases.BaseVO;
 import br.com.eyre.eyre.entity.Hospedagem;
+import br.com.eyre.eyre.repository.AvaliacaoRepository;
 import br.com.eyre.eyre.repository.HospedagemRepository;
 import br.com.eyre.eyre.service.HospedagemService;
 import br.com.eyre.eyre.vo.AvaliacoesInfoVO;
@@ -26,6 +27,9 @@ public class HospedagemServiceImpl extends BaseServiceImpl<Long, Hospedagem> imp
 
 	@Autowired
 	public HospedagemRepository hospedagemRepository;
+
+	@Autowired
+	public AvaliacaoRepository avaliacaoRepository;
 
 	@Override
 	protected JpaRepository<Hospedagem, Long> getRepository() {
@@ -50,7 +54,7 @@ public class HospedagemServiceImpl extends BaseServiceImpl<Long, Hospedagem> imp
 
 	@Override
 	public AvaliacoesInfoVO countAndMediaAvaliacoesById(Long id) {
-		return hospedagemRepository.countAndMediaAvaliacoesById(id);
+		return avaliacaoRepository.countAndMediaByHospedagem(id);
 	}
 
 }

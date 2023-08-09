@@ -10,6 +10,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
+//TODO INUTILIZADO NO MOMENTO (ESTÁ SENDO UTILIZADO O HOSPEDAGEMVO NO MOMENTO ATÉ DEFINIR OS JSON/VO'S)
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
@@ -32,5 +33,6 @@ public class HospedagemCardVO extends BaseVO<Long> {
 	private Boolean existeVoo;
 
 	private Boolean existeOnibus;
+	
 
 }
