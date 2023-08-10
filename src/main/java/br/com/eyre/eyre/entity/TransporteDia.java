@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import br.com.eyre.eyre.bases.BaseEntity;
 import br.com.eyre.eyre.enums.DiaEnum;
+import br.com.eyre.eyre.enums.RotaEnum;
 import br.com.eyre.eyre.vo.TransporteDiaVO;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -36,6 +37,10 @@ public class TransporteDia extends BaseEntity<Long> {
 
 	@OneToMany(mappedBy = "transporteDia")
 	private List<TransporteDiaHorario> listTransporteDiaHorarios;
+
+	@Enumerated(EnumType.ORDINAL)
+	@Column(name = "tipo_rota")
+	private RotaEnum tipoRota;
 
 	public TransporteDia() {
 	}

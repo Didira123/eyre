@@ -18,7 +18,7 @@ import br.com.eyre.eyre.repository.AvaliacaoRepository;
 import br.com.eyre.eyre.repository.HospedagemRepository;
 import br.com.eyre.eyre.service.HospedagemService;
 import br.com.eyre.eyre.vo.AvaliacoesInfoVO;
-import br.com.eyre.eyre.vo.HospedagemVO;
+import br.com.eyre.eyre.vo.HospedagemCardVO;
 import br.com.eyre.eyre.vo.OfertaVO;
 import br.com.eyre.eyre.vo.filter.HospedagemFiltroVO;
 
@@ -42,7 +42,7 @@ public class HospedagemServiceImpl extends BaseServiceImpl<Long, Hospedagem> imp
 		if (filter.getContent() == null) {
 			filter.setContent(new OfertaVO());
 		}
-		return new PageImpl<HospedagemVO>(
+		return new PageImpl<HospedagemCardVO>(
 				hospedagemRepository.findByFilter(filter).stream().map(h -> h.toCardVO()).collect(Collectors.toList()),
 				PageRequest.of(filter.getPage(), filter.getPageSize()), hospedagemRepository.countByFilter(filter));
 	}

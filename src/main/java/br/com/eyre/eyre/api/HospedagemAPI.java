@@ -38,7 +38,8 @@ public class HospedagemAPI extends BaseAPI<Long, Hospedagem, HospedagemVO, Hospe
 			try {
 				AvaliacoesInfoVO avaliacoesInfo = avaliacaoService.countAndMediaByHospedagem(id);
 				HospedagemCustomProximidadeVO vo = optional.get().toVO();
-				vo.setAvaliacoesInfo(avaliacoesInfo);
+				vo.setAvaliacoes(avaliacoesInfo.getCount());
+				vo.setClassificacao(avaliacoesInfo.getMedia());
 				return ResponseEntity.ok(vo);
 			} catch (NotImplementedException e) {
 				e.printStackTrace();

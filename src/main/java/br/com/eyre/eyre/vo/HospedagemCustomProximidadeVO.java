@@ -21,7 +21,9 @@ public class HospedagemCustomProximidadeVO extends BaseVO<Long> {
 
 	private HashMap<String, List<ProximidadeVO>> listProximidades = new HashMap<>();
 
-	private AvaliacoesInfoVO avaliacoesInfo;
+	private Long avaliacoes;
+
+	private Double classificacao;
 
 	public void setProximidadesAsHashMap(List<ProximidadeVO> list) {
 		if (list != null && !list.isEmpty()) {

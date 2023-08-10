@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 
 import br.com.eyre.eyre.bases.BaseEntity;
 import br.com.eyre.eyre.enums.QuartoEnum;
+import br.com.eyre.eyre.vo.HospedagemCardVO;
 import br.com.eyre.eyre.vo.HospedagemCustomProximidadeVO;
 import br.com.eyre.eyre.vo.HospedagemVO;
 import br.com.eyre.eyre.vo.ProximidadeVO;
@@ -105,7 +106,6 @@ public class Hospedagem extends BaseEntity<Long> {
 		vo.setDescricao(getDescricao());
 		vo.setTipoQuarto(getTipoQuarto());
 		vo.setDescricaoQuarto(getDescricaoQuarto());
-		vo.setQuantidadeReservas(getQuantidadeReservas());
 		if (getListTransportes() != null && !getListTransportes().isEmpty()) {
 			vo.setListTransportes(
 					getListTransportes().stream().map(ht -> ht.getTransporte().toVO()).collect(Collectors.toList()));
@@ -116,8 +116,6 @@ public class Hospedagem extends BaseEntity<Long> {
 		if (getListMidias() != null && !getListMidias().isEmpty()) {
 			vo.setListImagens(getListMidias().stream().map(m -> m.getMidia().toVO()).collect(Collectors.toList()));
 		}
-		vo.setEmail(getEmail());
-		vo.setTelefone(getTelefone());
 		vo.setCheckIn(getCheckIn());
 		vo.setCheckOut(getCheckOut());
 		if (getEndereco() != null) {
@@ -127,8 +125,8 @@ public class Hospedagem extends BaseEntity<Long> {
 		return vo;
 	}
 
-	public HospedagemVO toCardVO() {
-		HospedagemVO vo = new HospedagemVO(this);
+	public HospedagemCardVO toCardVO() {
+		HospedagemCardVO vo = new HospedagemCardVO(this);
 		return vo;
 	}
 

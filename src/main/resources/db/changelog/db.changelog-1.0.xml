@@ -250,6 +250,9 @@
 			<column name="dia" type="tinyint">
 				<constraints nullable="false" />
 			</column>
+			<column name="tipo_rota" type="tinyint">
+				<constraints nullable="false" />
+			</column>
 		</createTable>
 		<createTable tableName="transporte_dia_horario"
 			schemaName="public">
