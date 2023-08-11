@@ -1,6 +1,7 @@
 package br.com.eyre.eyre.entity;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Set;
@@ -89,26 +90,45 @@ public class Hospedagem extends BaseEntity<Long> {
 		setId(id);
 	}
 
-	public HospedagemCustomProximidadeVO toVO() {
+	@Override
+	public HospedagemVO toVO() {
+		// NÂO IMPLEMENTADO (NÂO ESTÀ EM USO!!!! Foi necessário criar o "toCustomVO"
+		// para fazer o findById personalizado com data)
+		return super.toVO();
+	}
+
+	public HospedagemCustomProximidadeVO toCustomVO(LocalDate data, Boolean maisDias) {
 		HospedagemCustomProximidadeVO vo = new HospedagemCustomProximidadeVO();
 //		vo.setId(getId());
-		vo.setHospedagem(toFullInnerVO());
+		vo.setHospedagem(toFullInnerVO(data, maisDias));
 		List<ProximidadeVO> listProximidades = getListProximidades().stream().map(hp -> hp.getProximidade().toSmallVO())
 				.collect(Collectors.toList());
 		vo.setProximidadesAsHashMap(listProximidades);
 		return vo;
 	}
 
-	public HospedagemVO toFullInnerVO() {
+	public HospedagemVO toFullInnerVO(LocalDate data, Boolean maisDias) {
 		HospedagemVO vo = new HospedagemVO();
 		vo.setId(getId());
 		vo.setTitulo(getTitulo());
 		vo.setDescricao(getDescricao());
 		vo.setTipoQuarto(getTipoQuarto());
 		vo.setDescricaoQuarto(getDescricaoQuarto());
+//		if (getListTransportes() != null && !getListTransportes().isEmpty()) {
+//			vo.setListTransportes(
+//					getListTransportes().stream().map(ht -> ht.getTransporte().toVO()).collect(Collectors.toList()));
+//		}
 		if (getListTransportes() != null && !getListTransportes().isEmpty()) {
-			vo.setListTransportes(
-					getListTransportes().stream().map(ht -> ht.getTransporte().toVO()).collect(Collectors.toList()));
+			for (HospedagemTransporte ht : getListTransportes()) {
+				if (ht.getTransporte() instanceof CompanhiaAerea) {
+					vo.getVoos().add(((CompanhiaAerea) ht.getTransporte()).toCustomVO(data, maisDias));
+				} else if (ht.getTransporte() instanceof Onibus) {
+					vo.getOnibus().add(((Onibus) ht.getTransporte()).toCustomVO(data, maisDias));
+				} else {
+					throw new RuntimeException("O transporte de id \"" + ht.getTransporte().getId()
+							+ "\" não é válido! (o \"type\" no banco pode estar ausente)");
+				}
+			}
 		}
 		if (getListExtras() != null && !getListExtras().isEmpty()) {
 			vo.setListExtras(getListExtras().stream().map(e -> e.getExtra().toVO()).collect(Collectors.toList()));

@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import br.com.eyre.eyre.bases.BaseEntity;
 import br.com.eyre.eyre.enums.DiaEnum;
 import br.com.eyre.eyre.enums.RotaEnum;
+import br.com.eyre.eyre.vo.DiaHorariosCustomVO;
 import br.com.eyre.eyre.vo.TransporteDiaVO;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -58,6 +59,13 @@ public class TransporteDia extends BaseEntity<Long> {
 					getListTransporteDiaHorarios().stream().map(tdh -> tdh.toVO()).collect(Collectors.toList()));
 		}
 
+		return vo;
+	}
+
+	public DiaHorariosCustomVO toCustomVO() {
+		DiaHorariosCustomVO vo = new DiaHorariosCustomVO();
+		vo.setListHorarios(getListTransporteDiaHorarios().stream().map(tdh -> tdh.toVO()).collect(Collectors.toList()));
+		vo.setTipoRota(getTipoRota());
 		return vo;
 	}
 

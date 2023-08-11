@@ -1,9 +1,12 @@
 package br.com.eyre.eyre.entity;
 
+import java.time.LocalDate;
 import java.util.stream.Collectors;
 
 import br.com.eyre.eyre.enums.AssentoEnum;
+import br.com.eyre.eyre.vo.EnderecoVO;
 import br.com.eyre.eyre.vo.OnibusVO;
+import br.com.eyre.eyre.vo.TransporteCustomDiasVO;
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
@@ -47,9 +50,30 @@ public class Onibus extends Transporte {
 			vo.setListTransporteDias(
 					getListTransporteDias().stream().map(td -> td.toVO()).collect(Collectors.toList()));
 		}
+		if (getMidia() != null) {
+			vo.setMidia(getMidia().toVO());
+		}
 		vo.setTipoAssento(getTipoAssento());
 		vo.setPreco(getPreco());
 
+		return vo;
+	}
+
+	public TransporteCustomDiasVO toCustomVO(LocalDate data, Boolean maisDias) {
+		TransporteCustomDiasVO vo = new TransporteCustomDiasVO();
+		vo.setNome(getNome());
+		if (getListTransporteDias() != null && !getListTransporteDias().isEmpty()) {
+			vo.setListDias(TransporteCustomDiasVO.getHashMapDiasHorarios(getListTransporteDias(), data, maisDias));
+		}
+		if (getMidia() != null) {
+			vo.setImagemOnibus(null);
+		}
+		if (getListTransporteEnderecos() != null && getListTransporteEnderecos().size() == 2) {
+			TransporteEndereco[] tes = getListTransporteEndereco_Ordenado();
+			vo.setLocalSaida(EnderecoVO.format(tes[0].getEndereco()));
+			vo.setLocalChegada(EnderecoVO.format(tes[1].getEndereco()));
+		}
+		vo.setTipoPoltrona(getTipoAssento());
 		return vo;
 	}
 

@@ -215,6 +215,9 @@
 			<column name="nome" type="varchar(150)">
 				<constraints nullable="false" />
 			</column>
+			<column name="midia_id" type="bigint">
+				<constraints nullable="false" />
+			</column>
 			<column name="preco" type="numeric(19,2)">
 				<constraints nullable="false" />
 			</column>
@@ -282,10 +285,7 @@
 			<column autoIncrement="true" name="id" type="BIGSERIAL">
 				<constraints primaryKey="true" nullable="false" />
 			</column>
-			<column name="escala" type="time">
-				<constraints nullable="false" />
-			</column>
-			<column name="midia_id" type="bigint">
+			<column name="escala" type="boolean">
 				<constraints nullable="false" />
 			</column>
 		</createTable>

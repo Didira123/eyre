@@ -54,8 +54,8 @@ public class PacoteViagemHistoricoVO extends BaseVO<Long> {
 		setMidiaPrincipal(hos.getListMidias().toArray(new HospedagemMidia[1])[0].getMidia().toVO());
 		setNomeTransporte(pv.getTransporte().getNome());
 		TransporteEndereco[] lte = pv.getTransporte().getListTransporteEndereco_Ordenado();
-		setEnderecoSaida(EnderecoVO.formatEndereco(lte[0].getEndereco()));
-		setEnderecoChegada(EnderecoVO.formatEndereco(lte[1].getEndereco()));
+		setEnderecoSaida(EnderecoVO.format(lte[0].getEndereco()));
+		setEnderecoChegada(EnderecoVO.format(lte[1].getEndereco()));
 		setDataHoraIda(pv.getDataHoraIda());
 		setDataHoraVolta(pv.getDataHoraVolta());
 	}

@@ -35,7 +35,7 @@ public class EnderecoVO extends BaseVO<Long> {
 
 	private String numero;
 
-	public static String formatEndereco(Endereco e) {
+	public static String format(Endereco e) {
 		return "Rua " + e.getRua() + ", " + e.getNumero() + HIFEN + e.getBairro() + HIFEN + e.getCidade() + HIFEN
 				+ e.getEstado() + " " + e.getSigla() + HIFEN + e.getCep();
 	}

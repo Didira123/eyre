@@ -36,10 +36,4 @@ public class OfertaVO implements Serializable {
 
 	private boolean diasAMais;
 
-	public static List<DiaEnum> getDiaAntesAtualEDepois(LocalDate data) {
-		int codeDia = data.getDayOfWeek().getValue();
-		return DiaEnum.getByListCodigo(
-				Arrays.asList(codeDia - 1 == 0 ? 7 : codeDia - 1, codeDia, codeDia + 1 == 8 ? 1 : codeDia + 1));
-	}
-
 }

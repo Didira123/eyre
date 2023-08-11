@@ -1,7 +1,5 @@
 package br.com.eyre.eyre.vo;
 
-import java.time.LocalTime;
-
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -13,8 +11,6 @@ public class CompanhiaAereaVO extends TransporteVO {
 
 	private static final long serialVersionUID = 1L;
 
-	private LocalTime escala;
-
-	private MidiaVO midia;
+	private Boolean escala;
 
 }

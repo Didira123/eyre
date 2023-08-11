@@ -10,9 +10,12 @@ import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorColumn;
 import jakarta.persistence.DiscriminatorType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
 
@@ -49,6 +52,10 @@ public abstract class Transporte extends BaseEntity<Long> {
 
 	@OneToMany(mappedBy = "transporte")
 	private Set<TransporteDia> listTransporteDias;
+
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "midia_id")
+	private Midia midia;
 
 	@Column(name = "preco")
 	private BigDecimal preco;

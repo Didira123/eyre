@@ -28,7 +28,9 @@ public class HospedagemVO extends BaseVO<Long> {
 
 	private Integer quantidadeReservas;
 
-	private List<TransporteVO> listTransportes = new ArrayList<>();
+	private List<TransporteCustomDiasVO> voos = new ArrayList<>();
+
+	private List<TransporteCustomDiasVO> onibus = new ArrayList<>();
 
 	private List<ExtraVO> listExtras = new ArrayList<>();
 

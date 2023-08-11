@@ -1,10 +1,13 @@
 package br.com.eyre.eyre.api;
 
+import java.time.LocalDate;
 import java.util.Optional;
 
 import org.apache.commons.lang3.NotImplementedException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,13 +34,14 @@ public class HospedagemAPI extends BaseAPI<Long, Hospedagem, HospedagemVO, Hospe
 	@Autowired
 	private AvaliacaoService avaliacaoService;
 
-	@Override
-	public ResponseEntity<?> findById(@PathVariable("id") Long id) {
+	@GetMapping(path = { "/{id}/{data}/{maisDias}" }, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> findByIdWithDatas(@PathVariable("id") Long id, @PathVariable("data") LocalDate data,
+			@PathVariable("maisDias") Boolean maisDias) {
 		Optional<Hospedagem> optional = hospedagemService.findById(id);
 		if (optional.isPresent()) {
 			try {
 				AvaliacoesInfoVO avaliacoesInfo = avaliacaoService.countAndMediaByHospedagem(id);
-				HospedagemCustomProximidadeVO vo = optional.get().toVO();
+				HospedagemCustomProximidadeVO vo = optional.get().toCustomVO(data, maisDias);
 				vo.setAvaliacoes(avaliacoesInfo.getCount());
 				vo.setClassificacao(avaliacoesInfo.getMedia());
 				return ResponseEntity.ok(vo);

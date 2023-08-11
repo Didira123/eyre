@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import br.com.eyre.eyre.entity.Hospedagem;
+import br.com.eyre.eyre.enums.DiaEnum;
 import br.com.eyre.eyre.enums.EnderecoEnum;
 import br.com.eyre.eyre.enums.ExtraEnum;
 import br.com.eyre.eyre.enums.MidiaEnum;
@@ -88,7 +89,8 @@ public class HospedagemRepositoryImpl implements HospedagemRepositoryCustom {
 			}
 		}
 		if (content.getOrcamento() != null) {
-			builder.append(" AND (((h.preco + t.preco + t2.preco)/1.15<=:orcamento) AND ((h.preco + t.preco + t2.preco)/0.85>=:orcamento)) ");
+			builder.append(
+					" AND (((h.preco + t.preco + t2.preco)/1.15<=:orcamento) AND ((h.preco + t.preco + t2.preco)/0.85>=:orcamento)) ");
 		}
 
 	}
@@ -109,8 +111,8 @@ public class HospedagemRepositoryImpl implements HospedagemRepositoryCustom {
 		}
 		if (content.getDataIda() != null && content.getDataVolta() != null) {
 			if (content.isDiasAMais()) {
-				query.setParameter("diasIda", OfertaVO.getDiaAntesAtualEDepois(content.getDataIda()));
-				query.setParameter("diasVolta", OfertaVO.getDiaAntesAtualEDepois(content.getDataVolta()));
+				query.setParameter("diasIda", DiaEnum.getDiaAntesAtualEDepois(content.getDataIda()));
+				query.setParameter("diasVolta", DiaEnum.getDiaAntesAtualEDepois(content.getDataVolta()));
 			} else {
 				query.setParameter("diaIda", content.getDataIda());
 				query.setParameter("diaVolta", content.getDataVolta());

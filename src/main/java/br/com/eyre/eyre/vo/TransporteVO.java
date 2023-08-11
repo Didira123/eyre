@@ -1,7 +1,6 @@
 package br.com.eyre.eyre.vo;
 
 import java.math.BigDecimal;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -36,10 +35,12 @@ public class TransporteVO extends BaseVO<Long> {
 
 	private EnderecoVO localChegada;
 
-	private BigDecimal preco;
-
 	private Set<TransporteEnderecoVO> listTransporteEnderecos = new HashSet<>();
 
 	private List<TransporteDiaVO> listTransporteDias = new ArrayList<>();
+
+	private MidiaVO midia;
+
+	private BigDecimal preco;
 
 }

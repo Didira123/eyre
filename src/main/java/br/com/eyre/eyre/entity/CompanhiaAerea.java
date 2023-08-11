@@ -1,15 +1,13 @@
 package br.com.eyre.eyre.entity;
 
-import java.time.LocalTime;
+import java.time.LocalDate;
 import java.util.stream.Collectors;
 
 import br.com.eyre.eyre.vo.CompanhiaAereaVO;
+import br.com.eyre.eyre.vo.TransporteCustomDiasVO;
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
 
@@ -24,11 +22,7 @@ public class CompanhiaAerea extends Transporte {
 	private static final long serialVersionUID = 1L;
 
 	@Column(name = "escala")
-	private LocalTime escala;
-
-	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "midia_id")
-	private Midia midia;
+	private Boolean escala;
 
 	public CompanhiaAerea() {
 	}
@@ -56,6 +50,40 @@ public class CompanhiaAerea extends Transporte {
 			vo.setMidia(getMidia().toVO());
 		}
 		vo.setPreco(getPreco());
+
+		return vo;
+	}
+	
+//	private String nome;
+//
+//	private List<TransporteDiaVO> listDias;
+//
+//// ---------Campos de CompanhiaAerea abaixo:
+//	
+//	private LocalTime escala;
+//
+//	private MidiaVO imgCompanhiaAerea;
+//
+//// ---------Campos de Onibus abaixo:
+//
+//	private MidiaVO imagemPoltrona;
+//
+//	private String localSaida;
+//
+//	private String LocalChegada;
+//
+//	private AssentoEnum tipoPoltrona;
+
+	public TransporteCustomDiasVO toCustomVO(LocalDate data, Boolean maisDias) {
+		TransporteCustomDiasVO vo = new TransporteCustomDiasVO();
+		vo.setNome(getNome());
+		if (getListTransporteDias() != null && !getListTransporteDias().isEmpty()) {
+			vo.setListDias(TransporteCustomDiasVO.getHashMapDiasHorarios(getListTransporteDias(), data, maisDias));
+		}
+		vo.setEscala(getEscala());
+		if (getMidia() != null) {
+			vo.setImagemCompanhiaAerea(getMidia().toVO());
+		}
 
 		return vo;
 	}
