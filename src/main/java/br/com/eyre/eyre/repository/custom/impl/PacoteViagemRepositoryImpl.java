@@ -47,7 +47,7 @@ public class PacoteViagemRepositoryImpl implements PacoteViagemRepositoryCustom 
 
 	public Long countByFilter(PacoteViagemFiltroVO filtro) {
 		StringBuilder builder = new StringBuilder();
-		builder.append("SELECT count(pv.id) FROM PacoteViagem pv ");
+		builder.append("SELECT count(distinct pv.id) FROM PacoteViagem pv ");
 		builder.append(" INNER JOIN pv.hospedagem h ");
 		builder.append(" INNER JOIN pv.transporte t ");
 		builder.append(" INNER JOIN t.listTransporteEnderecos lte ");

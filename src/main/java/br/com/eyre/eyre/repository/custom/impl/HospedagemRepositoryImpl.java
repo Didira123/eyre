@@ -1,5 +1,6 @@
 package br.com.eyre.eyre.repository.custom.impl;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
@@ -34,7 +35,7 @@ public class HospedagemRepositoryImpl implements HospedagemRepositoryCustom {
 		builder.append(" INNER JOIN t.listTransporteEnderecos lte ");
 		builder.append(" INNER JOIN lte.endereco et ");
 		builder.append(" INNER JOIN t.listTransporteDias ltd WITH ltd.tipoRota =:rotaIda ");
-		builder.append(" INNER JOIN t.listTransporteDias ltd2 WITH ltd.tipoRota =:rotaVolta ");
+		builder.append(" INNER JOIN t.listTransporteDias ltd2 WITH ltd2.tipoRota =:rotaVolta ");
 		builder.append(" LEFT JOIN h.listExtras le WITH le.tipoExtra=:extraPrincipal ");
 		builder.append(" LEFT JOIN le.extra ext ");
 
@@ -65,7 +66,7 @@ public class HospedagemRepositoryImpl implements HospedagemRepositoryCustom {
 		builder.append(" INNER JOIN t.listTransporteEnderecos lte ");
 		builder.append(" INNER JOIN lte.endereco et ");
 		builder.append(" INNER JOIN t.listTransporteDias ltd WITH ltd.tipoRota =:rotaIda ");
-		builder.append(" INNER JOIN t.listTransporteDias ltd2 WITH ltd.tipoRota =:rotaVolta ");
+		builder.append(" INNER JOIN t.listTransporteDias ltd2 WITH ltd2.tipoRota =:rotaVolta ");
 		builder.append(" LEFT JOIN h.listExtras le WITH le.tipoExtra=:extraPrincipal ");
 		builder.append(" LEFT JOIN le.extra ext ");
 
@@ -90,7 +91,7 @@ public class HospedagemRepositoryImpl implements HospedagemRepositoryCustom {
 		}
 		if (content.getOrcamento() != null) {
 			builder.append(
-					" AND (((h.preco + t.preco + t2.preco)/1.15<=:orcamento) AND ((h.preco + t.preco + t2.preco)/0.85>=:orcamento)) ");
+					" AND (((h.preco + 2 * t.preco)/1.15<=:orcamento) AND ((h.preco + 2 * t.preco)/0.85>=:orcamento)) ");
 		}
 
 	}
@@ -111,11 +112,11 @@ public class HospedagemRepositoryImpl implements HospedagemRepositoryCustom {
 		}
 		if (content.getDataIda() != null && content.getDataVolta() != null) {
 			if (content.isDiasAMais()) {
-				query.setParameter("diasIda", DiaEnum.getDiaAntesAtualEDepois(content.getDataIda()));
-				query.setParameter("diasVolta", DiaEnum.getDiaAntesAtualEDepois(content.getDataVolta()));
+				query.setParameter("diasIda", Arrays.asList(DiaEnum.getDiaAntesAtualEDepois(content.getDataIda())));
+				query.setParameter("diasVolta", Arrays.asList(DiaEnum.getDiaAntesAtualEDepois(content.getDataVolta())));
 			} else {
-				query.setParameter("diaIda", content.getDataIda());
-				query.setParameter("diaVolta", content.getDataVolta());
+				query.setParameter("diaIda", DiaEnum.getByDate(content.getDataIda()));
+				query.setParameter("diaVolta", DiaEnum.getByDate(content.getDataVolta()));
 			}
 		}
 		if (content.getOrcamento() != null) {

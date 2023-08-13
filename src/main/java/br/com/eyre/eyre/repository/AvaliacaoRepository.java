@@ -9,7 +9,7 @@ import br.com.eyre.eyre.vo.AvaliacoesInfoVO;
 
 public interface AvaliacaoRepository extends JpaRepository<Avaliacao, Long>, AvaliacaoRepositoryCustom {
 
-	@Query(value = "SELECT new br.com.eyre.eyre.AvaliacoesInfoVO(count(a.id), AVG(a.nota)) FROM Avaliacao a "
+	@Query(value = "SELECT new br.com.eyre.eyre.vo.AvaliacoesInfoVO(count(a.id), AVG(a.nota)) FROM Avaliacao a "
 			+ " WHERE a.hospedagem.id =:id")
 	public AvaliacoesInfoVO countAndMediaByHospedagem(Long id);
 

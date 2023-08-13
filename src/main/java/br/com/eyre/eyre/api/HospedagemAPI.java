@@ -5,12 +5,16 @@ import java.util.Optional;
 
 import org.apache.commons.lang3.NotImplementedException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 
 import br.com.eyre.eyre.bases.BaseAPI;
 import br.com.eyre.eyre.bases.BaseFilterAPI;
@@ -35,7 +39,7 @@ public class HospedagemAPI extends BaseAPI<Long, Hospedagem, HospedagemVO, Hospe
 	private AvaliacaoService avaliacaoService;
 
 	@GetMapping(path = { "/{id}/{data}/{maisDias}" }, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> findByIdWithDatas(@PathVariable("id") Long id, @PathVariable("data") LocalDate data,
+	public ResponseEntity<?> findByIdWithDatas(@PathVariable("id") Long id, @PathVariable("data") @DateTimeFormat(pattern = "dd-MM-yyyy") LocalDate data,
 			@PathVariable("maisDias") Boolean maisDias) {
 		Optional<Hospedagem> optional = hospedagemService.findById(id);
 		if (optional.isPresent()) {

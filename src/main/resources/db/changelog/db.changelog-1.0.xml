@@ -57,6 +57,12 @@
 			<column name="telefone" type="varchar(11)">
 				<constraints nullable="false" />
 			</column>
+			<column name="check_in" type="time">
+				<constraints nullable="false" />
+			</column>
+			<column name="check_out" type="time">
+				<constraints nullable="false" />
+			</column>
 			<column name="endereco_id" type="bigint">
 				<constraints nullable="false" />
 			</column>
@@ -182,29 +188,13 @@
 			<column name="texto" type="varchar(255)">
 				<constraints nullable="false" />
 			</column>
-			<column name="nota" type="numeric(2,2)">
+			<column name="nota" type="numeric(4,2)">
 				<constraints nullable="false" />
 			</column>
 		</createTable>
 		<addUniqueConstraint
 			constraintName="avaliacao>hospedagem_id,usuario_id"
 			tableName="avaliacao" columnNames="usuario_id,hospedagem_id" />
-		<createTable tableName="hospedagem_transporte"
-			schemaName="public">
-			<column autoIncrement="true" name="id" type="BIGSERIAL">
-				<constraints primaryKey="true" nullable="false" />
-			</column>
-			<column name="hospedagem_id" type="bigint">
-				<constraints nullable="false" />
-			</column>
-			<column name="transporte_id" type="bigint">
-				<constraints nullable="false" />
-			</column>
-		</createTable>
-		<addUniqueConstraint
-			constraintName="hospedagem_transporte>hospedagem_id,transporte_id"
-			tableName="hospedagem_transporte"
-			columnNames="hospedagem_id,transporte_id" />
 		<createTable tableName="transporte" schemaName="public">
 			<column autoIncrement="true" name="id" type="BIGSERIAL">
 				<constraints primaryKey="true" nullable="false" />
@@ -222,6 +212,39 @@
 				<constraints nullable="false" />
 			</column>
 		</createTable>
+		<createTable tableName="onibus" schemaName="public">
+			<column autoIncrement="true" name="id" type="BIGSERIAL">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="tipo_assento" type="tinyint">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+		<createTable tableName="companhia_aerea"
+			schemaName="public">
+			<column autoIncrement="true" name="id" type="BIGSERIAL">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="escala" type="boolean">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+		<createTable tableName="hospedagem_transporte"
+			schemaName="public">
+			<column autoIncrement="true" name="id" type="BIGSERIAL">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="hospedagem_id" type="bigint">
+				<constraints nullable="false" />
+			</column>
+			<column name="transporte_id" type="bigint">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+		<addUniqueConstraint
+			constraintName="hospedagem_transporte>hospedagem_id,transporte_id"
+			tableName="hospedagem_transporte"
+			columnNames="hospedagem_id,transporte_id" />
 		<createTable tableName="transporte_endereco"
 			schemaName="public">
 			<column autoIncrement="true" name="id" type="BIGSERIAL">
@@ -269,23 +292,6 @@
 				<constraints nullable="false" />
 			</column>
 			<column name="horario_chegada" type="time">
-				<constraints nullable="false" />
-			</column>
-		</createTable>
-		<createTable tableName="onibus" schemaName="public">
-			<column autoIncrement="true" name="id" type="BIGSERIAL">
-				<constraints primaryKey="true" nullable="false" />
-			</column>
-			<column name="tipo_assento" type="tinyint">
-				<constraints nullable="false" />
-			</column>
-		</createTable>
-		<createTable tableName="companhia_aerea"
-			schemaName="public">
-			<column autoIncrement="true" name="id" type="BIGSERIAL">
-				<constraints primaryKey="true" nullable="false" />
-			</column>
-			<column name="escala" type="boolean">
 				<constraints nullable="false" />
 			</column>
 		</createTable>
@@ -344,16 +350,15 @@
 				<constraints nullable="false" />
 			</column>
 		</createTable>
+		<addUniqueConstraint
+			constraintName="hospedagem_proximidade>hospedagem_id,proximidade_id"
+			tableName="hospedagem_proximidade" columnNames="hospedagem_id,proximidade_id" />
 		<createTable tableName="pagamento" schemaName="public"> <!-- TODO
 			ENTIDADE NÃO IMPLEMENTADO CORRETAMENTE -->
 			<column autoIncrement="true" name="id" type="BIGSERIAL">
 				<constraints primaryKey="true" nullable="false" />
 			</column>
 		</createTable>
-		<addUniqueConstraint
-			constraintName="hospedagem_proximidade>hospedagem_id,proximidade_id"
-			tableName="hospedagem_proximidade"
-			columnNames="hospedagem_id,proximidade_id" />
 		<addForeignKeyConstraint
 			constraintName="hospedagem-endereco" baseTableName="hospedagem"
 			baseColumnNames="endereco_id" referencedTableName="endereco"
@@ -395,6 +400,20 @@
 			baseColumnNames="usuario_id" referencedTableName="usuario"
 			referencedColumnNames="id" />
 		<addForeignKeyConstraint
+			constraintName="transporte-midia"
+			baseTableName="transporte" baseColumnNames="midia_id"
+			referencedTableName="midia" referencedColumnNames="id" />
+		<addForeignKeyConstraint
+			constraintName="onibus-transporte"
+			baseTableName="onibus"
+			baseColumnNames="id" referencedTableName="transporte"
+			referencedColumnNames="id" />
+		<addForeignKeyConstraint
+			constraintName="companhia_aerea-transporte"
+			baseTableName="companhia_aerea"
+			baseColumnNames="id" referencedTableName="transporte"
+			referencedColumnNames="id" />
+		<addForeignKeyConstraint
 			constraintName="hospedagem_transporte-hospedagem"
 			baseTableName="hospedagem_transporte"
 			baseColumnNames="hospedagem_id"
@@ -413,16 +432,6 @@
 			baseTableName="transporte_endereco" baseColumnNames="endereco_id"
 			referencedTableName="endereco" referencedColumnNames="id" />
 		<addForeignKeyConstraint
-			constraintName="onibus-transporte"
-			baseTableName="onibus"
-			baseColumnNames="id" referencedTableName="transporte"
-			referencedColumnNames="id" />
-		<addForeignKeyConstraint
-			constraintName="companhia_aerea-transporte"
-			baseTableName="companhia_aerea"
-			baseColumnNames="id" referencedTableName="transporte"
-			referencedColumnNames="id" />
-		<addForeignKeyConstraint
 			constraintName="transporte_dia-transporte"
 			baseTableName="transporte_dia" baseColumnNames="transporte_id"
 			referencedTableName="transporte" referencedColumnNames="id" />
@@ -431,10 +440,6 @@
 			baseTableName="transporte_dia_horario"
 			baseColumnNames="transporte_dia_id"
 			referencedTableName="transporte_dia" referencedColumnNames="id" />
-		<addForeignKeyConstraint
-			constraintName="companhia_aerea-midia"
-			baseTableName="companhia_aerea" baseColumnNames="midia_id"
-			referencedTableName="midia" referencedColumnNames="id" />
 		<addForeignKeyConstraint
 			constraintName="pacote_viagem-usuario" baseTableName="pacote_viagem"
 			baseColumnNames="usuario_id" referencedTableName="usuario"

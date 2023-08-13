@@ -1,5 +1,7 @@
 package br.com.eyre.eyre.entity;
 
+import java.util.Base64;
+
 import br.com.eyre.eyre.bases.BaseEntity;
 import br.com.eyre.eyre.enums.MidiaEnum;
 import br.com.eyre.eyre.vo.MidiaVO;
@@ -41,8 +43,7 @@ public class Midia extends BaseEntity<Long> {
 		vo.setId(getId());
 		vo.setNome(getNome());
 		vo.setTipoMidia(getTipoMidia());
-		vo.setDados(getDados());
-
+		vo.setDados(new String(getDados()));
 		return vo;
 	}
 
