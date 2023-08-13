@@ -1,0 +1,57 @@
+# Configurações Comuns/Padrões
+spring:
+  datasource:
+    driverClassName: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/eyre_local
+    username: postgres
+    password: root
+    testWhileIdle: true
+    validationQuery: SELECT 1
+    continue-on-error: true
+# JPA
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+      naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
+  debug: true
+  liquibase:
+    change-log: classpath:/db/changelog/db.changelog-master.yaml
+  mvc.pathmatch.matching-strategy: ant_path_matcher
+forum:
+  jwt:
+    secret: EQ8Y4zebDQtHHfziT5dFMqAbPrkKxmAT6mVzj6o54u3XCwNwYYTsEz7QWU6oFqSHTuutQregXM7wWbVJK2pN7mj6PMqc4FTY5CAchdiWcQMktcTz7PFwuVTezFBRKzznymjchcUmmR2kQw4vmjK26WfuYnf4Xt3ji9Vzroha3qJ9Hv4z2zLQQ7mazxM4R2R8cyMhyXRE55UeDjwPaX7e4gGJcBzJVXHYyUKTD7tNij8kgYpuNNaBoprWiDxfifW7
+    expiration: 1800000
+management:
+  endpoint.health.show-details: always
+  endpoints.web.exposure.include: '*'
+info.app:
+  name: '@project.name@'
+  version: '@project.version@'
+  encoding: '@project.build.sourceEncoding@'
+  java:
+      version: '@java.version@'
+
+---
+
+# PROFILE - H2 DATABASE - CONFIG
+spring:
+  config:
+    activate.on-profile: dev-h2
+  datasource:
+    driverClassName: org.h2.Driver
+    url: jdbc:h2:mem:testdb
+    username: sa
+    password: Eyre-V-2023
+  h2:
+    console:
+      enabled: true
+      path: /h2/
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+  liquibase.change-log: db/changelog/db.changelog-master.yaml

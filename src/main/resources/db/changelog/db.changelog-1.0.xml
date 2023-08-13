@@ -478,11 +478,8 @@
 	<changeSet id="popularTables" author="diego.rafael">
 		<sql>
 			insert into role (nome,access_level) values ('Usuário Sudo',1),('Usuário Comum',2);
-			insert into endereco values
-			(1,'cep','pais','estado','MG','cidade','bairro','rua','numero');
-			insert into usuario values (1,'00000000000000','Usuário Sudo para Verificações','usuarioSudo@gmail.com','{bcrypt}$2a$10$0XcRCPfjgisUYFBN95WXJe8tB3kuZOvIUcSPiZx/kSw5Vn21EslQy','2022-11-17','00000000000',null,1,1,true);
-			SELECT setval('usuario_id_seq', (select max(id) from usuario));
-			SELECT setval('endereco_id_seq', (select max(id) from endereco));
+			insert into endereco (cep,pais,estado,sigla,cidade,bairro,rua,numero) values ('cep','pais','estado','MG','cidade','bairro','rua','numero');
+			insert into usuario (cpf_cnpj,nome,email,senha,data_nascimento,telefone,midia_id,role_id,endereco_id,ativo) values ('00000000000000','Usuário Sudo para Verificações','usuarioSudo@gmail.com','{bcrypt}$2a$10$0XcRCPfjgisUYFBN95WXJe8tB3kuZOvIUcSPiZx/kSw5Vn21EslQy','2022-11-17','00000000000',null,1,1,true);
 		</sql>
 	</changeSet>
 </databaseChangeLog>

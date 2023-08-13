@@ -63,7 +63,7 @@ public class SecurityConfiguration {
 
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-		http.authorizeHttpRequests((authz) -> authz.requestMatchers("/auth/", "/actuator/**", "/api/usuario/")
+		http.authorizeHttpRequests((authz) -> authz.requestMatchers("/auth/", "/actuator/**", "/api/usuario/","/h2/**")
 				.permitAll().anyRequest().authenticated())
 //				(authz) -> authz.anyRequest().permitAll())
 				.csrf(csrf -> csrf.disable())
@@ -78,7 +78,7 @@ public class SecurityConfiguration {
 	@Bean
 	public WebSecurityCustomizer webSecurityCustomizer() {
 		return (web) -> web.ignoring().requestMatchers("/**.html", "/v2/api-docs", "/webjars/**", "/configuration/**",
-				"/swagger-resources/**"); // "/swagger-ui.html" é uma URL que faz parte de "/**.html"
+				"/swagger-resources/**", "/h2/**"); // "/swagger-ui.html" é uma URL que faz parte de "/**.html"
 	}
 
 	// LDAP AUTHENTICATION
