@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -34,8 +35,8 @@ public class Autenticacao {
 			Authentication authentication = authenticationManager.authenticate(dadosLogin);
 			String token = tokenService.generateToken(authentication);
 			return ResponseEntity.ok(new TokenVO(token, "Bearer"));
-		} catch (UsernameNotFoundException e) {
-			return ResponseEntity.badRequest().build();
+		} catch (UsernameNotFoundException | BadCredentialsException e) {
+			return ResponseEntity.badRequest().body(e.getMessage());
 //					.body(new Erro("N/A", "Dados Inválidos"));
 		}
 	}
