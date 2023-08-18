@@ -37,7 +37,17 @@ public class HospedagemAPI extends BaseAPI<Long, Hospedagem, HospedagemVO, Hospe
 
 	@Autowired
 	private AvaliacaoService avaliacaoService;
+	
+	@Override
+	protected HospedagemService getService() {
+		return hospedagemService;
+	}
 
+	@Override
+	public BaseFilterService<HospedagemFiltroVO> getFilterService() {
+		return hospedagemService;
+	}
+	
 	@GetMapping(path = { "/{id}/{data}/{maisDias}" }, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> findByIdWithDatas(@PathVariable("id") Long id, @PathVariable("data") @DateTimeFormat(pattern = "dd-MM-yyyy") LocalDate data,
 			@PathVariable("maisDias") Boolean maisDias) {
@@ -55,16 +65,6 @@ public class HospedagemAPI extends BaseAPI<Long, Hospedagem, HospedagemVO, Hospe
 			}
 		}
 		return ResponseEntity.notFound().build();
-	}
-
-	@Override
-	protected HospedagemService getService() {
-		return hospedagemService;
-	}
-
-	@Override
-	public BaseFilterService<HospedagemFiltroVO> getFilterService() {
-		return hospedagemService;
 	}
 
 }

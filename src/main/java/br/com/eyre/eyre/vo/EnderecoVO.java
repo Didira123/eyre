@@ -39,5 +39,15 @@ public class EnderecoVO extends BaseVO<Long> {
 		return "Rua " + e.getRua() + ", " + e.getNumero() + HIFEN + e.getBairro() + HIFEN + e.getCidade() + HIFEN
 				+ e.getEstado() + " " + e.getSigla() + HIFEN + e.getCep();
 	}
+	
+	public EnderecoVO() {
+		
+	}
+	
+	public EnderecoVO(String cidadeEstado) {
+		String[] valores = cidadeEstado.split(", ");
+		setCidade(valores[0]);
+		setEstado(valores[1]);
+	}
 
 }

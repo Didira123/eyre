@@ -24,7 +24,12 @@ public class UsuarioAPI extends BaseAPI<Long, Usuario, UsuarioVO, UsuarioVO, Usu
 
 	@Autowired
 	private UsuarioService usuarioService;
-
+	
+	@Override
+	protected UsuarioService getService() {
+		return usuarioService;
+	}
+	
 	@PostMapping(path = { "/" }, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> create(@RequestBody @Valid UsuarioNovoVO vo, BindingResult result) {
 		try {
