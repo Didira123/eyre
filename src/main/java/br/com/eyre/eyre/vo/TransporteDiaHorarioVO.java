@@ -2,6 +2,9 @@ package br.com.eyre.eyre.vo;
 
 import java.time.LocalTime;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonFormat.Shape;
+
 import br.com.eyre.eyre.bases.BaseVO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -16,8 +19,10 @@ public class TransporteDiaHorarioVO extends BaseVO<Long> {
 
 	private TransporteDiaVO transporteDia;
 
+	@JsonFormat(shape = Shape.STRING, pattern = "HH:mm")
 	private LocalTime horarioSaida;
 
+	@JsonFormat(shape = Shape.STRING, pattern = "HH:mm")
 	private LocalTime horarioChegada;
 
 }

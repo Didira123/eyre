@@ -5,6 +5,9 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonFormat.Shape;
+
 import br.com.eyre.eyre.bases.BaseVO;
 import br.com.eyre.eyre.enums.QuartoEnum;
 import lombok.Data;
@@ -42,8 +45,10 @@ public class HospedagemVO extends BaseVO<Long> {
 
 	private String telefone;
 
+	@JsonFormat(shape = Shape.STRING, pattern = "HH:mm")
 	private LocalTime checkIn;
 
+	@JsonFormat(shape = Shape.STRING, pattern = "HH:mm")
 	private LocalTime checkOut;
 
 	private EnderecoVO endereco;
