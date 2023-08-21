@@ -1,4 +1,6 @@
 # Configurações Comuns/Padrões
+server:
+  port: 3189
 spring:
   datasource:
     driverClassName: org.postgresql.Driver
