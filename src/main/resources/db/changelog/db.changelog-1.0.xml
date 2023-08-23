@@ -38,6 +38,10 @@
 				<constraints nullable="false" />
 			</column>
 		</createTable>
+		<addUniqueConstraint
+			constraintName="endereco>cep"
+			tableName="endereco"
+			columnNames="cep" />
 		<createTable tableName="hospedagem" schemaName="public">
 			<column autoIncrement="true" name="id" type="BIGSERIAL">
 				<constraints primaryKey="true" nullable="false" />
@@ -103,6 +107,14 @@
 				<constraints nullable="false" />
 			</column>
 		</createTable>
+		<addUniqueConstraint
+			constraintName="usuario>cpf_cnpj"
+			tableName="usuario"
+			columnNames="cpf_cnpj" />
+		<addUniqueConstraint
+			constraintName="usuario>email"
+			tableName="usuario"
+			columnNames="email" />
 		<createTable tableName="role" schemaName="public">
 			<column autoIncrement="true" name="id" type="BIGSERIAL">
 				<constraints primaryKey="true" nullable="false" />
