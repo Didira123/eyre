@@ -3,6 +3,7 @@ package br.com.eyre.eyre.vo;
 import java.math.BigDecimal;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -60,6 +61,8 @@ public class HospedagemVO extends BaseVO<Long> {
 	private Boolean existeVoo;
 
 	private Boolean existeOnibus;
+	
+	private HashMap<String, List<ProximidadeVO>> listProximidades = new HashMap<>();
 
 	public HospedagemVO() {
 	}

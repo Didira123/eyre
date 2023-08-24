@@ -19,8 +19,6 @@ public class HospedagemCustomProximidadeVO extends BaseVO<Long> {
 
 	private HospedagemVO hospedagem;
 
-	private HashMap<String, List<ProximidadeVO>> listProximidades = new HashMap<>();
-
 	private Long avaliacoes;
 
 	private Double classificacao;
@@ -54,7 +52,7 @@ public class HospedagemCustomProximidadeVO extends BaseVO<Long> {
 			map.put(ProximidadeEnum.RESTAURANTE.getDescription(), listRes);
 			map.put(ProximidadeEnum.BARES.getDescription(), listBar);
 			map.put(ProximidadeEnum.BOATES.getDescription(), listBoa);
-			setListProximidades(map);
+			hospedagem.setListProximidades(map);
 		}
 	}
 
