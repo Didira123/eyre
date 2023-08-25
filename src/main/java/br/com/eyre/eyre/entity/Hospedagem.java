@@ -97,17 +97,17 @@ public class Hospedagem extends BaseEntity<Long> {
 		return super.toVO();
 	}
 
-	public HospedagemCustomProximidadeVO toCustomVO(LocalDate data, Boolean maisDias) {
+	public HospedagemCustomProximidadeVO toCustomVO(LocalDate dataIda, LocalDate dataVolta, Boolean maisDias) {
 		HospedagemCustomProximidadeVO vo = new HospedagemCustomProximidadeVO();
 //		vo.setId(getId());
-		vo.setHospedagem(toFullInnerVO(data, maisDias));
+		vo.setHospedagem(toFullInnerVO(dataIda, dataVolta, maisDias));
 		List<ProximidadeVO> listProximidades = getListProximidades().stream().map(hp -> hp.getProximidade().toSmallVO())
 				.collect(Collectors.toList());
 		vo.setProximidadesAsHashMap(listProximidades);
 		return vo;
 	}
 
-	public HospedagemVO toFullInnerVO(LocalDate data, Boolean maisDias) {
+	public HospedagemVO toFullInnerVO(LocalDate dataIda, LocalDate dataVolta, Boolean maisDias) {
 		HospedagemVO vo = new HospedagemVO();
 		vo.setId(getId());
 		vo.setTitulo(getTitulo());
@@ -121,9 +121,9 @@ public class Hospedagem extends BaseEntity<Long> {
 		if (getListTransportes() != null && !getListTransportes().isEmpty()) {
 			for (HospedagemTransporte ht : getListTransportes()) {
 				if (ht.getTransporte() instanceof CompanhiaAerea) {
-					vo.getVoos().add(((CompanhiaAerea) ht.getTransporte()).toCustomVO(data, maisDias));
+					vo.getVoos().add(((CompanhiaAerea) ht.getTransporte()).toCustomVO(dataIda, dataVolta, maisDias));
 				} else if (ht.getTransporte() instanceof Onibus) {
-					vo.getOnibus().add(((Onibus) ht.getTransporte()).toCustomVO(data, maisDias));
+					vo.getOnibus().add(((Onibus) ht.getTransporte()).toCustomVO(dataIda, dataVolta, maisDias));
 				} else {
 					throw new RuntimeException("O transporte de id \"" + ht.getTransporte().getId()
 							+ "\" não é válido! (o \"type\" no banco pode estar ausente)");

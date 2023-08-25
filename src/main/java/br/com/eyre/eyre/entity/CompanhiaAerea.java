@@ -53,7 +53,7 @@ public class CompanhiaAerea extends Transporte {
 
 		return vo;
 	}
-	
+
 //	private String nome;
 //
 //	private List<TransporteDiaVO> listDias;
@@ -74,11 +74,12 @@ public class CompanhiaAerea extends Transporte {
 //
 //	private AssentoEnum tipoPoltrona;
 
-	public TransporteCustomDiasVO toCustomVO(LocalDate data, Boolean maisDias) {
+	public TransporteCustomDiasVO toCustomVO(LocalDate dataIda, LocalDate dataVolta, Boolean maisDias) {
 		TransporteCustomDiasVO vo = new TransporteCustomDiasVO();
 		vo.setNome(getNome());
 		if (getListTransporteDias() != null && !getListTransporteDias().isEmpty()) {
-			vo.setListDias(TransporteCustomDiasVO.getHashMapDiasHorarios(getListTransporteDias(), data, maisDias));
+			vo.setListDias(TransporteCustomDiasVO.getHashMapDiasHorarios(getListTransporteDias(), dataIda, dataVolta,
+					maisDias));
 		}
 		vo.setEscala(getEscala());
 		if (getMidia() != null) {

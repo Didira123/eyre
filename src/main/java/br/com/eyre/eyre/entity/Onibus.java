@@ -59,11 +59,12 @@ public class Onibus extends Transporte {
 		return vo;
 	}
 
-	public TransporteCustomDiasVO toCustomVO(LocalDate data, Boolean maisDias) {
+	public TransporteCustomDiasVO toCustomVO(LocalDate dataIda, LocalDate dataVolta, Boolean maisDias) {
 		TransporteCustomDiasVO vo = new TransporteCustomDiasVO();
 		vo.setNome(getNome());
 		if (getListTransporteDias() != null && !getListTransporteDias().isEmpty()) {
-			vo.setListDias(TransporteCustomDiasVO.getHashMapDiasHorarios(getListTransporteDias(), data, maisDias));
+			vo.setListDias(TransporteCustomDiasVO.getHashMapDiasHorarios(getListTransporteDias(), dataIda,
+					dataVolta, maisDias));
 		}
 		if (getMidia() != null) {
 			vo.setImagemOnibus(null);

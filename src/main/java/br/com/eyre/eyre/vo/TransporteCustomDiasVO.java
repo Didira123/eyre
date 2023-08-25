@@ -11,6 +11,7 @@ import br.com.eyre.eyre.bases.BaseVO;
 import br.com.eyre.eyre.entity.TransporteDia;
 import br.com.eyre.eyre.enums.AssentoEnum;
 import br.com.eyre.eyre.enums.DiaEnum;
+import br.com.eyre.eyre.enums.RotaEnum;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -43,7 +44,7 @@ public class TransporteCustomDiasVO extends BaseVO<Long> {
 	private AssentoEnum tipoPoltrona;
 
 	public static HashMap<String, List<DiaHorariosCustomVO>> getHashMapDiasHorarios(Set<TransporteDia> list,
-			LocalDate data, Boolean maisDias) {
+			LocalDate dataIda, LocalDate dataVolta, Boolean maisDias) {
 		HashMap<String, List<DiaHorariosCustomVO>> map = null;
 		if (list != null && !list.isEmpty()) {
 			map = new HashMap<>();
@@ -52,13 +53,14 @@ public class TransporteCustomDiasVO extends BaseVO<Long> {
 			List<DiaHorariosCustomVO> listDataExata = new ArrayList<>(10);
 			List<DiaHorariosCustomVO> listDataPosterior = new ArrayList<>(10);
 			if (maisDias) {
-				DiaEnum[] arrayDias = DiaEnum.getDiaAntesAtualEDepois(data);
+				DiaEnum[] arrayDiasIda = DiaEnum.getDiaAntesAtualEDepois(dataIda);
+				DiaEnum[] arrayDiasVolta = DiaEnum.getDiaAntesAtualEDepois(dataVolta);
 				for (TransporteDia td : list) {
-					if (td.getDia().getCode() == arrayDias[0].getCode()) {
+					if (isDiaERota(td, arrayDiasIda[0], arrayDiasVolta[0])) {
 						listDataAnterior.add(td.toCustomVO());
-					} else if (td.getDia().getCode() == arrayDias[1].getCode()) {
+					} else if (isDiaERota(td, arrayDiasIda[1], arrayDiasVolta[1])) {
 						listDataExata.add(td.toCustomVO());
-					} else {
+					} else if (isDiaERota(td, arrayDiasIda[2], arrayDiasVolta[2])) {
 						listDataPosterior.add(td.toCustomVO());
 					}
 				}
@@ -66,10 +68,20 @@ public class TransporteCustomDiasVO extends BaseVO<Long> {
 				map.put("ANTERIOR", listDataAnterior);
 				map.put("POSTERIOR", listDataPosterior);
 			} else {
-				map.put("EXATA", list.stream().map(td -> td.toCustomVO()).collect(Collectors.toList()));
+				for (TransporteDia td : list) {
+					if (isDiaERota(td, DiaEnum.getByDate(dataIda), DiaEnum.getByDate(dataVolta))) {
+						listDataExata.add(td.toCustomVO());
+					}
+				}
+				map.put("EXATA", listDataExata);
 			}
 		}
 		return map;
+	}
+
+	private static boolean isDiaERota(TransporteDia td, DiaEnum diaIda, DiaEnum diaVolta) {
+		return (td.getTipoRota() == RotaEnum.IDA && td.getDia().getCode() == diaIda.getCode())
+				|| (td.getTipoRota() == RotaEnum.VOLTA && td.getDia().getCode() == diaVolta.getCode());
 	}
 
 }

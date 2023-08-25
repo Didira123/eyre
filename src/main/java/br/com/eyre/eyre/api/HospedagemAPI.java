@@ -37,7 +37,7 @@ public class HospedagemAPI extends BaseAPI<Long, Hospedagem, HospedagemVO, Hospe
 
 	@Autowired
 	private AvaliacaoService avaliacaoService;
-	
+
 	@Override
 	protected HospedagemService getService() {
 		return hospedagemService;
@@ -47,15 +47,17 @@ public class HospedagemAPI extends BaseAPI<Long, Hospedagem, HospedagemVO, Hospe
 	public BaseFilterService<HospedagemFiltroVO> getFilterService() {
 		return hospedagemService;
 	}
-	
-	@GetMapping(path = { "/{id}/{data}/{maisDias}" }, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> findByIdWithDatas(@PathVariable("id") Long id, @PathVariable("data") @DateTimeFormat(pattern = "dd-MM-yyyy") LocalDate data,
+
+	@GetMapping(path = { "/{id}/{dataIda}/{dataVolta}/{maisDias}" }, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> findByIdWithDatas(@PathVariable("id") Long id,
+			@PathVariable("dataIda") @DateTimeFormat(pattern = "dd-MM-yyyy") LocalDate dataIda,
+			@PathVariable("dataVolta") @DateTimeFormat(pattern = "dd-MM-yyyy") LocalDate dataVolta,
 			@PathVariable("maisDias") Boolean maisDias) {
 		Optional<Hospedagem> optional = hospedagemService.findById(id);
 		if (optional.isPresent()) {
 			try {
 				AvaliacoesInfoVO avaliacoesInfo = avaliacaoService.countAndMediaByHospedagem(id);
-				HospedagemCustomProximidadeVO vo = optional.get().toCustomVO(data, maisDias);
+				HospedagemCustomProximidadeVO vo = optional.get().toCustomVO(dataIda, dataVolta, maisDias);
 				vo.setAvaliacoes(avaliacoesInfo.getCount());
 				vo.setClassificacao(avaliacoesInfo.getMedia());
 				return ResponseEntity.ok(vo);
