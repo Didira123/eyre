@@ -49,9 +49,9 @@
 			<column name="titulo" type="varchar(50)">
 				<constraints unique="true" nullable="false" />
 			</column>
-			<column name="descricao" type="varchar(255)" />
+			<column name="descricao" type="varchar(800)" />
 			<column name="tipo_quarto" type="tinyint" />
-			<column name="descricao_quarto" type="varchar(255)" />
+			<column name="descricao_quarto" type="varchar(300)" />
 			<column name="quantidade_reservas" type="smallint">
 				<constraints nullable="false" />
 			</column>
@@ -177,7 +177,7 @@
 			<column name="tipo_proximidade" type="tinyint">
 				<constraints nullable="false" />
 			</column>
-			<column name="descricao" type="varchar(255)">
+			<column name="descricao" type="varchar(800)">
 				<constraints nullable="false" />
 			</column>
 			<column name="midia_id" type="bigint">
@@ -197,7 +197,7 @@
 			<column name="usuario_id" type="bigint">
 				<constraints nullable="false" />
 			</column>
-			<column name="texto" type="varchar(255)">
+			<column name="texto" type="varchar(800)">
 				<constraints nullable="false" />
 			</column>
 			<column name="nota" type="numeric(4,2)">

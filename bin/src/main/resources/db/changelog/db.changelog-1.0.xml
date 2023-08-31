@@ -22,6 +22,9 @@
 			<column name="estado" type="varchar(150)">
 				<constraints nullable="false" />
 			</column>
+			<column name="sigla" type="varchar(2)">
+				<constraints nullable="false" />
+			</column>
 			<column name="cidade" type="varchar(150)">
 				<constraints nullable="false" />
 			</column>
@@ -35,6 +38,10 @@
 				<constraints nullable="false" />
 			</column>
 		</createTable>
+		<addUniqueConstraint
+			constraintName="endereco>cep"
+			tableName="endereco"
+			columnNames="cep" />
 		<createTable tableName="hospedagem" schemaName="public">
 			<column autoIncrement="true" name="id" type="BIGSERIAL">
 				<constraints primaryKey="true" nullable="false" />
@@ -52,6 +59,12 @@
 				<constraints nullable="false" />
 			</column>
 			<column name="telefone" type="varchar(11)">
+				<constraints nullable="false" />
+			</column>
+			<column name="check_in" type="time">
+				<constraints nullable="false" />
+			</column>
+			<column name="check_out" type="time">
 				<constraints nullable="false" />
 			</column>
 			<column name="endereco_id" type="bigint">
@@ -94,11 +107,22 @@
 				<constraints nullable="false" />
 			</column>
 		</createTable>
+		<addUniqueConstraint
+			constraintName="usuario>cpf_cnpj"
+			tableName="usuario"
+			columnNames="cpf_cnpj" />
+		<addUniqueConstraint
+			constraintName="usuario>email"
+			tableName="usuario"
+			columnNames="email" />
 		<createTable tableName="role" schemaName="public">
 			<column autoIncrement="true" name="id" type="BIGSERIAL">
 				<constraints primaryKey="true" nullable="false" />
 			</column>
 			<column name="nome" type="varchar(150)">
+				<constraints nullable="false" />
+			</column>
+			<column name="access_level" type="tinyint">
 				<constraints nullable="false" />
 			</column>
 		</createTable>
@@ -115,6 +139,9 @@
 				<constraints primaryKey="true" nullable="false" />
 			</column>
 			<column name="nome" type="varchar(150)">
+				<constraints nullable="false" />
+			</column>
+			<column name="tipo_midia" type="tinyint">
 				<constraints nullable="false" />
 			</column>
 			<column name="dados" type="bytea">
@@ -173,10 +200,47 @@
 			<column name="texto" type="varchar(255)">
 				<constraints nullable="false" />
 			</column>
+			<column name="nota" type="numeric(4,2)">
+				<constraints nullable="false" />
+			</column>
 		</createTable>
 		<addUniqueConstraint
 			constraintName="avaliacao>hospedagem_id,usuario_id"
 			tableName="avaliacao" columnNames="usuario_id,hospedagem_id" />
+		<createTable tableName="transporte" schemaName="public">
+			<column autoIncrement="true" name="id" type="BIGSERIAL">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="dtype" type="int">
+				<constraints nullable="false" />
+			</column>
+			<column name="nome" type="varchar(150)">
+				<constraints nullable="false" />
+			</column>
+			<column name="midia_id" type="bigint">
+				<constraints nullable="false" />
+			</column>
+			<column name="preco" type="numeric(19,2)">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+		<createTable tableName="onibus" schemaName="public">
+			<column autoIncrement="true" name="id" type="BIGSERIAL">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="tipo_assento" type="tinyint">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+		<createTable tableName="companhia_aerea"
+			schemaName="public">
+			<column autoIncrement="true" name="id" type="BIGSERIAL">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="escala" type="boolean">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
 		<createTable tableName="hospedagem_transporte"
 			schemaName="public">
 			<column autoIncrement="true" name="id" type="BIGSERIAL">
@@ -193,26 +257,6 @@
 			constraintName="hospedagem_transporte>hospedagem_id,transporte_id"
 			tableName="hospedagem_transporte"
 			columnNames="hospedagem_id,transporte_id" />
-		<createTable tableName="transporte" schemaName="public">
-			<column autoIncrement="true" name="id" type="BIGSERIAL">
-				<constraints primaryKey="true" nullable="false" />
-			</column>
-			<column name="dtype" type="int">
-				<constraints nullable="false" />
-			</column>
-			<column name="nome" type="varchar(150)">
-				<constraints nullable="false" />
-			</column>
-			<column name="horario_partida" type="time">
-				<constraints nullable="false" />
-			</column>
-			<column name="horario_chegada" type="time">
-				<constraints nullable="false" />
-			</column>
-			<column name="preco" type="numeric(19,2)">
-				<constraints nullable="false" />
-			</column>
-		</createTable>
 		<createTable tableName="transporte_endereco"
 			schemaName="public">
 			<column autoIncrement="true" name="id" type="BIGSERIAL">
@@ -244,6 +288,9 @@
 			<column name="dia" type="tinyint">
 				<constraints nullable="false" />
 			</column>
+			<column name="tipo_rota" type="tinyint">
+				<constraints nullable="false" />
+			</column>
 		</createTable>
 		<createTable tableName="transporte_dia_horario"
 			schemaName="public">
@@ -257,26 +304,6 @@
 				<constraints nullable="false" />
 			</column>
 			<column name="horario_chegada" type="time">
-				<constraints nullable="false" />
-			</column>
-		</createTable>
-		<createTable tableName="onibus" schemaName="public">
-			<column autoIncrement="true" name="id" type="BIGSERIAL">
-				<constraints primaryKey="true" nullable="false" />
-			</column>
-			<column name="tipo_assento" type="tinyint">
-				<constraints nullable="false" />
-			</column>
-		</createTable>
-		<createTable tableName="companhia_aerea"
-			schemaName="public">
-			<column autoIncrement="true" name="id" type="BIGSERIAL">
-				<constraints primaryKey="true" nullable="false" />
-			</column>
-			<column name="escala" type="time">
-				<constraints nullable="false" />
-			</column>
-			<column name="midia_id" type="bigint">
 				<constraints nullable="false" />
 			</column>
 		</createTable>
@@ -304,7 +331,8 @@
 			</column>
 		</createTable>
 		<addUniqueConstraint
-			constraintName="pacote_viagem>pagamento_id" tableName="pacote_viagem"
+			constraintName="pacote_viagem>pagamento_id"
+			tableName="pacote_viagem"
 			columnNames="pagamento_id" />
 		<createTable tableName="hospedagem_midia"
 			schemaName="public">
@@ -334,15 +362,15 @@
 				<constraints nullable="false" />
 			</column>
 		</createTable>
-		<createTable tableName="pagamento" schemaName="public"> <!-- TODO ENTIDADE NÃO IMPLEMENTADO CORRETAMENTE -->
+		<addUniqueConstraint
+			constraintName="hospedagem_proximidade>hospedagem_id,proximidade_id"
+			tableName="hospedagem_proximidade" columnNames="hospedagem_id,proximidade_id" />
+		<createTable tableName="pagamento" schemaName="public"> <!-- TODO
+			ENTIDADE NÃO IMPLEMENTADO CORRETAMENTE -->
 			<column autoIncrement="true" name="id" type="BIGSERIAL">
 				<constraints primaryKey="true" nullable="false" />
 			</column>
 		</createTable>
-		<addUniqueConstraint
-			constraintName="hospedagem_proximidade>hospedagem_id,proximidade_id"
-			tableName="hospedagem_proximidade"
-			columnNames="hospedagem_id,proximidade_id" />
 		<addForeignKeyConstraint
 			constraintName="hospedagem-endereco" baseTableName="hospedagem"
 			baseColumnNames="endereco_id" referencedTableName="endereco"
@@ -384,12 +412,28 @@
 			baseColumnNames="usuario_id" referencedTableName="usuario"
 			referencedColumnNames="id" />
 		<addForeignKeyConstraint
+			constraintName="transporte-midia"
+			baseTableName="transporte" baseColumnNames="midia_id"
+			referencedTableName="midia" referencedColumnNames="id" />
+		<addForeignKeyConstraint
+			constraintName="onibus-transporte"
+			baseTableName="onibus"
+			baseColumnNames="id" referencedTableName="transporte"
+			referencedColumnNames="id" />
+		<addForeignKeyConstraint
+			constraintName="companhia_aerea-transporte"
+			baseTableName="companhia_aerea"
+			baseColumnNames="id" referencedTableName="transporte"
+			referencedColumnNames="id" />
+		<addForeignKeyConstraint
 			constraintName="hospedagem_transporte-hospedagem"
-			baseTableName="hospedagem_transporte" baseColumnNames="hospedagem_id"
+			baseTableName="hospedagem_transporte"
+			baseColumnNames="hospedagem_id"
 			referencedTableName="hospedagem" referencedColumnNames="id" />
 		<addForeignKeyConstraint
 			constraintName="hospedagem_transporte-transporte"
-			baseTableName="hospedagem_transporte" baseColumnNames="transporte_id"
+			baseTableName="hospedagem_transporte"
+			baseColumnNames="transporte_id"
 			referencedTableName="transporte" referencedColumnNames="id" />
 		<addForeignKeyConstraint
 			constraintName="transporte_endereco-transporte"
@@ -408,10 +452,6 @@
 			baseTableName="transporte_dia_horario"
 			baseColumnNames="transporte_dia_id"
 			referencedTableName="transporte_dia" referencedColumnNames="id" />
-		<addForeignKeyConstraint
-			constraintName="companhia_aerea-midia"
-			baseTableName="companhia_aerea" baseColumnNames="midia_id"
-			referencedTableName="midia" referencedColumnNames="id" />
 		<addForeignKeyConstraint
 			constraintName="pacote_viagem-usuario" baseTableName="pacote_viagem"
 			baseColumnNames="usuario_id" referencedTableName="usuario"
@@ -446,5 +486,12 @@
 			baseTableName="hospedagem_proximidade"
 			baseColumnNames="proximidade_id" referencedTableName="proximidade"
 			referencedColumnNames="id" />
+	</changeSet>
+	<changeSet id="popularTables" author="diego.rafael">
+		<sql>
+			insert into role (nome,access_level) values ('Usuário Sudo',1),('Usuário Comum',2);
+			insert into endereco (cep,pais,estado,sigla,cidade,bairro,rua,numero) values ('cep','pais','estado','MG','cidade','bairro','rua','numero');
+			insert into usuario (cpf_cnpj,nome,email,senha,data_nascimento,telefone,midia_id,role_id,endereco_id,ativo) values ('00000000000000','Usuário Sudo para Verificações','usuarioSudo@gmail.com','{bcrypt}$2a$10$0XcRCPfjgisUYFBN95WXJe8tB3kuZOvIUcSPiZx/kSw5Vn21EslQy','2022-11-17','00000000000',null,1,1,true);
+		</sql>
 	</changeSet>
 </databaseChangeLog>
