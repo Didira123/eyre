@@ -158,9 +158,9 @@ public class Usuario extends BaseEntity<Long> implements UserDetails {
 
 		vo.setId(getId());
 		vo.setNome(getNome());
-		if (getFoto() != null) {
-			vo.setFoto(getFoto().toVO());
-		}
+		// if (getFoto() != null) {
+		// 	vo.setFoto(getFoto().toVO());
+		// }
 
 		return vo;
 	}
