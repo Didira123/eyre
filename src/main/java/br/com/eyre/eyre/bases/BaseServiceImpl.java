@@ -22,11 +22,6 @@ public class BaseServiceImpl<ID extends Serializable, E extends BaseEntity<ID>> 
 		return getRepository().findById(id);
 	}
 
-	@Override
-	public void deleteById(ID id) {
-		getRepository().deleteById(id);
-	}
-
 	protected JpaRepository<E, ID> getRepository() {
 		throw new NotImplementedException(
 				"This method from " + getClass().getName() + " must be implemented at the actual subclass.");

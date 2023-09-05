@@ -14,7 +14,7 @@ import br.com.eyre.eyre.vo.filter.AvaliacaoFiltroVO;
 
 @RestController
 @RequestMapping("/api/avaliacao")
-public class AvaliacaoAPI extends BaseAPI<Long, Avaliacao, AvaliacaoVO, AvaliacaoVO, AvaliacaoService>
+public class AvaliacaoAPI extends BaseAPI<Long, Avaliacao, AvaliacaoVO, AvaliacaoService>
 		implements BaseFilterAPI<AvaliacaoFiltroVO> {
 
 	@Autowired

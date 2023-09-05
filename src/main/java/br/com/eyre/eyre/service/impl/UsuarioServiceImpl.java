@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 
-import br.com.eyre.eyre.bases.BaseServiceImpl;
+import br.com.eyre.eyre.bases.CrudBaseServiceImpl;
 import br.com.eyre.eyre.entity.Endereco;
 import br.com.eyre.eyre.entity.Usuario;
 import br.com.eyre.eyre.repository.UsuarioRepository;
@@ -24,7 +24,8 @@ import br.com.eyre.eyre.vo.EnderecoVO;
 import br.com.eyre.eyre.vo.UsuarioNovoVO;
 
 @Service
-public class UsuarioServiceImpl extends BaseServiceImpl<Long, Usuario> implements UserDetailsService, UsuarioService {
+public class UsuarioServiceImpl extends CrudBaseServiceImpl<Long, Usuario, UsuarioNovoVO>
+		implements UserDetailsService, UsuarioService {
 
 	private static final String USUARIO_COMUM = "Usuário Comum";
 
@@ -84,7 +85,7 @@ public class UsuarioServiceImpl extends BaseServiceImpl<Long, Usuario> implement
 
 		return usuarioRepository.save(entity);
 	}
-	
+
 	@Override
 	public Optional<Usuario> findById(Long id) {
 		return usuarioRepository.findById(id);

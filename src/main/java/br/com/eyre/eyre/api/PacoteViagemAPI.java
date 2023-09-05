@@ -14,7 +14,7 @@ import br.com.eyre.eyre.vo.filter.PacoteViagemFiltroVO;
 
 @RestController
 @RequestMapping("/api/pacoteViagem")
-public class PacoteViagemAPI extends BaseAPI<Long, PacoteViagem, PacoteViagemVO, PacoteViagemVO, PacoteViagemService>
+public class PacoteViagemAPI extends BaseAPI<Long, PacoteViagem, PacoteViagemVO, PacoteViagemService>
 		implements BaseFilterAPI<PacoteViagemFiltroVO> {
 
 	@Autowired

@@ -13,12 +13,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonFormat.Shape;
-
-import br.com.eyre.eyre.bases.BaseAPI;
 import br.com.eyre.eyre.bases.BaseFilterAPI;
 import br.com.eyre.eyre.bases.BaseFilterService;
+import br.com.eyre.eyre.bases.CrudBaseAPI;
 import br.com.eyre.eyre.entity.Hospedagem;
 import br.com.eyre.eyre.service.AvaliacaoService;
 import br.com.eyre.eyre.service.HospedagemService;
@@ -29,7 +26,7 @@ import br.com.eyre.eyre.vo.filter.HospedagemFiltroVO;
 
 @RestController
 @RequestMapping("/api/hospedagem")
-public class HospedagemAPI extends BaseAPI<Long, Hospedagem, HospedagemVO, HospedagemVO, HospedagemService>
+public class HospedagemAPI extends CrudBaseAPI<Long, Hospedagem, HospedagemVO, HospedagemService>
 		implements BaseFilterAPI<HospedagemFiltroVO> {
 
 	@Autowired

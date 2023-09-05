@@ -8,19 +8,10 @@ import java.util.stream.Collectors;
 import org.apache.commons.lang3.NotImplementedException;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-public class BaseAPI<ID extends Serializable, E extends BaseEntity<ID>, VRQ extends BaseVO<ID>, VRP extends BaseVO<ID>, S extends BaseService<ID, E>> {
-
-//	@PostMapping("/")
-//	public ResponseEntity<V> create(V vo, BindResult<?> result) {
-//		
-//		BaseService service = (BaseService) S;
-//		service.
-//		return null;
-//	}
+public class BaseAPI<ID extends Serializable, E extends BaseEntity<ID>, VRQ extends BaseVO<ID>, S extends BaseService<ID, E>> {
 
 	@GetMapping(path = { "/findAll" }, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> findAll() {
@@ -47,17 +38,6 @@ public class BaseAPI<ID extends Serializable, E extends BaseEntity<ID>, VRQ exte
 			}
 		}
 		return ResponseEntity.notFound().build();
-	}
-
-	@DeleteMapping(path = { "/{id}" })
-	public ResponseEntity<?> deleteById(@PathVariable("id") ID id) {
-		try {
-			getService().deleteById(id);
-			return ResponseEntity.noContent().build();
-		} catch (Exception e) {
-			e.printStackTrace();
-			return ResponseEntity.internalServerError().body(e.getMessage());
-		}
 	}
 
 	protected S getService() {

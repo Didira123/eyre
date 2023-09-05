@@ -40,7 +40,7 @@ public class HospedagemVO extends BaseVO<Long> {
 
 	private List<MidiaVO> listImagens = new ArrayList<>();
 
-//	private List<ProximidadeVO> listProximidades = new ArrayList<>();
+	private List<TransporteVO> listTransportes;
 
 	private String email;
 
@@ -61,7 +61,7 @@ public class HospedagemVO extends BaseVO<Long> {
 	private Boolean existeVoo;
 
 	private Boolean existeOnibus;
-	
+
 	private HashMap<String, List<ProximidadeVO>> listProximidades = new HashMap<>();
 
 	public HospedagemVO() {
