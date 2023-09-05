@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 
 import br.com.eyre.eyre.bases.CrudBaseServiceImpl;
@@ -17,6 +18,7 @@ import br.com.eyre.eyre.vo.ExtraVO;
 import br.com.eyre.eyre.vo.HospedagemExtraVO;
 import br.com.eyre.eyre.vo.HospedagemVO;
 
+@Service
 public class HospedagemExtraServiceImpl extends CrudBaseServiceImpl<Long, HospedagemExtra, HospedagemExtraVO>
 		implements HospedagemExtraService {
 
