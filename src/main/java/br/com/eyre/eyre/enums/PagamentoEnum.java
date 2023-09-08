@@ -23,9 +23,8 @@ public enum PagamentoEnum {
 	}
 
 	@JsonCreator
-	public static PagamentoEnum fromString(Object string) {
-
-		return PagamentoEnum.valueOf((String) ((LinkedHashMap) string).get("name"));
+	public static QuartoEnum fromString(Object string) {
+		return QuartoEnum.valueOf((String) string);
 	}
 
 	public static PagamentoEnum getByCodigo(Integer codigo) {

@@ -28,9 +28,8 @@ public enum DiaEnum {
 	}
 
 	@JsonCreator
-	public static DiaEnum fromString(Object string) {
-
-		return DiaEnum.valueOf((String) ((LinkedHashMap) string).get("name"));
+	public static QuartoEnum fromString(Object string) {
+		return QuartoEnum.valueOf((String) string);
 	}
 
 	public static DiaEnum getByCodigo(Integer codigo) {

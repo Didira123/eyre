@@ -17,6 +17,7 @@ import br.com.eyre.eyre.bases.CrudBaseServiceImpl;
 import br.com.eyre.eyre.entity.Hospedagem;
 import br.com.eyre.eyre.repository.AvaliacaoRepository;
 import br.com.eyre.eyre.repository.HospedagemRepository;
+import br.com.eyre.eyre.service.EnderecoService;
 import br.com.eyre.eyre.service.HospedagemExtraService;
 import br.com.eyre.eyre.service.HospedagemService;
 import br.com.eyre.eyre.vo.AvaliacoesInfoVO;
@@ -31,6 +32,9 @@ public class HospedagemServiceImpl extends CrudBaseServiceImpl<Long, Hospedagem,
 
 	@Autowired
 	private HospedagemExtraService hospedagemExtraService;
+
+	@Autowired
+	private EnderecoService enderecoService;
 
 	@Autowired
 	private HospedagemRepository hospedagemRepository;
@@ -59,6 +63,7 @@ public class HospedagemServiceImpl extends CrudBaseServiceImpl<Long, Hospedagem,
 	public Hospedagem create(HospedagemVO vo, BindingResult result) {
 		Hospedagem entity = new Hospedagem();
 		entity.setTitulo(vo.getTitulo());
+		entity.setDescricao(vo.getDescricao());
 		entity.setTipoQuarto(vo.getTipoQuarto());
 		entity.setDescricaoQuarto(vo.getDescricaoQuarto());
 		entity.setQuantidadeReservas(vo.getQuantidadeReservas());
@@ -67,10 +72,12 @@ public class HospedagemServiceImpl extends CrudBaseServiceImpl<Long, Hospedagem,
 		entity.setTelefone(vo.getTelefone());
 		entity.setCheckIn(vo.getCheckIn());
 		entity.setCheckOut(vo.getCheckOut());
-		vo.getEndereco();
+		entity.setEndereco(enderecoService.create(vo.getEndereco(), result));
 		entity.setPreco(vo.getPreco());
 		Hospedagem entityCreated = hospedagemRepository.save(entity);
-		hospedagemExtraService.createAll(vo.getListExtras(), entityCreated.getId(), result);
+		if (vo.getListExtras() != null && !vo.getListExtras().isEmpty()) {
+			hospedagemExtraService.createAll(vo.getListExtras(), entityCreated.getId(), result);
+		}
 //		vo.getListTransportes()aasdsdda
 		return entityCreated;
 

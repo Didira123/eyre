@@ -24,9 +24,8 @@ public enum RotaEnum {
 	}
 
 	@JsonCreator
-	public static RotaEnum fromString(Object string) {
-
-		return RotaEnum.valueOf((String) ((LinkedHashMap) string).get("name"));
+	public static QuartoEnum fromString(Object string) {
+		return QuartoEnum.valueOf((String) string);
 	}
 
 	public static RotaEnum getByCodigo(Integer codigo) {

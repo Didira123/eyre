@@ -23,9 +23,8 @@ public enum AssentoEnum {
 	}
 
 	@JsonCreator
-	public static AssentoEnum fromString(Object string) {
-
-		return AssentoEnum.valueOf((String) ((LinkedHashMap) string).get("name"));
+	public static QuartoEnum fromString(Object string) {
+		return QuartoEnum.valueOf((String) string);
 	}
 
 	public static AssentoEnum getByCodigo(Integer codigo) {

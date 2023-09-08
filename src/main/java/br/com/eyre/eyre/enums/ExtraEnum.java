@@ -23,9 +23,8 @@ public enum ExtraEnum {
 	}
 
 	@JsonCreator
-	public static ExtraEnum fromString(Object string) {
-
-		return ExtraEnum.valueOf((String) ((LinkedHashMap) string).get("name"));
+	public static QuartoEnum fromString(Object string) {
+		return QuartoEnum.valueOf((String) string);
 	}
 
 	public static ExtraEnum getByCodigo(Integer codigo) {

@@ -1,7 +1,5 @@
 package br.com.eyre.eyre.enums;
 
-import java.util.LinkedHashMap;
-
 import com.fasterxml.jackson.annotation.JsonCreator;
 
 import lombok.Getter;
@@ -14,20 +12,22 @@ public enum QuartoEnum {
 
 	private Integer code;
 
-	private String name;
-
 	private String description;
+
+	private QuartoEnum() {
+
+	}
 
 	private QuartoEnum(Integer code, String description) {
 		this.code = code;
-		this.name = name();
 		this.description = description;
 	}
 
 	@JsonCreator
 	public static QuartoEnum fromString(Object string) {
-
-		return QuartoEnum.valueOf((String) ((LinkedHashMap) string).get("name"));
+		return QuartoEnum.valueOf((String) string);
+//		return QuartoEnum
+//				.valueOf((String) ((string instanceof LinkedHashMap) ? ((LinkedHashMap) string).get("name") : string));
 	}
 
 	public static QuartoEnum getByCodigo(Integer codigo) {
