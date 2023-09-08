@@ -2,6 +2,7 @@ package br.com.eyre.eyre.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 
 import br.com.eyre.eyre.bases.CrudBaseServiceImpl;
@@ -10,6 +11,7 @@ import br.com.eyre.eyre.repository.MidiaRepository;
 import br.com.eyre.eyre.service.MidiaService;
 import br.com.eyre.eyre.vo.MidiaVO;
 
+@Service
 public class MidiaServiceImpl extends CrudBaseServiceImpl<Long, Midia, MidiaVO> implements MidiaService {
 
 	@Autowired
