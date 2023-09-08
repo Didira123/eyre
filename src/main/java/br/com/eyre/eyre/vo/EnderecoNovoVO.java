@@ -10,16 +10,14 @@ import lombok.ToString;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public class EnderecoVO extends BaseVO<Long> {
+public class EnderecoNovoVO extends BaseVO<Long> {
 
 	private static final String HIFEN = " - ";
 
 	private static final long serialVersionUID = 1L;
-	
-	@NotBlank
+
 	private String cep;
-	
-	@NotBlank
+
 	private String pais;
 
 	@NotBlank
@@ -30,14 +28,11 @@ public class EnderecoVO extends BaseVO<Long> {
 
 	@NotBlank
 	private String cidade;
-	
-	@NotBlank
+
 	private String bairro;
-	
-	@NotBlank
+
 	private String rua;
-	
-	@NotBlank
+
 	private String numero;
 
 	public static String format(Endereco e) {
@@ -45,11 +40,11 @@ public class EnderecoVO extends BaseVO<Long> {
 				+ e.getEstado() + " " + e.getSigla() + HIFEN + e.getCep();
 	}
 	
-	public EnderecoVO() {
+	public EnderecoNovoVO() {
 		
 	}
 	
-	public EnderecoVO(String cidadeEstado) {
+	public EnderecoNovoVO(String cidadeEstado) {
 		String[] valores = cidadeEstado.split(", ");
 		setCidade(valores[0]);
 		setEstado(valores[1]);

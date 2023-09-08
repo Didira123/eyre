@@ -32,6 +32,8 @@ public class UsuarioNovoVO extends BaseVO<Long> {
 
 	private String telefone;
 
+	private MidiaVO foto;
+
 	private RoleVO role;
 
 	private EnderecoVO endereco;

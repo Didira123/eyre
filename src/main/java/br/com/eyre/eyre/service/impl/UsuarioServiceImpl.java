@@ -18,8 +18,10 @@ import br.com.eyre.eyre.entity.Endereco;
 import br.com.eyre.eyre.entity.Usuario;
 import br.com.eyre.eyre.repository.UsuarioRepository;
 import br.com.eyre.eyre.service.EnderecoService;
+import br.com.eyre.eyre.service.MidiaService;
 import br.com.eyre.eyre.service.RoleService;
 import br.com.eyre.eyre.service.UsuarioService;
+import br.com.eyre.eyre.utils.FormatterUtils;
 import br.com.eyre.eyre.vo.EnderecoVO;
 import br.com.eyre.eyre.vo.UsuarioNovoVO;
 
@@ -33,10 +35,13 @@ public class UsuarioServiceImpl extends CrudBaseServiceImpl<Long, Usuario, Usuar
 	private UsuarioRepository usuarioRepository;
 
 	@Autowired
+	private RoleService roleService;
+
+	@Autowired
 	private EnderecoService enderecoService;
 
 	@Autowired
-	private RoleService roleService;
+	private MidiaService midiaService;
 
 	@Autowired
 	private PasswordEncoder encoder;
@@ -68,7 +73,7 @@ public class UsuarioServiceImpl extends CrudBaseServiceImpl<Long, Usuario, Usuar
 		entity.setEmail(vo.getEmail());
 		entity.setSenha(encoder.encode(vo.getSenha()));
 		entity.setDataNascimento(vo.getDataNascimento());
-		entity.setTelefone(vo.getTelefone());
+		entity.setTelefone(FormatterUtils.numbers(vo.getTelefone()));
 		entity.setRole(roleService.findByNome(USUARIO_COMUM));
 		entity.setAtivo(true);
 
@@ -96,7 +101,7 @@ public class UsuarioServiceImpl extends CrudBaseServiceImpl<Long, Usuario, Usuar
 		entity.setTelefone(vo.getTelefone());
 //		entity.setRole(roleService.findByNome(USUARIO_COMUM));
 //		entity.setAtivo(true);
-
+		entity.setFoto(midiaService.create(vo.getFoto(), result));
 		EnderecoVO enderecoVO = vo.getEndereco();
 		if (enderecoVO != null) {
 			Endereco endereco;
