@@ -87,6 +87,31 @@ public class UsuarioServiceImpl extends CrudBaseServiceImpl<Long, Usuario, Usuar
 	}
 
 	@Override
+	public Usuario update(Usuario entity, UsuarioNovoVO vo, BindingResult result) {
+//		entity.setCpfCnpj(vo.getCpfCnpj());
+		entity.setNome(vo.getNome());
+		entity.setEmail(vo.getEmail());
+//		entity.setSenha(encoder.encode(vo.getSenha()));
+//		entity.setDataNascimento(vo.getDataNascimento());
+		entity.setTelefone(vo.getTelefone());
+//		entity.setRole(roleService.findByNome(USUARIO_COMUM));
+//		entity.setAtivo(true);
+
+		EnderecoVO enderecoVO = vo.getEndereco();
+		if (enderecoVO != null) {
+			Endereco endereco;
+			if (enderecoVO.getId() != null) {
+				endereco = enderecoService.findById(enderecoVO.getId()).get();
+			} else {
+				endereco = enderecoService.create(vo.getEndereco(), result);
+			}
+			entity.setEndereco(new Endereco(endereco.getId()));
+		}
+
+		return usuarioRepository.save(entity);
+	}
+
+	@Override
 	public Optional<Usuario> findById(Long id) {
 		return usuarioRepository.findById(id);
 	}

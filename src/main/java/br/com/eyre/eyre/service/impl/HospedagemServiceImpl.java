@@ -30,21 +30,21 @@ public class HospedagemServiceImpl extends CrudBaseServiceImpl<Long, Hospedagem,
 		implements HospedagemService {
 
 	@Autowired
-	public HospedagemExtraService hospedagemExtraService;
+	private HospedagemExtraService hospedagemExtraService;
 
 	@Autowired
-	public HospedagemRepository hospedagemRepository;
+	private HospedagemRepository hospedagemRepository;
 
 	@Autowired
-	public AvaliacaoRepository avaliacaoRepository;
+	private AvaliacaoRepository avaliacaoRepository;
 
 	@Override
 	protected JpaRepository<Hospedagem, Long> getRepository() {
 		return hospedagemRepository;
 	}
 
-	@Override
 	@Transactional()
+	@Override
 	public Page<? extends BaseVO<?>> findByFilter(HospedagemFiltroVO filter) {
 		if (filter.getContent() == null) {
 			filter.setContent(new OfertaVO());

@@ -21,6 +21,11 @@ public class PacoteViagemAPI extends BaseAPI<Long, PacoteViagem, PacoteViagemVO,
 	public PacoteViagemService pacoteViagemService;
 
 	@Override
+	protected PacoteViagemService getService() {
+		return pacoteViagemService;
+	}
+
+	@Override
 	public BaseFilterService<PacoteViagemFiltroVO> getFilterService() {
 		return pacoteViagemService;
 	}

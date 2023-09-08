@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 
 import br.com.eyre.eyre.bases.CrudBaseServiceImpl;
@@ -23,13 +24,14 @@ public class HospedagemExtraServiceImpl extends CrudBaseServiceImpl<Long, Hosped
 		implements HospedagemExtraService {
 
 	@Autowired
-	HospedagemExtraRepository hospedagemExtraRepository;
+	private HospedagemExtraRepository hospedagemExtraRepository;
 
 	@Override
 	protected JpaRepository<HospedagemExtra, Long> getRepository() {
 		return hospedagemExtraRepository;
 	}
 
+	@Transactional()
 	@Override
 	public HospedagemExtra create(HospedagemExtraVO vo, BindingResult result) {
 		HospedagemExtra entity = new HospedagemExtra();
