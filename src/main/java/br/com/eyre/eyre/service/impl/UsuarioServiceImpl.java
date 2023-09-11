@@ -23,6 +23,7 @@ import br.com.eyre.eyre.service.RoleService;
 import br.com.eyre.eyre.service.UsuarioService;
 import br.com.eyre.eyre.utils.FormatterUtils;
 import br.com.eyre.eyre.vo.EnderecoVO;
+import br.com.eyre.eyre.vo.UsuarioMeVO;
 import br.com.eyre.eyre.vo.UsuarioNovoVO;
 
 @Service
@@ -119,6 +120,11 @@ public class UsuarioServiceImpl extends CrudBaseServiceImpl<Long, Usuario, Usuar
 	@Override
 	public Optional<Usuario> findById(Long id) {
 		return usuarioRepository.findById(id);
+	}
+
+	@Override
+	public UsuarioMeVO findUsuarioAndPermissionsById(Long id) {
+		return usuarioRepository.findUsuarioAndPermissionsById(id);
 	}
 
 }

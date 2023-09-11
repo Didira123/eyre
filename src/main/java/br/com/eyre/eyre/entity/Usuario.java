@@ -60,7 +60,7 @@ public class Usuario extends BaseEntity<Long> implements UserDetails {
 	private Endereco endereco;
 
 	@Column(name = "ativo")
-	private Boolean ativo;
+	private boolean ativo;
 
 	public Usuario() {
 	}
@@ -84,7 +84,7 @@ public class Usuario extends BaseEntity<Long> implements UserDetails {
 		if (getEndereco() != null) {
 			vo.setEndereco(getEndereco().toVO());
 		}
-		vo.setAtivo(getAtivo());
+		vo.setAtivo(isAtivo());
 
 		return vo;
 	}
@@ -125,7 +125,7 @@ public class Usuario extends BaseEntity<Long> implements UserDetails {
 
 	@Override
 	public boolean isEnabled() {
-		return getAtivo();
+		return isAtivo();
 	}
 
 	@Override
@@ -159,7 +159,7 @@ public class Usuario extends BaseEntity<Long> implements UserDetails {
 		vo.setId(getId());
 		vo.setNome(getNome());
 		// if (getFoto() != null) {
-		// 	vo.setFoto(getFoto().toVO());
+		// vo.setFoto(getFoto().toVO());
 		// }
 
 		return vo;

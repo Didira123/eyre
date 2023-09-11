@@ -30,6 +30,6 @@ public class UsuarioVO extends BaseVO<Long> {
 
 	private EnderecoVO endereco;
 
-	private Boolean ativo;
+	private boolean ativo;
 
 }
