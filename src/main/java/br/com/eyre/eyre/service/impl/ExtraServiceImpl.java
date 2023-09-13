@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 
@@ -16,6 +17,7 @@ import br.com.eyre.eyre.repository.ExtraRepository;
 import br.com.eyre.eyre.service.ExtraService;
 import br.com.eyre.eyre.vo.ExtraVO;
 
+@Service
 public class ExtraServiceImpl extends CrudBaseServiceImpl<Long, Extra, ExtraVO> implements ExtraService {
 
 	@Autowired
