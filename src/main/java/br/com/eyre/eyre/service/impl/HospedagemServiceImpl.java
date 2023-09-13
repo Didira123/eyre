@@ -19,7 +19,9 @@ import br.com.eyre.eyre.repository.AvaliacaoRepository;
 import br.com.eyre.eyre.repository.HospedagemRepository;
 import br.com.eyre.eyre.service.EnderecoService;
 import br.com.eyre.eyre.service.HospedagemExtraService;
+import br.com.eyre.eyre.service.HospedagemProximidadeService;
 import br.com.eyre.eyre.service.HospedagemService;
+import br.com.eyre.eyre.service.HospedagemTransporteService;
 import br.com.eyre.eyre.vo.AvaliacoesInfoVO;
 import br.com.eyre.eyre.vo.HospedagemCardVO;
 import br.com.eyre.eyre.vo.HospedagemVO;
@@ -35,6 +37,12 @@ public class HospedagemServiceImpl extends CrudBaseServiceImpl<Long, Hospedagem,
 
 	@Autowired
 	private EnderecoService enderecoService;
+
+	@Autowired
+	private HospedagemProximidadeService hospedagemProximidadeService;
+
+	@Autowired
+	private HospedagemTransporteService hospedagemTransporteService;
 
 	@Autowired
 	private HospedagemRepository hospedagemRepository;
@@ -67,7 +75,6 @@ public class HospedagemServiceImpl extends CrudBaseServiceImpl<Long, Hospedagem,
 		entity.setTipoQuarto(vo.getTipoQuarto());
 		entity.setDescricaoQuarto(vo.getDescricaoQuarto());
 		entity.setQuantidadeReservas(vo.getQuantidadeReservas());
-//		vo.getListProximidades() TODO cobrar Botelho campos de proximidade no design ou ele mesmo fazer o campo para a requisição
 		entity.setEmail(vo.getEmail());
 		entity.setTelefone(vo.getTelefone());
 		entity.setCheckIn(vo.getCheckIn());
@@ -78,7 +85,10 @@ public class HospedagemServiceImpl extends CrudBaseServiceImpl<Long, Hospedagem,
 		if (vo.getListExtras() != null && !vo.getListExtras().isEmpty()) {
 			hospedagemExtraService.createAll(vo.getListExtras(), entityCreated.getId(), result);
 		}
-//		vo.getListTransportes()aasdsdda
+		if (vo.getListProximidades() != null) {
+			hospedagemProximidadeService.createAll(vo.getListProximidades(), entityCreated.getId(), result);
+		}
+		hospedagemTransporteService.createAllByHospedagem(entityCreated.getId(), vo.getEndereco(), result);
 		return entityCreated;
 
 	}

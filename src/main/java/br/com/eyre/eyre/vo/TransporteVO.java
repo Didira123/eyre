@@ -42,5 +42,13 @@ public class TransporteVO extends BaseVO<Long> {
 	private MidiaVO midia;
 
 	private BigDecimal preco;
+	
+	public TransporteVO() {
+		
+	}
+	
+	public TransporteVO(Long id) {
+		setId(id);
+	}
 
 }

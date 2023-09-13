@@ -1,7 +1,5 @@
 package br.com.eyre.eyre.enums;
 
-import java.util.LinkedHashMap;
-
 import com.fasterxml.jackson.annotation.JsonCreator;
 
 import lombok.Getter;
@@ -23,8 +21,8 @@ public enum ProximidadeEnum {
 	}
 
 	@JsonCreator
-	public static QuartoEnum fromString(Object string) {
-		return QuartoEnum.valueOf((String) string);
+	public static ProximidadeEnum fromString(Object string) {
+		return ProximidadeEnum.valueOf((String) string);
 	}
 
 	public static ProximidadeEnum getByCodigo(Integer codigo) {

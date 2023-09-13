@@ -48,10 +48,10 @@ public class HospedagemCustomProximidadeVO extends BaseVO<Long> {
 				}
 			}
 			HashMap<String, List<ProximidadeVO>> map = new HashMap<>();
-			map.put(ProximidadeEnum.TURISTICO.getDescription(), listTur);
-			map.put(ProximidadeEnum.RESTAURANTE.getDescription(), listRes);
-			map.put(ProximidadeEnum.BARES.getDescription(), listBar);
-			map.put(ProximidadeEnum.BOATES.getDescription(), listBoa);
+			map.put(ProximidadeEnum.TURISTICO.toString(), listTur);
+			map.put(ProximidadeEnum.RESTAURANTE.toString(), listRes);
+			map.put(ProximidadeEnum.BARES.toString(), listBar);
+			map.put(ProximidadeEnum.BOATES.toString(), listBoa);
 			hospedagem.setListProximidades(map);
 		}
 	}
