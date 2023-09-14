@@ -37,7 +37,7 @@ public class HospedagemExtraServiceImpl extends CrudBaseServiceImpl<Long, Hosped
 		HospedagemExtra entity = new HospedagemExtra();
 		entity.setExtra(new Extra(vo.getExtra().getId()));
 		entity.setHospedagem(new Hospedagem(vo.getHospedagem().getId()));
-		return super.create(vo, result);
+		return hospedagemExtraRepository.save(entity);
 	}
 
 	@Override
