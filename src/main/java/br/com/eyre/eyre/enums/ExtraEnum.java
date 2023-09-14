@@ -15,7 +15,11 @@ public enum ExtraEnum {
 	private String name;
 
 	private String description;
+	
+	private ExtraEnum() {
 
+	}
+	
 	private ExtraEnum(Integer code, String description) {
 		this.code = code;
 		this.name = name();

@@ -1,6 +1,7 @@
 package br.com.eyre.eyre.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 
@@ -26,6 +27,11 @@ public class ProximidadeServiceImpl extends CrudBaseServiceImpl<Long, Proximidad
 
 	@Autowired
 	private ProximidadeRepository proximidadeRepository;
+
+	@Override
+	protected JpaRepository<Proximidade, Long> getRepository() {
+		return proximidadeRepository;
+	}
 
 	@Override
 	public Proximidade create(ProximidadeVO vo, BindingResult result) {

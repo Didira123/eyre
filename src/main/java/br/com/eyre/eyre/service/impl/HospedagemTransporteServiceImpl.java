@@ -3,6 +3,7 @@ package br.com.eyre.eyre.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 
@@ -29,6 +30,11 @@ public class HospedagemTransporteServiceImpl extends
 	private HospedagemTransporteRepository hospedagemTransporteRepository;
 
 	@Override
+	protected JpaRepository<HospedagemTransporte, Long> getRepository() {
+		return hospedagemTransporteRepository;
+	}
+
+	@Override
 	public HospedagemTransporte create(Hospedagem hospedagem, Transporte transporte, BindingResult result) {
 		HospedagemTransporte entity = new HospedagemTransporte();
 		entity.setHospedagem(hospedagem);
@@ -41,10 +47,7 @@ public class HospedagemTransporteServiceImpl extends
 		List<Transporte> listTransportes = transporteService.findByDestinoWithPaisAndEstadoAndCidade(endereco.getPais(),
 				endereco.getEstado(), endereco.getCidade());
 		for (Transporte t : listTransportes) {
-			HospedagemTransporteVO ht = new HospedagemTransporteVO();
-			ht.setHospedagem(new HospedagemVO(idHospedagem));
-			ht.setTransporte(new TransporteVO(t.getId()));
-			create(ht, result);
+			create(new Hospedagem(idHospedagem), t, result);
 		}
 		return listTransportes;
 	}

@@ -14,6 +14,9 @@ public enum ProximidadeEnum {
 
 	private String description;
 
+	private ProximidadeEnum() {
+	}
+
 	private ProximidadeEnum(Integer code, String description) {
 		this.code = code;
 		this.name = name();

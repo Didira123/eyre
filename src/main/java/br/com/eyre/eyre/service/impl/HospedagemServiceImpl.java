@@ -19,6 +19,7 @@ import br.com.eyre.eyre.repository.AvaliacaoRepository;
 import br.com.eyre.eyre.repository.HospedagemRepository;
 import br.com.eyre.eyre.service.EnderecoService;
 import br.com.eyre.eyre.service.HospedagemExtraService;
+import br.com.eyre.eyre.service.HospedagemMidiaService;
 import br.com.eyre.eyre.service.HospedagemProximidadeService;
 import br.com.eyre.eyre.service.HospedagemService;
 import br.com.eyre.eyre.service.HospedagemTransporteService;
@@ -33,10 +34,13 @@ public class HospedagemServiceImpl extends CrudBaseServiceImpl<Long, Hospedagem,
 		implements HospedagemService {
 
 	@Autowired
-	private HospedagemExtraService hospedagemExtraService;
+	private EnderecoService enderecoService;
 
 	@Autowired
-	private EnderecoService enderecoService;
+	private HospedagemMidiaService hospedagemMidiaService;
+
+	@Autowired
+	private HospedagemExtraService hospedagemExtraService;
 
 	@Autowired
 	private HospedagemProximidadeService hospedagemProximidadeService;
@@ -82,6 +86,9 @@ public class HospedagemServiceImpl extends CrudBaseServiceImpl<Long, Hospedagem,
 		entity.setEndereco(enderecoService.create(vo.getEndereco(), result));
 		entity.setPreco(vo.getPreco());
 		Hospedagem entityCreated = hospedagemRepository.save(entity);
+		if (vo.getListImagens() != null && !vo.getListImagens().isEmpty()) {
+			hospedagemMidiaService.createAll(vo.getListImagens(), entityCreated.getId(), result);
+		}
 		if (vo.getListExtras() != null && !vo.getListExtras().isEmpty()) {
 			hospedagemExtraService.createAll(vo.getListExtras(), entityCreated.getId(), result);
 		}

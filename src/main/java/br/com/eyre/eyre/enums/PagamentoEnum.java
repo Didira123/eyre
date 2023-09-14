@@ -1,7 +1,5 @@
 package br.com.eyre.eyre.enums;
 
-import java.util.LinkedHashMap;
-
 import com.fasterxml.jackson.annotation.JsonCreator;
 
 import lombok.Getter;
@@ -15,6 +13,9 @@ public enum PagamentoEnum {
 	private String name;
 
 	private String description;
+
+	private PagamentoEnum() {
+	}
 
 	private PagamentoEnum(Integer code, String description) {
 		this.code = code;

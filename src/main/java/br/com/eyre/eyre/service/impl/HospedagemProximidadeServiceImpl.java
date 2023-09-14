@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 
@@ -30,6 +31,11 @@ public class HospedagemProximidadeServiceImpl
 
 	@Autowired
 	private ProximidadeService proximidadeService;
+
+	@Override
+	protected JpaRepository<HospedagemProximidade, Long> getRepository() {
+		return hospedagemProximidadeRepository;
+	}
 
 	@Override
 	public HospedagemProximidade create(HospedagemProximidadeVO vo, BindingResult result) {

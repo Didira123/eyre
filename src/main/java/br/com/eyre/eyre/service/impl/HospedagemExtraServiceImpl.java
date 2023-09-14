@@ -37,6 +37,7 @@ public class HospedagemExtraServiceImpl extends CrudBaseServiceImpl<Long, Hosped
 		HospedagemExtra entity = new HospedagemExtra();
 		entity.setExtra(new Extra(vo.getExtra().getId()));
 		entity.setHospedagem(new Hospedagem(vo.getHospedagem().getId()));
+		entity.setTipoExtra(vo.getTipoExtra());
 		return hospedagemExtraRepository.save(entity);
 	}
 
@@ -47,6 +48,7 @@ public class HospedagemExtraServiceImpl extends CrudBaseServiceImpl<Long, Hosped
 			HospedagemExtraVO heVO = new HospedagemExtraVO();
 			heVO.setExtra(vo);
 			heVO.setHospedagem(new HospedagemVO(idHospedagem));
+			heVO.setTipoExtra(vo.getTipoExtra());
 			listReturn.add(create(heVO, result));
 		}
 		return listReturn;
