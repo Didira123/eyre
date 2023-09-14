@@ -35,4 +35,9 @@ public class BaseEntity<I extends Serializable> implements Serializable {
 				"This method from " + getClass().getName() + " must be implemented at the actual subclass.");
 	}
 
+	public <B extends BaseVO<I>> B toCustomVO() {
+		throw new NotImplementedException(
+				"This method from " + getClass().getName() + " must be implemented at the actual subclass.");
+	}
+
 }

@@ -16,8 +16,13 @@ public class BaseAPI<ID extends Serializable, E extends BaseEntity<ID>, VRQ exte
 	@GetMapping(path = { "/findAll" }, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> findAll() {
 		try {
-			List<? extends BaseVO<ID>> listVOs = getService().findAll().stream().map(e -> (BaseVO<ID>) e.toVO())
-					.collect(Collectors.toList());
+			List<? extends BaseVO<ID>> listVOs = getService().findAll().stream().map(e -> {
+				try {
+					return (BaseVO<ID>) ((BaseEntity<ID>) e).toVO();
+				} catch (Exception ex) {
+					return (BaseVO<ID>) e;
+				}
+			}).collect(Collectors.toList());
 			return ResponseEntity.ok(listVOs);
 		} catch (Exception e) {
 			e.printStackTrace();

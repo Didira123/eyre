@@ -7,7 +7,7 @@ import java.util.Optional;
 //informar o ID (ID), Classe Entidade (E)
 public interface BaseService<ID extends Serializable, E extends BaseEntity<ID>> {
 
-	public List<E> findAll();
+	public List<?> findAll();
 
 	public Optional<E> findById(ID id);
 

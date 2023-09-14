@@ -13,7 +13,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public class BaseServiceImpl<ID extends Serializable, E extends BaseEntity<ID>> implements BaseService<ID, E> {
 
 	@Override
-	public List<E> findAll() {
+	public List<?> findAll() {
 		return getRepository().findAll(Sort.by(Direction.ASC, "id"));
 	}
 

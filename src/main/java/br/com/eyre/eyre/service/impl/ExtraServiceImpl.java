@@ -4,8 +4,6 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,8 +27,8 @@ public class ExtraServiceImpl extends CrudBaseServiceImpl<Long, Extra, ExtraVO> 
 	}
 
 	@Override
-	public List<Extra> findAll() {
-		return extraRepository.findAll(Sort.by(Direction.ASC, "nome"));
+	public List<ExtraVO> findAll() {
+		return extraRepository.findAllCustom();
 	}
 
 	@Transactional()

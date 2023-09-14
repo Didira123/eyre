@@ -17,4 +17,18 @@ public class ExtraVO extends BaseVO<Long> {
 
 	private ExtraEnum tipoExtra;
 
+	public ExtraVO() {
+
+	}
+
+	public ExtraVO(Long id) {
+		setId(id);
+	}
+
+	public ExtraVO(Long id, String nome, ExtraEnum tipoExtra) {
+		setId(id);
+		setNome(nome);
+		setTipoExtra(tipoExtra);
+	}
+
 }
