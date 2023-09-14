@@ -10,7 +10,7 @@ import br.com.eyre.eyre.vo.ExtraVO;
 
 public interface ExtraRepository extends JpaRepository<Extra, Long> {
 
-	@Query("Select new br.com.eyre.eyre.vo.ExtraVO(e.id, e.nome, e.tipoExtra) FROM " + " HospedagemExtra he "
+	@Query("Select new br.com.eyre.eyre.vo.ExtraVO(e.id, e.nome, he.tipoExtra) FROM " + " HospedagemExtra he "
 			+ " INNER JOIN he.extra e " + " ORDER BY e.nome")
 	List<ExtraVO> findAllCustom();
 
