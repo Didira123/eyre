@@ -39,9 +39,9 @@
 			</column>
 		</createTable>
 		<addUniqueConstraint
-			constraintName="endereco>cep"
+			constraintName="endereco>cep,pais,estado,sigla,cidade,bairro,rua,numero"
 			tableName="endereco"
-			columnNames="cep" />
+			columnNames="cep,pais,estado,sigla,cidade,bairro,rua,numero" />
 		<createTable tableName="hospedagem" schemaName="public">
 			<column autoIncrement="true" name="id" type="BIGSERIAL">
 				<constraints primaryKey="true" nullable="false" />

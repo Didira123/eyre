@@ -23,8 +23,12 @@ public class UsuarioMeVO extends UsuarioVO {
 		setEmail(usuario.getEmail());
 		setDataNascimento(usuario.getDataNascimento());
 		setTelefone(usuario.getTelefone());
-		setFoto(usuario.getFoto().toVO());
-		setRole(usuario.getRole().toVO());
+		if (usuario.getFoto() != null) {
+			setFoto(usuario.getFoto().toVO());
+		}
+		if (usuario.getRole() != null) {
+			setRole(usuario.getRole().toVO());
+		}
 		setEndereco(usuario.getEndereco().toVO());
 		setAtivo(usuario.isAtivo());
 	}
