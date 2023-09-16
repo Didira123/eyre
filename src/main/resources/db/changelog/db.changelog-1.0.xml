@@ -184,7 +184,7 @@
 				<constraints nullable="false" />
 			</column>
 			<column name="endereco_id" type="bigint">
-				<constraints nullable="false" />
+				<constraints/>
 			</column>
 		</createTable>
 		<createTable tableName="avaliacao" schemaName="public">
