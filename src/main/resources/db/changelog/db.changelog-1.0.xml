@@ -9,6 +9,10 @@
 						http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd">
 
 	<changeSet id="createTables-iniciais" author="diego.rafael">
+		<addUniqueConstraint
+			constraintName="databasechangelog>id"
+			tableName="databasechangelog"
+			columnNames="id" />
 		<createTable tableName="endereco" schemaName="public">
 			<column autoIncrement="true" name="id" type="BIGSERIAL">
 				<constraints primaryKey="true" nullable="false" />

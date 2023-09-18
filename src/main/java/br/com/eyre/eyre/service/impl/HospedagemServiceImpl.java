@@ -23,6 +23,7 @@ import br.com.eyre.eyre.service.HospedagemMidiaService;
 import br.com.eyre.eyre.service.HospedagemProximidadeService;
 import br.com.eyre.eyre.service.HospedagemService;
 import br.com.eyre.eyre.service.HospedagemTransporteService;
+import br.com.eyre.eyre.utils.FormatterUtils;
 import br.com.eyre.eyre.vo.AvaliacoesInfoVO;
 import br.com.eyre.eyre.vo.HospedagemCardVO;
 import br.com.eyre.eyre.vo.HospedagemVO;
@@ -80,7 +81,7 @@ public class HospedagemServiceImpl extends CrudBaseServiceImpl<Long, Hospedagem,
 		entity.setDescricaoQuarto(vo.getDescricaoQuarto());
 		entity.setQuantidadeReservas(vo.getQuantidadeReservas());
 		entity.setEmail(vo.getEmail());
-		entity.setTelefone(vo.getTelefone());
+		entity.setTelefone(FormatterUtils.numbers(vo.getTelefone()));
 		entity.setCheckIn(vo.getCheckIn());
 		entity.setCheckOut(vo.getCheckOut());
 		entity.setEndereco(enderecoService.create(vo.getEndereco(), result));
