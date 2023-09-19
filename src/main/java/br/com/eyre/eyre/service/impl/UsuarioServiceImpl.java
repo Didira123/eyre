@@ -102,7 +102,10 @@ public class UsuarioServiceImpl extends CrudBaseServiceImpl<Long, Usuario, Usuar
 		entity.setTelefone(vo.getTelefone());
 //		entity.setRole(roleService.findByNome(USUARIO_COMUM));
 //		entity.setAtivo(true);
-		entity.setFoto(midiaService.create(vo.getFoto(), result));
+		if(vo.getFoto().getId() == null){
+			entity.setFoto(midiaService.create(vo.getFoto(), result));
+		}
+			
 		EnderecoVO enderecoVO = vo.getEndereco();
 		if (enderecoVO != null) {
 			Endereco endereco;

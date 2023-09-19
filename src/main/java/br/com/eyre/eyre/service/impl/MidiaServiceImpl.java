@@ -32,4 +32,13 @@ public class MidiaServiceImpl extends CrudBaseServiceImpl<Long, Midia, MidiaVO> 
 		return midiaRepository.save(entity);
 	}
 
+	@Override
+	public Midia update(Midia entity, MidiaVO vo, BindingResult result) {
+		entity.setNome(vo.getNome());
+		entity.setTipoMidia(vo.getTipoMidia());
+		entity.setDados(vo.getByteArrayFrom64());
+		
+		return midiaRepository.save(entity);
+	}
+
 }
