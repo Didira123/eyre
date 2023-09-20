@@ -2,6 +2,7 @@ package br.com.eyre.eyre.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,6 +14,7 @@ import br.com.eyre.eyre.bases.CrudBaseServiceImpl;
 import br.com.eyre.eyre.entity.Extra;
 import br.com.eyre.eyre.entity.Hospedagem;
 import br.com.eyre.eyre.entity.HospedagemExtra;
+import br.com.eyre.eyre.enums.ExtraEnum;
 import br.com.eyre.eyre.repository.HospedagemExtraRepository;
 import br.com.eyre.eyre.service.HospedagemExtraService;
 import br.com.eyre.eyre.vo.ExtraVO;
@@ -52,6 +54,11 @@ public class HospedagemExtraServiceImpl extends CrudBaseServiceImpl<Long, Hosped
 			listReturn.add(create(heVO, result));
 		}
 		return listReturn;
+	}
+
+	@Override
+	public Set<HospedagemExtra> findByHospedagemAndTipoFetchExtra(Long id, ExtraEnum tipoExtra) {
+		return hospedagemExtraRepository.findByHospedagemAndTipoFetchExtra(id, tipoExtra);
 	}
 
 }

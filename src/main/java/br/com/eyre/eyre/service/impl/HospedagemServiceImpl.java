@@ -15,6 +15,7 @@ import org.springframework.validation.BindingResult;
 import br.com.eyre.eyre.bases.BaseVO;
 import br.com.eyre.eyre.bases.CrudBaseServiceImpl;
 import br.com.eyre.eyre.entity.Hospedagem;
+import br.com.eyre.eyre.enums.ExtraEnum;
 import br.com.eyre.eyre.repository.AvaliacaoRepository;
 import br.com.eyre.eyre.repository.HospedagemRepository;
 import br.com.eyre.eyre.service.EnderecoService;
@@ -67,7 +68,7 @@ public class HospedagemServiceImpl extends CrudBaseServiceImpl<Long, Hospedagem,
 			filter.setContent(new OfertaVO());
 		}
 		return new PageImpl<HospedagemCardVO>(
-				hospedagemRepository.findByFilter(filter).stream().map(h -> h.toCardVO()).collect(Collectors.toList()),
+				hospedagemRepository.findByFilter(filter).stream().map(h -> {h.setListExtras(hospedagemExtraService.findByHospedagemAndTipoFetchExtra(h.getId(), ExtraEnum.SERVIÇO_PRINCIPAL));return h.toCardVO();}).collect(Collectors.toList()),
 				PageRequest.of(filter.getPage(), filter.getPageSize()), hospedagemRepository.countByFilter(filter));
 	}
 

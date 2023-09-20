@@ -43,7 +43,7 @@ public class HospedagemCardVO extends BaseVO<Long> {
 		setTipoQuarto(h.getTipoQuarto());
 		setDescricaoQuarto(h.getDescricaoQuarto());
 		if (h.getListExtras() != null && !h.getListExtras().isEmpty()) {
-			setListExtras(h.getListExtras().stream().map(e -> e.getExtra().toVO()).collect(Collectors.toList()));
+			setListExtras(h.getListExtras().stream().map(e -> new ExtraVO(e.getExtra().getId(), e.getExtra().getNome(), e.getTipoExtra())).collect(Collectors.toList()));
 		}
 		if (h.getListMidias() != null && !h.getListMidias().isEmpty()) {
 			setListImagens(h.getListMidias().stream().map(e -> e.getMidia().toVO()).collect(Collectors.toList()));
