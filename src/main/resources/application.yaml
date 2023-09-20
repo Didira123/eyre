@@ -46,6 +46,7 @@ spring:
   datasource:
     driverClassName: org.h2.Driver
     url: jdbc:h2:mem:testdb
+    schema: classpath:/data.sql
     username: sa
     password: Eyre-V-2023
   h2:
