@@ -11,18 +11,20 @@ import br.com.eyre.eyre.repository.custom.HospedagemRepositoryCustom;
 public interface HospedagemRepository extends JpaRepository<Hospedagem, Long>, HospedagemRepositoryCustom{
 
 	@Query(value = "SELECT h FROM Hospedagem h "
-			+ " LEFT JOIN FETCH h.endereco he "
-			+ " LEFT JOIN FETCH h.listTransportes lt "
-			+ " LEFT JOIN FETCH lt.transporte t "
-			+ " LEFT JOIN FETCH t.listTransporteEnderecos lte "
-			+ " LEFT JOIN FETCH t.listTransporteDias ltd "
-			+ " LEFT JOIN ltd.listTransporteDiaHorarios ltdh "
+			+ " INNER JOIN FETCH h.endereco he "
+			+ " INNER JOIN FETCH h.listTransportes lt "
+			+ " INNER JOIN FETCH lt.transporte t "
+			+ " INNER JOIN FETCH t.listTransporteEnderecos lte "
+			+ " INNER JOIN FETCH lte.endereco te "
+			+ " INNER JOIN FETCH t.listTransporteDias ltd "
+			+ " INNER JOIN FETCH ltd.listTransporteDiaHorarios ltdh "
+			+ " INNER JOIN FETCH h.listMidias lm "
+			+ " INNER JOIN FETCH lm.midia mid "
 			+ " LEFT JOIN FETCH h.listExtras le "
 			+ " LEFT JOIN FETCH le.extra ext "
-			+ " LEFT JOIN FETCH h.listMidias lm "
-			+ " LEFT JOIN FETCH lm.midia mid "
 			+ " LEFT JOIN FETCH h.listProximidades lp "
 			+ " LEFT JOIN FETCH lp.proximidade prox "
+			+ " LEFT JOIN FETCH prox.foto f "
 			+ " WHERE h.id =:id")
 	public Optional<Hospedagem> findByIdFetchEnderecoFetchTransportesFetchExtrasFetchMidiasFetchProximidades(
 			Long id);
