@@ -12,6 +12,7 @@ import br.com.eyre.eyre.bases.CrudBaseServiceImpl;
 import br.com.eyre.eyre.entity.Endereco;
 import br.com.eyre.eyre.repository.EnderecoRepository;
 import br.com.eyre.eyre.service.EnderecoService;
+import br.com.eyre.eyre.utils.FormatterUtils;
 import br.com.eyre.eyre.vo.EnderecoVO;
 
 @Service
@@ -29,7 +30,7 @@ public class EnderecoServiceImpl extends CrudBaseServiceImpl<Long, Endereco, End
 	@Override
 	public Endereco create(EnderecoVO vo, BindingResult result) {
 		Endereco entity = new Endereco();
-		entity.setCep(vo.getCep());
+		entity.setCep(FormatterUtils.numbers(vo.getCep()));
 		entity.setPais(vo.getPais());
 		entity.setEstado(vo.getEstado());
 		entity.setSigla(vo.getSigla());
