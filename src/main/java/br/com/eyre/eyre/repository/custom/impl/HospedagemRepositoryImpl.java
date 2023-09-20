@@ -32,6 +32,7 @@ public class HospedagemRepositoryImpl implements HospedagemRepositoryCustom {
 		builder.append(" INNER JOIN lm.midia m WITH m.tipoMidia=:midiaPrincipal ");
 		builder.append(" INNER JOIN FETCH h.listTransportes lt ");
 		builder.append(" INNER JOIN FETCH lt.transporte t ");
+		builder.append(" INNER JOIN lt.transporte t2 ");
 		builder.append(" INNER JOIN t.listTransporteEnderecos lte ");
 		builder.append(" INNER JOIN lte.endereco et ");
 		builder.append(" INNER JOIN t.listTransporteDias ltd WITH ltd.tipoRota =:rotaIda ");
@@ -91,7 +92,7 @@ public class HospedagemRepositoryImpl implements HospedagemRepositoryCustom {
 		}
 		if (content.getOrcamento() != null) {
 			builder.append(
-					" AND (((h.preco + 2 * t.preco)/1.15<=:orcamento) AND ((h.preco + 2 * t.preco)/0.85>=:orcamento)) ");
+					" AND (((h.preco + t.preco + t2.preco)/1.15<=:orcamento) AND ((h.preco + t.preco + t2.preco)/0.85>=:orcamento)) ");
 		}
 
 	}

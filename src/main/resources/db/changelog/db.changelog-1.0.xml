@@ -504,9 +504,9 @@
 			insert into transporte values (DEFAULT, 1, 'Buser', (select id from midia where nome = 'buser'), 200.00);
 			insert into onibus values ((select max(id) from transporte), 0);
 			
-			insert into endereco values (DEFAULT, '30180101','Brasil','Minas Gerais','MG','Belo Horizonte','Barro Preto','Rua dos Guajajaras','1353');
+			insert into endereco values (DEFAULT, '30180101','Brasil','MG','MG','Belo Horizonte','Barro Preto','Rua dos Guajajaras','1353');
 			insert into transporte_endereco values (DEFAULT, (select max(id) from transporte), (select id from endereco where cep = '30180101' and rua = 'Rua dos Guajajaras' and numero = '1353'), 0);
-			insert into endereco values (DEFAULT, '41800700','Brasil','Bahia','BA','Salvador','Pernambués','Avenida Antônio Carlos Magalhães','4362');
+			insert into endereco values (DEFAULT, '41800700','Brasil','BA','BA','Salvador','Pernambués','Avenida Antônio Carlos Magalhães','4362');
 			insert into transporte_endereco values (DEFAULT, (select max(id) from transporte), (select id from endereco where cep = '41800700' and rua = 'Avenida Antônio Carlos Magalhães' and numero = '4362'), 1);
 			
 			insert into transporte_dia values (DEFAULT, (select max(id) from transporte), 0, 0);
@@ -577,7 +577,7 @@
 			insert into transporte values (DEFAULT, 1, 'Buser', (select id from midia where nome = 'buser'), 220.00);
 			insert into onibus values ((select max(id) from transporte), 1);
 			
-			insert into endereco values (DEFAULT, '01154060','Brasil','São Paulo','SP','São Paulo','Barra Funda','Rua Mário de Andrade','664');
+			insert into endereco values (DEFAULT, '01154060','Brasil','SP','SP','São Paulo','Barra Funda','Rua Mário de Andrade','664');
 			insert into transporte_endereco values (DEFAULT, (select max(id) from transporte), (select id from endereco where cep = '01154060' and rua = 'Rua Mário de Andrade' and numero = '664'), 0);
 			insert into transporte_endereco values (DEFAULT, (select max(id) from transporte), (select id from endereco where cep = '41800700' and rua = 'Avenida Antônio Carlos Magalhães' and numero = '4362'), 1);
 			
@@ -649,7 +649,7 @@
 			insert into transporte values (DEFAULT, 1, 'Buser', (select id from midia where nome = 'buser'), 245.00);
 			insert into onibus values ((select max(id) from transporte), 0);
 			
-			insert into endereco values (DEFAULT, '20220310','Brasil','Rio de Janeiro','RJ','Rio de Janeiro','Santo Cristo','Avenida Francisco Bicalho','1');
+			insert into endereco values (DEFAULT, '20220310','Brasil','RJ','RJ','Rio de Janeiro','Santo Cristo','Avenida Francisco Bicalho','1');
 			insert into transporte_endereco values (DEFAULT, (select max(id) from transporte), (select id from endereco where cep = '20220310' and rua = 'Avenida Francisco Bicalho' and numero = '1'), 0);
 			insert into transporte_endereco values (DEFAULT, (select max(id) from transporte), (select id from endereco where cep = '41800700' and rua = 'Avenida Antônio Carlos Magalhães' and numero = '4362'), 1);
 			
@@ -3207,7 +3207,7 @@
 			insert into transporte_dia_horario values (DEFAULT, (select max(id) from transporte_dia), '11:30:00', '12:15:00');
 			insert into transporte_dia_horario values (DEFAULT, (select max(id) from transporte_dia), '13:00:00', '13:45:00');
 			
-			insert into extra values (DEFAULT, 'Quartos para não fumantes'), (DEFAULT, 'Piscina'), (DEFAULT, 'Instalações para pessoas com deficiência'), (DEFAULT, 'Estacionamento gratuito'), (DEFAULT, 'Wi-Fi gratuito'), (DEFAULT, 'Café da manhã'), (DEFAULT, 'Academia'), (DEFAULT, 'Recepção 24 horas'), (DEFAULT, 'Spa'), (DEFAULT, 'Cartão de acesso'), (DEFAULT, 'Heliporto'), (DEFAULT, 'Ar-condicionado'), (DEFAULT, 'Lavanderia'), (DEFAULT, 'Beira-mar'), (DEFAULT, 'Jardim'), (DEFAULT, 'Serviço de limpeza diário'), (DEFAULT, 'Chaleira/cafeteira em todos os quartos');
+			insert into extra values (DEFAULT, 'Quartos para não fumantes'), (DEFAULT, 'Piscina'), (DEFAULT, 'Instalações para pessoas com deficiência'), (DEFAULT, 'Estacionamento gratuito'), (DEFAULT, 'Wi-Fi gratuito'), (DEFAULT, 'Café da manhã'), (DEFAULT, 'Academia'), (DEFAULT, 'Recepção 24 horas'), (DEFAULT, 'Spa'), (DEFAULT, 'Cartão de acesso'), (DEFAULT, 'Heliporto'), (DEFAULT, 'Ar-condicionado'), (DEFAULT, 'Lavanderia'), (DEFAULT, 'Beira-mar'), (DEFAULT, 'Jardim'), (DEFAULT, 'Serviço de limpeza diário'), (DEFAULT, 'Chaleira/cafeteira em todos os quartos'), (DEFAULT, 'Bar'), (DEFAULT, 'Restaurante');
 		</sql>
 	</changeSet>
 </databaseChangeLog>

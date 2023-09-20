@@ -43,7 +43,7 @@ public class Midia extends BaseEntity<Long> {
 		vo.setId(getId());
 		vo.setNome(getNome());
 		vo.setTipoMidia(getTipoMidia());
-		vo.setDados(new String(getDados()));
+		vo.setDados(new String(Base64.getEncoder().encodeToString(getDados())));
 		return vo;
 	}
 
