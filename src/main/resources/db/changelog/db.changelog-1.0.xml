@@ -491,7 +491,9 @@
 			baseColumnNames="proximidade_id" referencedTableName="proximidade"
 			referencedColumnNames="id" />
 	</changeSet>
-	<!--
+	
+	<!-- OS 2 CHANGESETS ABAIXO ESTÃO DENTRO DO DATA.SQL H2 - DEVEM SER COMENTADOS -->
+	
 	<changeSet id="popularUsuarioSudo-e-Roles" author="diego.rafael">
 		<sql>
 			insert into role (nome,access_level) values ('Usuário Sudo',1),('Usuário Comum',2);
@@ -3211,5 +3213,5 @@
 			insert into extra values (DEFAULT, 'Quartos para não fumantes'), (DEFAULT, 'Piscina'), (DEFAULT, 'Instalações para pessoas com deficiência'), (DEFAULT, 'Estacionamento gratuito'), (DEFAULT, 'Wi-Fi gratuito'), (DEFAULT, 'Café da manhã'), (DEFAULT, 'Academia'), (DEFAULT, 'Recepção 24 horas'), (DEFAULT, 'Spa'), (DEFAULT, 'Cartão de acesso'), (DEFAULT, 'Heliporto'), (DEFAULT, 'Ar-condicionado'), (DEFAULT, 'Lavanderia'), (DEFAULT, 'Beira-mar'), (DEFAULT, 'Jardim'), (DEFAULT, 'Serviço de limpeza diário'), (DEFAULT, 'Chaleira/cafeteira em todos os quartos'), (DEFAULT, 'Bar'), (DEFAULT, 'Restaurante');
 		</sql>
 	</changeSet>
-	-->
+	
 </databaseChangeLog>
