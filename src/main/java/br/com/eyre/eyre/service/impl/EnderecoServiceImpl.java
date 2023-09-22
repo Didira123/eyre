@@ -47,4 +47,9 @@ public class EnderecoServiceImpl extends CrudBaseServiceImpl<Long, Endereco, End
 		return enderecoRepository.findById(id);
 	}
 
+	@Override
+	public Optional<Endereco> findByCepAndRuaAndNumero(String cep, String rua, String numero) {
+		return enderecoRepository.findByCepAndRuaAndNumero(cep, rua, numero);
+	}
+
 }

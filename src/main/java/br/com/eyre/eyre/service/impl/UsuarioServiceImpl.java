@@ -69,7 +69,7 @@ public class UsuarioServiceImpl extends CrudBaseServiceImpl<Long, Usuario, Usuar
 	@Override
 	public Usuario create(UsuarioNovoVO vo, BindingResult result) {
 		Usuario entity = new Usuario();
-		entity.setCpfCnpj(vo.getCpfCnpj());
+		entity.setCpfCnpj(FormatterUtils.numbers(vo.getCpfCnpj()));
 		entity.setNome(vo.getNome());
 		entity.setEmail(vo.getEmail());
 		entity.setSenha(encoder.encode(vo.getSenha()));
@@ -84,7 +84,13 @@ public class UsuarioServiceImpl extends CrudBaseServiceImpl<Long, Usuario, Usuar
 			if (enderecoVO.getId() != null) {
 				endereco = enderecoService.findById(enderecoVO.getId()).get();
 			} else {
-				endereco = enderecoService.create(vo.getEndereco(), result);
+				Optional<Endereco> optional = enderecoService.findByCepAndRuaAndNumero(enderecoVO.getCep(),
+						enderecoVO.getRua(), enderecoVO.getNumero());
+				if (optional.isPresent()) {
+					endereco = optional.get();
+				} else {
+					endereco = enderecoService.create(enderecoVO, result);
+				}
 			}
 			entity.setEndereco(new Endereco(endereco.getId()));
 		}
@@ -102,10 +108,10 @@ public class UsuarioServiceImpl extends CrudBaseServiceImpl<Long, Usuario, Usuar
 		entity.setTelefone(vo.getTelefone());
 //		entity.setRole(roleService.findByNome(USUARIO_COMUM));
 //		entity.setAtivo(true);
-		if(vo.getFoto().getId() == null){
+		if (vo.getFoto().getId() == null) {
 			entity.setFoto(midiaService.create(vo.getFoto(), result));
 		}
-			
+
 		EnderecoVO enderecoVO = vo.getEndereco();
 		if (enderecoVO != null) {
 			Endereco endereco;

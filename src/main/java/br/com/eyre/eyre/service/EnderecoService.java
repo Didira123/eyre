@@ -13,4 +13,6 @@ public interface EnderecoService {
 
 	public Endereco create(EnderecoVO vo, BindingResult result);
 
+	public Optional<Endereco> findByCepAndRuaAndNumero(String cep, String rua, String numero);
+
 }
