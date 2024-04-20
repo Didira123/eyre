@@ -104,7 +104,7 @@ public class HospedagemServiceImpl extends CrudBaseServiceImpl<Long, Hospedagem,
 
 	@Override
 	public Optional<Hospedagem> findById(Long id) {
-		return hospedagemRepository.findByIdFetchEnderecoFetchTransportesFetchExtrasFetchMidiasFetchProximidades(id);
+		return hospedagemRepository.findByIdFetchEnderecoFetchTransportesFetchExtras(id);
 	}
 
 	@Override

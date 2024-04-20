@@ -1,6 +1,7 @@
 package br.com.eyre.eyre.api;
 
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Optional;
 
 import org.apache.commons.lang3.NotImplementedException;
@@ -18,6 +19,8 @@ import br.com.eyre.eyre.bases.BaseFilterService;
 import br.com.eyre.eyre.bases.CrudBaseAPI;
 import br.com.eyre.eyre.entity.Hospedagem;
 import br.com.eyre.eyre.service.AvaliacaoService;
+import br.com.eyre.eyre.service.HospedagemMidiaService;
+import br.com.eyre.eyre.service.HospedagemProximidadeService;
 import br.com.eyre.eyre.service.HospedagemService;
 import br.com.eyre.eyre.vo.AvaliacoesInfoVO;
 import br.com.eyre.eyre.vo.HospedagemCustomProximidadeVO;
@@ -31,6 +34,12 @@ public class HospedagemAPI extends CrudBaseAPI<Long, Hospedagem, HospedagemVO, H
 
 	@Autowired
 	private HospedagemService hospedagemService;
+
+	@Autowired
+	private HospedagemMidiaService hospedagemMidiaService;
+
+	@Autowired
+	private HospedagemProximidadeService hospedagemProximidadeService;
 
 	@Autowired
 	private AvaliacaoService avaliacaoService;
@@ -52,9 +61,12 @@ public class HospedagemAPI extends CrudBaseAPI<Long, Hospedagem, HospedagemVO, H
 			@PathVariable("maisDias") Boolean maisDias) {
 		Optional<Hospedagem> optional = hospedagemService.findById(id);
 		if (optional.isPresent()) {
+			Hospedagem hospedagem = optional.get();
 			try {
+				hospedagem.setListMidias(new HashSet<>(hospedagemMidiaService.findByHospedagem(id)));
+				hospedagem.setListProximidades(new HashSet<>(hospedagemProximidadeService.findByHospedagem(id)));
 				AvaliacoesInfoVO avaliacoesInfo = avaliacaoService.countAndMediaByHospedagem(id);
-				HospedagemCustomProximidadeVO vo = optional.get().toCustomVO(dataIda, dataVolta, maisDias);
+				HospedagemCustomProximidadeVO vo = hospedagem.toCustomVO(dataIda, dataVolta, maisDias);
 				vo.setAvaliacoes(avaliacoesInfo.getCount());
 				vo.setClassificacao(avaliacoesInfo.getMedia());
 				return ResponseEntity.ok(vo);

@@ -17,4 +17,6 @@ public interface HospedagemProximidadeService
 	public List<Proximidade> createAll(HashMap<String, List<ProximidadeVO>> listVos, Long idHospedagem,
 			BindingResult result);
 
+	public List<HospedagemProximidade> findByHospedagem(Long id);
+
 }

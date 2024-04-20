@@ -62,4 +62,9 @@ public class HospedagemProximidadeServiceImpl
 		return listVOReturn;
 	}
 
+	@Override
+	public List<HospedagemProximidade> findByHospedagem(Long id) {
+		return hospedagemProximidadeRepository.findByHospedagem(id);
+	}
+
 }

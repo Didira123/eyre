@@ -13,5 +13,7 @@ import br.com.eyre.eyre.vo.MidiaVO;
 public interface HospedagemMidiaService extends CrudBaseService<Long, HospedagemMidia, HospedagemMidiaVO> {
 
 	public List<Midia> createAll(List<MidiaVO> listVos, Long idHospedagem, BindingResult result);
-
+	
+	public List<HospedagemMidia> findByHospedagem(Long id);
+	
 }

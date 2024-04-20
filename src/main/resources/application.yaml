@@ -10,6 +10,9 @@ spring:
     testWhileIdle: true
     validationQuery: SELECT 1
     continue-on-error: true
+  # Ajuste de memória para imagens
+  # jvm:
+  #   memoryargs: "-Xms2G -Xmx2G"
 # JPA
   jpa:
     properties:
@@ -46,7 +49,7 @@ spring:
   datasource:
     driverClassName: org.h2.Driver
     url: jdbc:h2:mem:testdb
-    --schema: classpath:/data.sql
+    # schema: classpath:/data.sql
     username: sa
     password: Eyre-V-2023
   h2:

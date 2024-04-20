@@ -54,4 +54,9 @@ public class HospedagemMidiaServiceImpl extends CrudBaseServiceImpl<Long, Hosped
 		return listReturn;
 	}
 
+	@Override
+	public List<HospedagemMidia> findByHospedagem(Long id) {
+		return hospedagemMidiaRepository.findByHospedagem(id);
+	}
+
 }
